@@ -1,0 +1,163 @@
+﻿<Page x:Class="testing.Modules.CombineTextures.TrollPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:testing.Modules.CombineTextures"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      Title="CombineTextures_Type1">
+
+    <Grid Height="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="275"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Padding="4" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="4" Margin="5" HorizontalAlignment="Left">
+            <Grid Background="{StaticResource Nier_Level0_Brush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28"/>
+                    <RowDefinition Height="256"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Padding="10 0 0 0" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="0 0 0 0" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Foreground="White" Text="Metallic Roughness" FontSize="20"/>
+                        <Button Grid.Column="1" Command="{Binding CollapseDetails}">
+                            <Image Source="/images/flipui.png"/>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- START : Image is displayed here... -->
+                <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10">
+                    <Image x:Name="MainDisplay" Source="/images/trolling/sad.jpg" />
+                </Border>
+
+
+                <Border Grid.Row="2" Padding="10" CornerRadius="10 10 10 10">
+                    <StackPanel>
+                        <StackPanel>
+                            <!-- Button interfaces -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="Okaythen" Grid.Column="0" Margin="0 0 10 0"  Content="Test" Visibility="{Binding ShowDetails}"/>
+                                <Button Grid.Column="1" Margin="0 0 10 0" Content="Disgusting"/>
+                                <Button Grid.Column="2" Margin="10 0 0 0" Content="Scum on Earth"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource CollapsibleSegment}">
+                            <TextBlock Text="Processes a Metallic Roughness set of textures." FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"></TextBlock>
+                            <!-- Description -->
+                            <TextBlock Text="Description" FontWeight="Bold" Margin="2 0 0 6"></TextBlock>
+                            <!-- Row 1 : Gradient effect-->
+                            <Border Height="2" BorderThickness="0 2 0 0">
+                                <!-- Underline (Linear gradient from sides to mid)-->
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.0"/>
+                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.2"/>
+                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.8"/>
+                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                            </Border>
+                            <TextBox Text="." Padding="2" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Grid.Column="2" Margin="0 6" Padding="2" >
+            <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
+                <StackPanel Grid.Column="2" >
+                </StackPanel>
+            </Border>
+        </Border>
+        <Border Grid.Column="3" Margin="0 6" Padding="2">
+            <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
+                <StackPanel Grid.Column="2" >
+                </StackPanel>
+            </Border>
+        </Border>
+        <Border Grid.Column="4" Margin="0 8 8 8" Padding="10" CornerRadius="4" Height="Auto" Background="{StaticResource NierBackgroundBrush}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <!-- Description section of documentation -->
+                    <!-- Input "bool IsMinimized" required -->
+                    <StackPanel Style="{StaticResource CollapsibleSegment}">
+                        <TextBlock FontSize="20" FontWeight="Bold">Server reply.</TextBlock>
+                        <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Desc:</Bold> Retarded <Italic>loser</Italic> who should not have been born.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Verdict:</Bold> Should be discarded from society.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>p.s.:</Bold> You want hugs ? lol. You get to die alone, bitch.</TextBlock>
+                        <TextBlock/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock FontSize="20" FontWeight="Bold">Interface</TextBlock>
+                        <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Input</Bold> : Receieved hug request.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Test</Bold> : Analysed recipient to to potential weeb <Bold>trash good for nothing</Bold>.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Clear</Bold> : This bitch was a happy little accident. Let him suffer.</TextBlock>
+                        <TextBlock/>
+                    </StackPanel>
+
+                    <!-- Description section of documentation -->
+                    <!-- Input "bool IsMinimized" required -->
+                    <StackPanel Style="{StaticResource CollapsibleSegment}">
+                        <TextBlock FontSize="20" FontWeight="Bold">Notes to self.</TextBlock>
+                        <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"> - My waifu does not love me.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"> - My co-workers hate me.</TextBlock>
+                        <TextBlock FontSize="16" TextWrapping="Wrap"> - I hate myself :)</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                    <Grid Height="30" Background="{StaticResource Nier_Level0_Brush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Margin="0 0" Padding="0" >
+                            <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
+                                <StackPanel Grid.Column="2" >
+                                </StackPanel>
+                            </Border>
+                        </Border>
+                        <Border Grid.Column="2" Margin="0 0" Padding="0">
+                            <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
+                                <StackPanel Grid.Column="2" >
+                                </StackPanel>
+                            </Border>
+                        </Border>
+                        <TextBlock Grid.Column="3" x:Name="Console" VerticalAlignment="Center" Margin="8 0 0 0" FontSize="16" Text="Why don't you go kill yourself, loser."/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

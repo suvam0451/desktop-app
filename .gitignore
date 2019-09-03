@@ -1,0 +1,9 @@
+# Location where builds are stored(all levels)...
+x64/
+x86/
+Debug/
+Release/
+bin/
+
+# Location where builds are stored(inside)...
+.vs/*
