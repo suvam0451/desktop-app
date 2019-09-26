@@ -39,10 +39,13 @@ namespace testing.Modules.OpenCV
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-
+                MessageBox.Show("lmao yeet");
                 //BackgroundWorker worker = sender as BackgroundWorker;
 
                 Files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                StartVideoProcessing(Files[0]);
+                // backend.HandleMediaDrop(Files);
+                
             }
             else
             {
@@ -50,10 +53,13 @@ namespace testing.Modules.OpenCV
             }
 
         }
+        private void StartVideoProcessing(String In) {
+            backend.HandleMediaDrop(In);
+        }
 
         private void ClearPressed(object sender, RoutedEventArgs e) {
             // Handle OpenCV video  without locking fs
-            backend.HandleMediaDrop(Files);
+            // backend.HandleMediaDrop(Files);
         }
 
         private void FilesDropped(object sender, DragEventArgs e) {

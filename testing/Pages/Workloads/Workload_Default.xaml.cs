@@ -23,13 +23,6 @@ namespace testing.Pages.Workloads
         // Test function fired on button click...
         private void Fire_that(object sender, RoutedEventArgs e)
         {
-            //int retval = Add(10, 20);
-            int[] data = { 1, 2, 3, 4, 5 };
-            //if (ReturnIntArraySize(data, 5) == 15)
-            //{
-            //MessageBox.Show(ReturnIntArraySize(data, 5).ToString());
-            //receiveIR(data, 10);
-
             // Add our fancy UI interaction...
             Frame tmp = new Frame();
             handle = new CombineTextures_Type1();
@@ -52,7 +45,7 @@ namespace testing.Pages.Workloads
             //receiveIR(data, 10);
         }
 
-        private void SendHug(object sender, RoutedEventArgs e) {
+        private void Start_OpenCV(object sender, RoutedEventArgs e) {
             //handle.Height = 0;
             // MessageBox.Show("Fuck you, Go kill yourself.");
 
@@ -74,10 +67,14 @@ namespace testing.Pages.Workloads
         // Handlers window change events from main menu...
         private void Start_TextureCombine(object sender, RoutedEventArgs e)
         {
+            Frame tmp = new Frame();
+            // handle = new CombineTextures_Type1();
+            // tmp.Content = handle;
+            tmp.Content = new CombineTextures_Type1();
+            ContentHolder.Children.Insert(1, tmp);
+        }
+        private void Start_Graphviz(object sender, RoutedEventArgs e) {
 
-            // Texture Combine window
-            //Workspace.Content = new TextureCombine();
-            //Workspace.Content = new AppWelcome();
         }
 
 

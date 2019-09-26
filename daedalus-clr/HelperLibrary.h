@@ -38,17 +38,23 @@ struct TextureCombiner_Preset {
 class HelperLibrary
 {
 public:
-	static std::string StringManagedToSTL(String^ In) {
-		// Allocate handle...
+	static std::string StringManagedToSTL(String^ In)
+	{
 		const char* mine = (const char*)Marshal::StringToHGlobalAnsi(In).ToPointer();
-		// Allocate memory reference
 		std::string retval = mine;
-		// Free allocated memory
 		Marshal::FreeHGlobal(IntPtr((void*)mine));
 		//delete(mine);
-		// Return stl string
 		return retval;
 	}
+
+	// static String^ StringSTLToManaged(std::string In)
+	// {
+	// 	const char* mine = (const char*)Marshal::StringToHGlobalAnsi(In).ToPointer();
+	// 	std::string retval = mine;
+	// 	Marshal::FreeHGlobal(IntPtr((void*)mine));
+	// 	//delete(mine);
+	// 	return String^();
+	// }
 
 	//static ImageSource^ GetImageSourceFromCV(cv::Mat &In) {
 	static BitmapImage^ GetImageSourceFromCV(cv::Mat& In) {
@@ -68,19 +74,14 @@ public:
 		image->StreamSource = ms;
 		image->EndInit();
 
-		// gc
-		//ms->Close();
-		//ms->Dispose();
-		//ImageSource^ retval = image;
+		// gc(Unmanaged)
+		// ms->Close();
 
-		// gc
-		// Managed
-		//delete(bitmap);
-		//delete(ms);
+		// gc(Managed)
+		// delete(bitmap);
+		// delete(ms);
 
-		// return ImageSource...
 		return image;
-		//return image;
 	}
 
 	//static void TextureCombiner_Parse(Dictionary<String^, String^>^ &FileData, ) {
@@ -88,3 +89,17 @@ public:
 	//}
 };
 
+class LaneDetector {
+private:
+	double img_size;
+	double img_center;
+	bool left_flag = false, right_flag = false;
+	cv::Point right_b;  // Members of both line equations of the line boundaries
+	double right_m;  // y = m*b + b
+	cv::Point left_b;  //
+	double left_m;  //
+
+public:
+	static cv::Mat deNoise(cv::Mat inputImage);  // Apply gaussian blur to the input image
+	static cv::Mat edgeDetector(cv::Mat img_noise);  // Filter the image to obtain only edges
+};

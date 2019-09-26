@@ -14,16 +14,8 @@ using namespace System::Windows::Media::Imaging;
 using namespace System::Windows::Controls;
 using namespace System::Windows::Interop;
 using namespace System::Windows::Media;
-//using namespace System::Windows::Markup;
 using namespace System::Collections::Generic;
 using namespace System::Text::RegularExpressions;
-//using namespace System::Windows::Xaml;
-//using namespace System::Windows::Input;
-//using namespace System::Windows::Presentation;
-//using namespace System::Windows::
-//using namespace msclr
-//using namespace PresentationCore;
-//using namespace System::Windows::Controls;
 
 // Threading operations...
 using namespace System::Threading;
@@ -33,23 +25,10 @@ using namespace System::Windows::Threading;
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include "HelperLibrary.h"
-//#include <boost/python/numpy.hpp>
+#include <lua.hpp>
 
-// void __stdcall MyCallback(int percent);
-
-// Callback functions(pure C++)...
-// typedef void (__stdcall *CallbackFunc)(int);
-// CallbackFunctions in C#
-//namespace p = boost::python;
-//namespace np = boost::python;
-
-// call this directly from c# with method adequate to the action
-// void TestCallBack(Action<int>^);
-// call this directly from C# with method adequate to the handler
-// void TestCallBack2(ManagedCallbackHandler^);		
 public delegate void ManagedCallbackHandler(int _In);
-public delegate void ImageDelegate(ImageSource^ in);
-
+public delegate void ImageDelegate(ImageSource^ In);
 
 namespace daedalus_clr {
 	public ref class TextureCombine_Type1_Backend
@@ -104,16 +83,11 @@ namespace daedalus_clr {
 		}
 
 #pragma endregion
-
-
-
 		void GetDataSize() {
 			_consoleref->Text = FileData->Count.ToString();
 		}
 
 		static String^ GetCodes(System::Object^ sender, System::ComponentModel::PropertyChangedEventArgs^ e) {
-			//return 10;
-
 			return gcnew System::String("oniichan");
 		}
 
@@ -121,38 +95,84 @@ namespace daedalus_clr {
 			
 		}
 
-		void HandleMediaDrop(array<String^>^ strarr) {
-			cv::VideoCapture cap(HelperLibrary::StringManagedToSTL(strarr[0]));
-			cap.set(cv::CAP_PROP_FPS, 60);
-			
+		void HandleMediaDrop(String^ strarr)
+		{
+			lua_State* L = luaL_newstate();
+			luaL_openlibs(L);
+			luaL_dofile(L, "lewdheh.lua");
+
+			cv::VideoCapture cap(HelperLibrary::StringManagedToSTL(strarr));
+
+			lua_getglobal(L, "max_frames");
+			// MessageBox::Show(lua_tonumber(L, -1).ToString());
+			cap.set(cv::CAP_PROP_FPS, lua_tonumber(L, -1));	
+
+			lua_close(L);
+
 			if (cap.isOpened()) {
 				// Handle not video file error
 			}
 			while (true) {
 				cv::Mat frame;
 				cap >> frame;
-				if (frame.empty()) break;
+				if (frame.empty())
+					break;
 				
+				cv::imshow("RGB", frame);
+
 				// Decorator info text
 				cv::putText(frame, "Tortoise", cv::Point(10, 30), cv::FONT_HERSHEY_COMPLEX, 0.6, (0,255,0), 2);
-				// Set image
-				UpdateDisplay(HelperLibrary::GetImageSourceFromCV(frame));
+
 				// set console
 				cap.get(cv::CAP_PROP_FPS).ToString();
 
-				UpdateConsole(cap.get(cv::CAP_PROP_FPS).ToString());
-				// ESC to exit
-				char c = (char)cv::waitKey(16.66);
-				if (c == 27) break;
+				// Denoise
+				// cv::Mat output;
+				// cv::GaussianBlur(frame, output, cv::Size(3, 3), 0, 0);
+
+				frame = LaneDetector::deNoise(frame);
+				// frame = LaneDetector::edgeDetector(frame);
+
+				// cv::Mat output;
+				// cv::Mat kernel;
+				// cv::Point anchor;
+				// Convert image from RGB to gray
+				
+				// Binarize gray image
+				// cv::threshold(output, output, 140, 255, cv::THRESH_BINARY);
+
+				// cv::Mat newout = LaneDetector::edgeDetector(frame);
+
+				cv::Mat vicky;
+
+				// cv::cvtColor(frame, vicky, cv::COLOR_RGB2GRAY);
+				// Create the kernel [-1 0 1]
+				// This kernel is based on the one found in the
+				// Lane Departure Warning System by Mathworks
+				// anchor = cv::Point(-1, -1);
+				// kernel = cv::Mat(1, 3, CV_32F);
+				// kernel.at<float>(0, 0) = -1;
+				// kernel.at<float>(0, 1) = 0;
+				// kernel.at<float>(0, 2) = 1;
+				// Filter the binary image to obtain the edges
+				// cv::filter2D(output, output, -1, kernel, anchor, 0, cv::BORDER_DEFAULT);
+				
+
+				// UpdateConsole(cap.get(cv::CAP_PROP_FPS).ToString());
+				UpdateDisplay(HelperLibrary::GetImageSourceFromCV(frame));
+
+				char c = (char)cv::waitKey(1);
+				if (c == 27) 
+					break;
 			}
 			// Release memory
 			cap.release();
 			cv::destroyAllWindows();
-			//MessageBox::Show(strarr[0]);
 		}
 
 		// Handles event when items are dropped...
 		void HandleFileDrop(ImageDelegate^ imagedel, array<String^>^ strarr) {
+			
 			FileData->Clear();
 
 			// Check for maps using pattern matching...
@@ -229,22 +249,14 @@ namespace daedalus_clr {
 			writearr[2] = tmparr[2];
 			cv::merge(writearr, 3, combined_02);
 
-
-			//cv::Mat example = tmp1.clone();
-			//tmp1[0];
 			cv::hconcat(albedo, normal, tmp1);
 			cv::hconcat(combined_01, combined_02, tmp2);
 
 			// Vertical concatenation to form 4 quadrants
 			cv::vconcat(tmp1, tmp2, out);
 
-			// Update image on UI thread
-
-			yamete = HelperLibrary::GetImageSourceFromCV(out);
-			//UpdateDisplay(yamete);
-			imagedel(yamete);
-
-			//delete(retval);
+			imgsrc = HelperLibrary::GetImageSourceFromCV(out);
+			UpdateDisplay(imgsrc);
 
 			// gc 
 			// Using deallocate first WILL NOT not release memory...
@@ -270,71 +282,15 @@ namespace daedalus_clr {
 			//delete(tmparr);
 			//delete(writearr);
 		}
-	private:
-
-		// Build sthe image to be displayed...
-		void BuildDisplayImage() {
-		}
-
-		//void GetImageSourceFromCV(std::string name) {
-		//
-		//	String^ usethis;
-		//
-		//	FileData->TryGetValue("albedo", usethis);
-		//	std::string str = HelperLibrary::StringManagedToSTL(usethis);
-		//	cv::Mat In = cv::imread(str);
-		//	// Convern OpenCV image to Bitmap...
-		//	System::IntPtr ptr(In.ptr());
-		//	Bitmap^ bitmap = gcnew Bitmap(In.cols, In.rows, In.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
-		//
-		//	// Stream image data to stream...
-		//	MemoryStream^ ms = gcnew MemoryStream();
-		//	bitmap->Save(ms, System::Drawing::Imaging::ImageFormat::Bmp);
-		//
-		//	// Declare a bitmap image and read the stream...
-		//	BitmapImage^ image = gcnew BitmapImage();
-		//	image->BeginInit();
-		//	ms->Seek(0, SeekOrigin::Begin);
-		//	image->StreamSource = ms;
-		//	image->EndInit();
-		//
-		//	ImageSource^ retval = image;
-		//	UpdateDisplay(image);
-		//	//_dispatcherref->BeginInvoke(gcnew UpdateImage(this, &TextureCombine_Type1_Backend::UpdateDisplay), image);
-		//	//_dispatcherref->BeginInvoke(gcnew ConsoleUpdateDel(this, &TextureCombine_Type1_Backend::UpdateConsole), "chotto matte");
-		//
-		//	//current->Sleep(5);
-		//	//SetImage(image);
-		//
-		//	//_dispatcherref->BeginInvoke(_displayref->Source = in);
-		//	//_dispatcherref->BeginInvoke(gcnew ImageUpdate(this->SetImage), retval);
-		//	//this->Invoke(gcnew ImageUpdate(this, &TextureCombine_Type1_Backend::SetImage), retval);
-		//	//_displayref->Source = image;
-		//
-		//	// Thread to set image asset...
-		//	//ThreadStart^ del = gcnew ThreadStart(this, &TextureCombine_Type1_Backend::GetImageSourceFromCV);	
-		//	//Thread^ thread = gcnew Thread(del);
-		//	//thread->Start();
-		//	//GetImageSourceFromCV("albedo");
-		//	//SetImageSourceFromCVDel^ del = gcnew SetImageSourceFromCVDel(this, &TextureCombine_Type1_Backend::GetImageSourceFromCV);
-		//
-		//	//Thread^ thread = gcnew Thread(GetImageSourceFromCV);
-		//	//gcnew ThreadStart(this, &GetImageSourceFromCV(img))
-		//	//_displayref->Source = HelperLibrary::GetImageSourceFromCV(img);
-		//	
-		//	// gc
-		//
-		//	// OpenCV
-		//	In.deallocate();
-		//	In.release();
-		//}
 
 	private:
-		void UpdateConsole(String^ in) {
+		void UpdateConsole(String^ in)
+		{
 			_consoleref->Text = in;
 		}
-		void UpdateDisplay(ImageSource^ in) {
-			delete(_displayref->Source);
+
+		void UpdateDisplay(ImageSource^ in)
+		{
 			_displayref->Source = in;
 		}
 

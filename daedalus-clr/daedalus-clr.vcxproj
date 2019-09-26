@@ -91,11 +91,11 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\libs\boost_1_70_0;D:\Suvam\libs\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\libs\lua535\include;D:\Suvam\libs\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D:\Suvam\libs\opencv\build\x64\vc15\lib\opencv_world411.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\libs\boost_1_70_0\lib64-msvc-14.1;D:\Suvam\libs\opencv\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>D:\Suvam\libs\opencv\build\x64\vc15\lib\opencv_world411.lib;lua53.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\libs\boost_1_70_0\lib64-msvc-14.1;D:\Suvam\libs\opencv\build\x64\vc15\lib;D:\libs\lua535\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

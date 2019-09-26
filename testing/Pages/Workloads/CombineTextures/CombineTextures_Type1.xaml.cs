@@ -1,30 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-//using testing.CombineTextures;
-using System.ComponentModel;
-using testing;
 using daedalus_clr;
 using Microsoft.Win32;
 using System.IO;
+using NLua;
 
-//using System.Windows.Forms;
-
-namespace testing.Modules.CombineTextures {
-    /// Module : CombineTextures, Submodule : MetallicRoughness
+namespace testing.Modules.CombineTextures
+{
     public partial class CombineTextures_Type1 : Page
     {
         // Most of back-end work is handled by this C++ wrapper class...
@@ -52,27 +40,33 @@ namespace testing.Modules.CombineTextures {
         // Passes files from file drop event...
         public void FilesDropped(object sender, DragEventArgs e)
         {
+            // MessageBox.Show("yeet");
+
+            Lua state = new Lua();
+
+            // int res = (int)state.DoString("return 10 + 3*(5 + 2)")[0];
+            var res = state.DoString("return 10 + 3*(5 + 2)")[0];
+
+            MessageBox.Show(res.ToString());
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                
-                //BackgroundWorker worker = sender as BackgroundWorker;
-
                 Files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 //Thread thr = new Thread(FileDropAsync);
                 //thr.Start();
                 //backend.HandleFileDrop(SetMainImage, Files);
 
-                ThreadStart mine = FileDropAsync;
-                mine += SetMainImage;
-                Thread thread = new Thread(mine) { IsBackground = true };
-                thread.Start();
+                // ThreadStart mine = FileDropAsync;
+                // mine += SetMainImage;
+                // Thread thread = new Thread(mine) { IsBackground = true };
+                // thread.Start();
 
-                //new Thread(() =>
                 //{
                 //    Thread.CurrentThread.IsBackground = true;
                 //    /* run your code here */
-                //    backend.HandleFileDrop(SaveMainImage, Files);
+                //    backend.HandleFileDrop(SaveMainImage, Fil
+                backend.HandleFileDrop(SaveMainImage, Files);
+                //new Thread(() =>es);
                 //    //Console.WriteLine("Hello, world");
                 //}).Start();
 
@@ -100,9 +94,6 @@ namespace testing.Modules.CombineTextures {
             else {
                 //Console.Text = "You did not drop files.";
             }
-        }
-        private void FileDropAsync() {
-            backend.HandleFileDrop(SaveMainImage, Files);
         }
         private void SaveMainImage(ImageSource _In) {
             _ImageSource = _In;
