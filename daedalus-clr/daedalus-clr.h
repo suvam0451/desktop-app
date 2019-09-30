@@ -109,6 +109,34 @@ namespace daedalus_clr {
 
 			lua_close(L);
 
+			int mincost = INT32_MAX;
+			int** connectivity;
+			int minindex = 10;
+			// Vic and jesco, what do i doooo :(
+			(connectivity[0][0] == 1) ? (minindex = 10) : (minindex = 0);
+			
+			
+			// for (int i = 0; i < Vertices; i++) {
+
+				// TERNARY ASSIGNMENTS : works
+				// This works. good.
+				// mincost = (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : mincost;
+
+				// This works. I can live with that.
+				// _ = (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : mincost;
+
+				// TERNARY EXPRESSIONS : do not work
+				// This does not work. Damn it C#
+				// (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : true;
+
+				// This also does not work. This would have worked in C++
+				
+
+				// Vic and jesco, what do i doooo :(
+			//}
+
+
+
 			if (cap.isOpened()) {
 				// Handle not video file error
 			}

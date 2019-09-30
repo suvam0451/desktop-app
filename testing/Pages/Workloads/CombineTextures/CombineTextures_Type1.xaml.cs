@@ -10,6 +10,7 @@ using daedalus_clr;
 using Microsoft.Win32;
 using System.IO;
 using NLua;
+using testing.Libraries;
 
 namespace testing.Modules.CombineTextures
 {
@@ -112,6 +113,20 @@ namespace testing.Modules.CombineTextures
         }
 
         private void ClearPressed(object sender, RoutedEventArgs e) {
+            clsGraph mine = new clsGraph(4);
+            mine.AddEdge(0, 1);
+            mine.AddEdge(0, 2);
+            mine.AddEdge(1, 2);
+            mine.AddEdge(2, 0);
+            mine.AddEdge(2, 3);
+            mine.AddEdge(3, 3);
+
+            mine.PrintAdjacencyMatrix();
+
+            // mine.BFS(2);
+            mine.DFS(2);
+
+            MST mine2 = new MST(3);
             // backend.PlayMovie(Files);
         }
 

@@ -126,6 +126,7 @@
     <Compile Include="Directory\ViewModel\Base\RelayCommand.cs" />
     <Compile Include="Directory\ViewModel\DirectoryItemViewModel.cs" />
     <Compile Include="Directory\ViewModel\DirectoryStructureViewModel.cs" />
+    <Compile Include="Libraries\GraphAlgorithms.cs" />
     <Compile Include="Pages\Sidebar_Home.xaml.cs">
       <DependentUpon>Sidebar_Home.xaml</DependentUpon>
     </Compile>
