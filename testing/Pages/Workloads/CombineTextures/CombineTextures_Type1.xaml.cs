@@ -113,21 +113,25 @@ namespace testing.Modules.CombineTextures
         }
 
         private void ClearPressed(object sender, RoutedEventArgs e) {
-            clsGraph mine = new clsGraph(4);
-            mine.AddEdge(0, 1);
-            mine.AddEdge(0, 2);
-            mine.AddEdge(1, 2);
-            mine.AddEdge(2, 0);
-            mine.AddEdge(2, 3);
-            mine.AddEdge(3, 3);
+            // clsGraph mine = new clsGraph(4);
+            // mine.AddEdge(0, 1);
+            // mine.AddEdge(0, 2);
+            // mine.AddEdge(1, 2);
+            // mine.AddEdge(2, 0);
+            // mine.AddEdge(2, 3);
+            // mine.AddEdge(3, 3);
+            // 
+            // mine.PrintAdjacencyMatrix();
+            // mine.DFS(2);
 
-            mine.PrintAdjacencyMatrix();
+            MST mine2 = new MST(5);
 
-            // mine.BFS(2);
-            mine.DFS(2);
-
-            MST mine2 = new MST(3);
-            // backend.PlayMovie(Files);
+            int[,] graph = new int[,] { { 0, 2, 0, 6, 0 },
+                                      { 2, 0, 3, 8, 5 },
+                                      { 0, 3, 0, 0, 7 },
+                                      { 6, 8, 0, 0, 9 },
+                                      { 0, 5, 7, 9, 0 } };
+            mine2.primMST(graph);
         }
 
         private void ChangeTheWorld(object sender, RoutedEventArgs e) {

@@ -112,6 +112,7 @@ namespace daedalus_clr {
 			int mincost = INT32_MAX;
 			int** connectivity;
 			int minindex = 10;
+
 			// Vic and jesco, what do i doooo :(
 			(connectivity[0][0] == 1) ? (minindex = 10) : (minindex = 0);
 			

@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace testing.Libraries
 {
+    public static void WriteLinesToFile(string filepath, List<string> InList)
+    {
+
+    }
     class clsGraph
     {
         private int Vertices;
@@ -116,21 +121,70 @@ namespace testing.Libraries
             return min_index;
         }
 
-        private void UpdateNode(int a, int b, int value) {
+        public void UpdateNode(int a, int b, int value) {
             connectivity[a, b] = 1;
             connectivity[b, a] = 1;
             cost[a, b] = value;
             cost[b, a] = value;
         }
 
-        private void printMST(int[] parent, int[,] graph) {
+        // Print the MST
+        public void printMST(int[] parent, int[,] graph) {
+            List<String> lines = new List<String>();
+            lines.Add("digraph G {");
+
             Console.WriteLine("Edge \tWeight");
             for (int i = 1; i < Vertices; i++) {
+                String line = parent[i] + " -> " + i + " [label=\"" + graph[i, parent[i]] + "\"];";
+                Console.WriteLine(line);
+                lines.Add(line);
                 Console.WriteLine(parent[i] + " - " + i + "\t" + graph[i, parent[i]]);
+            }
+            lines.Add("}");
+
+            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(DocPath, "Exmple.dot")))
+            {
+                foreach (string line in lines) {
+                    outputFile.WriteLine(line);
+                }
             }
         }
 
-        private void PrimsMST(int a) {
+        public void primMST(int[,] graph)
+        {
+            int[] parent = new int[Vertices];
+            int[] key = new int[Vertices];
+            bool[] mstSet = new bool[Vertices];
+
+            for (int i = 0; i < Vertices; i++)
+            {
+                key[i] = int.MaxValue;
+                mstSet[i] = false;
+            }
+
+            key[0] = 0;
+            parent[0] = -1;
+
+            for (int count = 0; count < Vertices - 1; count++) {
+                int u = minKey(key, mstSet);
+                mstSet[u] = true;
+
+                for (int v = 0; v < Vertices; v++) {
+                    if (graph[u, v] != 0 && 
+                        mstSet[v] == false && 
+                        graph[u,v]<key[v])
+                    {
+                        parent[v] = u;
+                        key[v] = graph[u, v];
+                    }
+                }
+            }
+
+            printMST(parent, graph);
+        }
+
+        public void PrimsMST(int a) {
             bool[] visited = new bool[Vertices];
             visited[a] |= true;
             int mincost = int.MaxValue;
@@ -155,12 +209,6 @@ namespace testing.Libraries
                     }
                     mincost = Math.Min(cost[a, i], mincost);
                 }
-
-
-
-                int x = 20, y = 10;
-
-                _ = (x > y) ? (x = 1, x = 2) : (1, 10);
             }
         }
     }
