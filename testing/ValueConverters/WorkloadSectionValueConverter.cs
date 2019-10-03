@@ -23,8 +23,6 @@ namespace testing
                     Debugger.Break();
                     return null;
             }
-
-            throw new NotImplementedException();
         }
 
         public override object ConvertBack(Object value, Type targetType, object parameter, CultureInfo culture)

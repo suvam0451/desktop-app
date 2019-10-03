@@ -28,7 +28,7 @@ namespace testing
         #region Public Properties
         /// The smallest width the window can go to
         public double WindowMinimumWidth { get; set; } = 1080;
-
+        public String Yeet { get; set; } = "Yeeto";
         /// The smallest height the window can go to
         public double WindowMinimumHeight { get; set; } = 500;
 
@@ -100,23 +100,19 @@ namespace testing
         #endregion
 
         #region Commands
-        /// The command to minimize the window
+
         public ICommand MinimizeCommand { get; set; }
-
-        /// The command to maximize the window
         public ICommand MaximizeCommand { get; set; }
-
-        /// The command to close the window
         public ICommand CloseCommand { get; set; }
-
-        /// The command to show the system menu of the window
         public ICommand MenuCommand { get; set; }
+        public ICommand YeetOut { get; set; }
         #endregion
 
         #region Constructor
 
         /// Default constructor
         public WindowViewModel(Window window)
+        // public WindowViewModel()
         {
             mWindow = window;
 
@@ -133,58 +129,19 @@ namespace testing
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
+            YeetOut = new RelayCommand(Rambo);
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
             // Fix window resize issue...
             var resizer = new WindowResizer(mWindow);
-            /*
-            // Listen out for the window resizing
-            mWindow.StateChanged += (sender, e) =>
-            {
-                // Fire off events for all properties that are affected by a resize
-                WindowResized();
-            };
-
-
-            /// Fix window resize issue
-            mWindowResizer = new WindowResizer(mWindow);
-
-            // Listen out for dock changes
-            mWindowResizer.WindowDockChanged += (dock) =>
-            {
-                // Store last position
-                mDockPosition = dock;
-
-                // Fire off resize events
-                WindowResized();
-            };
-
-            // On window being moved/dragged
-            mWindowResizer.WindowStartedMove += () =>
-            {
-                // Update being moved flag
-                BeingMoved = true;
-            };
-
-            // Fix dropping an undocked window at top which should be positioned at the
-            // very top of screen
-            mWindowResizer.WindowFinishedMove += () =>
-            {
-                // Update being moved flag
-                BeingMoved = false;
-
-                // Check for moved to top of window and not at an edge
-                if (mDockPosition == WindowDockPosition.Undocked && mWindow.Top == mWindowResizer.CurrentScreenSize.Top)
-                    // If so, move it to the true top (the border size)
-                    mWindow.Top = -OuterMarginSize.Top;
-            };*/
         }
 
+        private void Rambo() {
+            MessageBox.Show("To carry children");
+        }
         #endregion
 
         #region Private Helpers
-
-        /// Gets the current mouse position on the screen
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -206,27 +163,6 @@ namespace testing
             // Window position added
             return new Point(w32Mouse.X + mWindow.Left, w32Mouse.Y + mWindow.Top);
         }
-
-        /*private Point GetMousePosition()
-            {
-                return mWindowResizer.GetCursorPosition();
-            }*/
-
-        /// If the window resizes to a special position (docked or maximized)
-        /// this will update all required property change events to set the borders and radius values
-
-
-        /*private void WindowResized()
-            {
-                // Fire off events for all properties that are affected by a resize
-                OnPropertyChanged(nameof(Borderless));
-                OnPropertyChanged(nameof(FlatBorderThickness));
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OuterMarginSize));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
-            }*/
-
         #endregion
     }
 }

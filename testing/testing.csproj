@@ -76,6 +76,9 @@
     <ApplicationIcon>images\logo\applogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.2.1.0\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="KeraLua, Version=1.0.22.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
       <HintPath>..\packages\KeraLua.1.0.22\lib\net45\KeraLua.dll</HintPath>
     </Reference>
@@ -127,6 +130,8 @@
     <Compile Include="Directory\ViewModel\DirectoryItemViewModel.cs" />
     <Compile Include="Directory\ViewModel\DirectoryStructureViewModel.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
+    <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\SidebarModel.cs" />
     <Compile Include="Pages\Sidebar_Home.xaml.cs">
       <DependentUpon>Sidebar_Home.xaml</DependentUpon>
     </Compile>
@@ -159,6 +164,10 @@
     <Compile Include="ViewModel\Modules\CombineTextures\VM_CombineTextures_Home.cs">
       <Generator>MSBuild:Compile</Generator>
     </Compile>
+    <Compile Include="ViewModel\VM_CombineTexture.cs" />
+    <Compile Include="ViewModel\VM_CVPlayVideo.cs" />
+    <Compile Include="ViewModel\VM_DefaultPage.cs" />
+    <Compile Include="ViewModel\VM_Sidebar.cs" />
     <Compile Include="ViewModel\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="MainWindow.xaml">

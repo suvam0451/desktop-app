@@ -20,12 +20,9 @@ namespace testing
 
         private void Start_OpenCVVideo(object sender, RoutedEventArgs e)
         {
-
-            // MessageBox.Show("Fuck off, incel");
         }
 
         #region DLL imports
-        //[DllImport("downtown_dll.dll", CallingConvention = CallingConvention.ThisCall)]
         [DllImport("devops_test.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern int receiveIR(uint[] data, int length);
 
@@ -33,9 +30,7 @@ namespace testing
         static extern int Add(int first, int second);
 
         [DllImport("devops_test.dll", CallingConvention = CallingConvention.Cdecl)]
-        //static extern bool ReturnIntArraySize(int initial, int size);
         static extern int ReturnIntArraySize(int[] initial, int size);
-
         #endregion
     }
 

@@ -1,10 +1,6 @@
-﻿//using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows.Controls;
 
 
 namespace testing
@@ -67,10 +63,8 @@ namespace testing
                     items.AddRange(fs.Select(file => new DirectoryItem { FullPath = file, Type = DirectoryItemType.File }));
             }
             catch { }
-
             return items;
         }
-
         #endregion
     }
 }

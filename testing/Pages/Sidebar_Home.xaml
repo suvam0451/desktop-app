@@ -5,13 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:testing.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="60"
+      d:DesignHeight="600" d:DesignWidth="{Binding DesignWidth, FallbackValue=50}"
       Title="Sidebar">
 
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="{Binding SidebarWidth, FallbackValue=50}"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
 
@@ -19,8 +19,31 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Background="{StaticResource NierDarkestBrush}">
+                <!-- Displays a list of workflows available and pinned. -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="auto">
+                    <ItemsControl ItemsSource="{Binding SidebarItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Height="auto" Width="50" Orientation="Vertical">
+                                    <Button Style="{StaticResource Hoverless}">
+                                        <Image Source="/images/logo/airplane.png" PreviewMouseLeftButtonDown="rect_MouseLeftButtonDown"/>
+                                    </Button>
+                                    <TextBlock Text="{Binding DisplayName, FallbackValue=Uhh}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
             
-            <StackPanel Grid.Column="0" Grid.Row="0" Width="50" Background="{StaticResource NierDarkestBrush}">
+            <StackPanel Grid.Column="1" Grid.Row="1" Width="50" Background="{StaticResource NierDarkestBrush}">
                 <Button Style="{StaticResource Hoverless}">
                     <Image Source="/images/logo/airplane.png" PreviewMouseLeftButtonDown="rect_MouseLeftButtonDown"/>
                 </Button>
@@ -57,8 +80,9 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Background="{StaticResource Nier_Menu0_Brush}">
-                <Button Style="{StaticResource Hoverless}">
-                    <Image Source="/images/logo/airplane.png" PreviewMouseLeftButtonDown="rect_MouseLeftButtonDown"/>
+                <Button Command="{Binding AddToList}" Style="{StaticResource Hoverless}">
+                    <!--Image Source="/images/logo/airplane.png" PreviewMouseLeftButtonDown="rect_MouseLeftButtonDown"/-->
+                    <Image Source="/images/logo/airplane.png"/>
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1" Background="{StaticResource Nier_Menu0_Brush}">

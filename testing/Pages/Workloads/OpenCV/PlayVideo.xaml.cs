@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using daedalus_clr;
+using testing.ViewModels;
 
 namespace testing.Modules.OpenCV
 {
@@ -26,6 +28,9 @@ namespace testing.Modules.OpenCV
         public PlayVideo()
         {
             InitializeComponent();
+            // DataContext = new VM_DefaultPage();
+            DataContext = new VM_CVPlayVideo();
+            // this.DataContext = new WindowViewModel(this);
             backend = new TextureCombine_Type1_Backend();
 
             // Bind references to dll
@@ -44,6 +49,7 @@ namespace testing.Modules.OpenCV
 
                 Files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 StartVideoProcessing(Files[0]);
+                
                 // backend.HandleMediaDrop(Files);
                 
             }
@@ -64,10 +70,6 @@ namespace testing.Modules.OpenCV
 
         private void FilesDropped(object sender, DragEventArgs e) {
             // Do nothing
-        }
-
-        private void SaveImage(object sender, RoutedEventArgs e) {
-            // DO nothing
         }
     }
 }

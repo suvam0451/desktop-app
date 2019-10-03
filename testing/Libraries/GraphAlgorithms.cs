@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace testing.Libraries
 {
-    public static void WriteLinesToFile(string filepath, List<string> InList)
+    class Utility
     {
-
+        // Writes lines to files
+        public static void WriteLinesToFile(string filepath, List<string> InList)
+        {
+            using (StreamWriter outputFile = new StreamWriter(filepath)) {
+                foreach (string line in InList) {
+                    outputFile.WriteLine(line);
+                }
+            }
+        }
     }
+
     class clsGraph
     {
         private int Vertices;
@@ -143,12 +152,7 @@ namespace testing.Libraries
             lines.Add("}");
 
             string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(DocPath, "Exmple.dot")))
-            {
-                foreach (string line in lines) {
-                    outputFile.WriteLine(line);
-                }
-            }
+            Utility.WriteLinesToFile(Path.Combine(DocPath, "Exmple.dot"), lines);
         }
 
         public void primMST(int[,] graph)

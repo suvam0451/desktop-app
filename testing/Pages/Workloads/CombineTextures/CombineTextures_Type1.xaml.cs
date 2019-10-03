@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using System.IO;
 using NLua;
 using testing.Libraries;
+using testing.ViewModels;
 
 namespace testing.Modules.CombineTextures
 {
@@ -28,7 +29,10 @@ namespace testing.Modules.CombineTextures
         public CombineTextures_Type1()
         {
             InitializeComponent();
-            DataContext = new VM_CombineTexture_Type1(this);
+            // this.DataContext = new 
+
+            // DataContext = new VM_CombineTexture_Type1(this);
+            DataContext = new VM_CombineTexture();
             backend = new TextureCombine_Type1_Backend();
 
             //backend._consoleText = Console.Text;

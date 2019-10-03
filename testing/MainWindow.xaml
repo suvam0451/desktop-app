@@ -179,19 +179,21 @@
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="69*"/>
             <!-- Title -->
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
         <!-- Right side dock -->
-        <Border Padding="8" Grid.Column="2" Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0">
+        <Border Padding="8" Grid.Column="2" Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0" Grid.ColumnSpan="2">
             <StackPanel>
                 <TextBlock Text="Ambient Occlusion" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
                 <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default Ambient Occlusion to assume, in case texture input is missing."></TextBox>
                 <TextBlock Text="Roughness" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
+                <TextBox Text="" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
                 <TextBlock Text="Metallic" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
                 <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
                 <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1" />
+                <Button Command="{Binding YeetOut}">Hello</Button>
             </StackPanel>
         </Border>
 
