@@ -44,7 +44,7 @@ namespace testing
         }
 
         // This will be our current sidebar (Value converted)...
-        public Application_Sidebar Sidebar_Home_Content { get; set; } = Application_Sidebar.HomePage;
+        public EPageList Sidebar_Home_Content { get; set; } = EPageList.Sidebar;
         public Application_Workload Workspace_Home_Content { get; set; } = Application_Workload.Default;
 
         /// The size of the resize border around the window, taking into account the outer margin
@@ -86,7 +86,7 @@ namespace testing
         public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
 
         /// The height of the title bar / caption of the window
-        public int TitleHeight { get; set; } = 28;
+        public int TitleHeight { get; set; } = 32;
 
         /// The height of the title bar / caption of the window
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
@@ -96,7 +96,7 @@ namespace testing
         public bool DimmableOverlayVisible { get; set; }
 
         // Current sidebar
-        public Application_Sidebar CurrentPage { get; set; } = Application_Sidebar.Default;
+        public Pagename CurrentPage { get; set; } = Pagename.Default;
         #endregion
 
         #region Commands

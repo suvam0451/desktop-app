@@ -1,11 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using testing.Modules.CombineTextures;
-using testing.Modules.OpenCV;
+using testing.Pages;
 using testing.ViewModels;
 
-namespace testing.Pages.Workloads
+namespace testing.Pages
 {
     public partial class Workload_Default : Page
     {
@@ -13,6 +12,8 @@ namespace testing.Pages.Workloads
         {
             InitializeComponent();
             DataContext = new VM_DefaultPage();
+            ShowsNavigationUI = false;
+            
         }
 
         // private CombineTextures_Type1 handle;

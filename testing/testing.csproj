@@ -122,6 +122,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataModels\Application_Sidebar.cs" />
+    <Compile Include="DataModels\List_AvailablePages.cs" />
     <Compile Include="Directory\Data\DirectoryItemType.cs" />
     <Compile Include="Directory\DirectoryStructure.cs" />
     <Compile Include="Directory\Data\DirectoryItem.cs" />
@@ -131,20 +132,33 @@
     <Compile Include="Directory\ViewModel\DirectoryStructureViewModel.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
     <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\PageTabModel.cs" />
     <Compile Include="Models\SidebarModel.cs" />
     <Compile Include="Pages\Sidebar_Home.xaml.cs">
       <DependentUpon>Sidebar_Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Workloads\CombineTextures\CombineTextures_Type1.xaml.cs">
+    <Compile Include="Pages\CombineTextures_Type1.xaml.cs">
       <DependentUpon>CombineTextures_Type1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Workloads\OpenCV\PlayVideo.xaml.cs">
+    <Compile Include="Pages\PlayVideo.xaml.cs">
       <DependentUpon>PlayVideo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Workloads\Workload_Default.xaml.cs">
+    <Compile Include="Pages\Workload_Default.xaml.cs">
       <DependentUpon>Workload_Default.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\Workloads\OpenCV\PlayVideo.xaml">
+    <Page Include="Pages\PlayVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Borders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Images.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,11 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="ValueConverters\HeaderToImageConverter.cs" />
-    <Compile Include="Pages\TextureCombine.xaml.cs">
-      <DependentUpon>TextureCombine.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\VC_PageToFrame.cs" />
+    <Compile Include="ValueConverters\VC_StringToIcon.cs" />
     <Compile Include="ValueConverters\WorkloadSectionValueConverter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Modules\CombineTextures\VM_CombineTexture_Type1.cs" />
@@ -186,11 +199,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Workloads\CombineTextures\CombineTextures_Type1.xaml">
+    <Page Include="Pages\CombineTextures_Type1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Workloads\Workload_Default.xaml">
+    <Page Include="Pages\Workload_Default.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,11 +219,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Texts.xaml">
+    <Page Include="Styles\TabControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TextureCombine.xaml">
+    <Page Include="Styles\Texts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

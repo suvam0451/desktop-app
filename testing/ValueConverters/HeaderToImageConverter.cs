@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Media.Imaging;
@@ -10,8 +6,6 @@ using System.IO;
 
 namespace testing
 {
-    
-
     /** Converts a full-path string to a image type. */
     [ValueConversion(typeof(string), typeof(BitmapImage))]
     public class HeaderToImageConverter : IValueConverter
@@ -24,7 +18,8 @@ namespace testing
             if (path == null)
                 return null;
 
-            var name = TextureCombine.GetFileFolderName(path);
+            // var name = TextureCombine.GetFileFolderName(path);
+            var name = "dangerous";
             var image = "Images/file.png";
 
 

@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 namespace testing.DataModels
 {
     // Used for switching sidebars...
-    public enum Pagename {
+    public enum EPageList
+    {
         // No sidebar, Default(N/A), Pages/Sidebar_Home, TextureCombine
         None = 0,
         Default = 1,
-        HomePage = 2,
-        TextureCombiner = 3
-    }
-
-    public enum Application_Workload
-    {
-        None = 0,
-        Default = 1
+        CombineTexture = 2,
+        PlayVideo = 3,
+        HomePage = 4,
+        //
+        Sidebar = 5,
     }
 }

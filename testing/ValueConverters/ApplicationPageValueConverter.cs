@@ -11,18 +11,25 @@ namespace testing
     public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
     {
         public override object Convert(Object value, Type targetType, object parameter, CultureInfo culture) {
-            switch ((Application_Sidebar)value) {
+            switch ((EPageList)value) {
 
-                case Application_Sidebar.TextureCombiner:
-                    return new TextureCombine();
-                case Application_Sidebar.HomePage:
+                //  Workload pages
+                case EPageList.CombineTexture:
+                    return new CombineTextures_Type1();
+                case EPageList.PlayVideo:
+                    return new PlayVideo();
+                case EPageList.HomePage:
+                    return new Workload_Default();
+
+                // Sidebars
+                case EPageList.Sidebar:
                     return new Sidebar_Home();
+
+                // Defaults
                 default:
                     Debugger.Break();
                     return null;
             }
-
-            throw new NotImplementedException(); 
         }
 
         public override object ConvertBack(Object value, Type targetType, object parameter, CultureInfo culture) {

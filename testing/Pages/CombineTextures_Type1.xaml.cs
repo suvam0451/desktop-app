@@ -13,7 +13,7 @@ using NLua;
 using testing.Libraries;
 using testing.ViewModels;
 
-namespace testing.Modules.CombineTextures
+namespace testing.Pages
 {
     public partial class CombineTextures_Type1 : Page
     {

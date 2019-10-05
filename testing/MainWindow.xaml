@@ -42,41 +42,37 @@
                                     </Grid.OpacityMask>
                                     <Grid.RowDefinitions>
                                         <!-- Title Bar -->
-                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=28}"/>
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
                                         <!-- Drop Shadow -->
-                                        <RowDefinition Height="0"/>
-                                        <!-- Window Content -->
                                         <RowDefinition Height="*"/>
+                                        <!-- Window Content -->
+                                        <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
 
                                     <!-- Row 0 : Title Bar-->
                                     <Grid  Grid.Row="0" Background="{StaticResource Nier_Menu0_Brush}" Panel.ZIndex="1">
                                         <Grid.ColumnDefinitions>
-                                            <!-- Icon -->
                                             <ColumnDefinition Width="Auto"/>
-                                            <!-- Title -->
                                             <ColumnDefinition Width="*"/>
-                                            <!-- Windows Button -->
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Column 0 : Icon -->
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <!--Button Style="{StaticResource Hoverless}" Command="{Binding MenuCommand}"-->
-                                            <Button Style="{StaticResource Hoverless}">
-                                                <Image Source="/images/logo/applogo.ico"/>
-                                            </Button>
-                                            <Viewbox Margin="0" HorizontalAlignment="Center">
+                                            <Image Margin="5" Source="/images/logo/applogo.ico"/>
+                                            <TextBlock Foreground="Azure" VerticalAlignment="Center" Margin="8 0 8 0" FontSize="18" Text="WinterWildfire Tools"/>
+                                            <!--/-->
+                                            <!--Viewbox Margin="0" HorizontalAlignment="Center">
                                                 <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome'}"/>
-                                            </Viewbox>
+                                            </-->
                                         </StackPanel>
 
 
                                         <!-- Column 1 : Title (Viewbox restricts expansion) -->
                                         <StackPanel Grid.Column="1">
-                                            <Viewbox Grid.Column="1" Margin="0" HorizontalAlignment="Center">
+                                            <!--Viewbox Grid.Column="1" Margin="0" HorizontalAlignment="Center">
                                                 <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome'}"/>
-                                            </Viewbox>
+                                            </-->
                                         </StackPanel>
 
 
@@ -87,9 +83,8 @@
                                             <Button Command="{Binding CloseCommand}" Style="{StaticResource W_CloseButton}" Content="x"/>
                                         </StackPanel>
                                     </Grid>
-
                                     <!-- Row 2 : Post title. -->
-                                    <Grid Grid.Row="2">
+                                    <Grid Grid.Row="1">
                                         <Grid.ColumnDefinitions>
                                             <!-- Workload list -->
                                             <ColumnDefinition Width="60"/>
@@ -99,47 +94,48 @@
 
                                         <!-- START : Left Sidebar section -->
                                         <Grid Grid.Column="0">
-                                            <Frame x:Name="SideBar_Home" Content="{Binding Sidebar_Home_Content, Converter={local:ApplicationPageValueConverter}}"/>
+                                            <Frame Content="{Binding Sidebar_Home_Content, Converter={local:ApplicationPageValueConverter}}"/>
                                         </Grid>
 
                                         <Grid Height="Auto" Grid.Column="1">
                                             <Grid.RowDefinitions>
                                                 <!-- Workload list -->
-                                                <RowDefinition Height="18"/>
+                                                <RowDefinition Height="24"/>
                                                 <!-- Main Content -->
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
 
-                                            <Menu Grid.Row="0" Background="{StaticResource NierDarkestBrush}" DockPanel.Dock="Top" Foreground="{StaticResource Nier_Level0_Brush}">
-                                                <MenuItem VerticalAlignment="Center" HorizontalAlignment="Center" Header="_File">
-                                                    <MenuItem  Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+                                            <Menu Grid.Row="0" Style="{StaticResource WW_Menu_01}" DockPanel.Dock="Top" VerticalAlignment="Center" Height="24">
+                                                <!--Menu Grid.Row="0" Style="{StaticResource WW_Menu_01}" Background="{StaticResource NierDarkestBrush}" DockPanel.Dock="Top" Foreground="{StaticResource Nier_Level0_Brush}" VerticalAlignment="Center" Height="24"-->
+                                                <MenuItem FontSize="14" Header="_File">
+                                                    <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <Separator />
+                                                    <Separator Height="2" Foreground="AliceBlue"/>
                                                     <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                 </MenuItem>
-                                                <MenuItem Header="_Edit">
+                                                <MenuItem FontSize="14" Header="_Edit">
                                                     <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <Separator />
                                                     <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                 </MenuItem>
-                                                <MenuItem Header="_View">
+                                                <MenuItem FontSize="14" Header="_View">
                                                     <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <Separator />
                                                     <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                 </MenuItem>
-                                                <MenuItem Header="_Tools">
+                                                <MenuItem FontSize="14" Header="_Tools">
                                                     <MenuItem Header="_Combine Textures" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_TextureCombine"/>
                                                     <MenuItem Header="_OpenCV_Video" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_OpenCVVideo"/>
                                                     <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <Separator />
                                                     <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                 </MenuItem>
-                                                <MenuItem Header="_Help">
+                                                <MenuItem FontSize="14" Header="_Help">
                                                     <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                                                     <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
@@ -152,6 +148,11 @@
                                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                                             </Border>
                                         </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">
+                                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                                        </Border>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -198,6 +199,6 @@
         </Border>
 
         <!-- Page which displays info on our workload. -->
-        <Frame Grid.Column="0" x:Name="Workspace_Home" Content="{Binding Workspace_Home_Content, Converter={local:WorkloadSectionValueConverter}}" Grid.ColumnSpan="2"/>
+        <Frame Grid.Column="0" x:Name="Workspace_Home" NavigationUIVisibility="Hidden" Content="{Binding Workspace_Home_Content, Converter={local:WorkloadSectionValueConverter}}" Grid.ColumnSpan="2" />
     </Grid>
 </Window>

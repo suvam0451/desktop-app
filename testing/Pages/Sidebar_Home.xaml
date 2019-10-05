@@ -79,10 +79,13 @@
 
             </StackPanel>
 
-            <StackPanel Grid.Column="0" Grid.Row="1" Background="{StaticResource Nier_Menu0_Brush}">
-                <Button Command="{Binding AddToList}" Style="{StaticResource Hoverless}">
-                    <!--Image Source="/images/logo/airplane.png" PreviewMouseLeftButtonDown="rect_MouseLeftButtonDown"/-->
-                    <Image Source="/images/logo/airplane.png"/>
+            <StackPanel Grid.Column="0" Grid.Row="1" Background="{StaticResource NierDarkestBrush}">
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding AddToList}" Style="{StaticResource Hoverless}" Padding="5">
+                    <Image Style="{StaticResource ResourceKey=SettingsRotate}" Source="/images/logo/airplane.png">
+                        <Image.RenderTransform>
+                            <RotateTransform CenterX="20" CenterY="20"/>
+                        </Image.RenderTransform>
+                    </Image>
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1" Background="{StaticResource Nier_Menu0_Brush}">

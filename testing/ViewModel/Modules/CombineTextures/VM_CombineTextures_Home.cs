@@ -48,7 +48,7 @@ namespace testing
         }
 
         // This will be our current sidebar (Value converted)...
-        public Application_Sidebar Sidebar_Home_Content { get; set; } = Application_Sidebar.HomePage;
+        public Pagename Sidebar_Home_Content { get; set; } = Pagename.HomePage;
         public Application_Workload Workspace_Home_Content { get; set; } = Application_Workload.Default;
 
         /// The size of the resize border around the window, taking into account the outer margin
@@ -100,7 +100,7 @@ namespace testing
         public bool DimmableOverlayVisible { get; set; }
 
         // Current sidebar
-        public Application_Sidebar CurrentPage { get; set; } = Application_Sidebar.Default;
+        public Pagename CurrentPage { get; set; } = Pagename.Default;
         #endregion
 
         #region Commands

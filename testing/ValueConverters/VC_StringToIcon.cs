@@ -11,22 +11,20 @@ namespace testing.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
             switch (value.ToString().ToLower()) {
-                case: 
+                case "airplane":
+                    return "/images/logo/airplane.png";
+                default:
+                    return "/images/logo/airplane.png";
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
+            switch (value.ToString().ToLower()) {
+                case "/images/logo/airplane.png":
+                    return "airplane";
+                default:
+                    return "airplane";
             }
         }
     }
 }
-
-Do it like this```
-2                                       do nothing
-2 -> 2                                  do nothing
-2 -> 2 -> 2                             do nothing
-2 -> 2 -> 2 -> 2                        do nothing
-2 -> 2 -> 2 -> 2 -> 2                   exceeds 9 (delete smallest {2} )
-2 -> 2 -> 2 -> 3                        MATCH (4 combinations)
-2 -> 2 -> 2 -> 3 -> 3                   exceeds 9 (delete smallest {2} )
-2 -> 2 -> 3 -> 3                        exceeds 9 (delete smallest {2} )
-2 -> 3 -> 3                             do nothing
-2 -> 3 -> 3 -> 3                        exceeds 0 (delete smallest {2} )
-3 -> 3 -> 3                             MATCH(1 combinations)
-

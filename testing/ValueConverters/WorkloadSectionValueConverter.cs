@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Globalization;
 using testing.DataModels;
 using testing.Pages;
-using testing.Pages.Workloads;
 
 namespace testing
 {

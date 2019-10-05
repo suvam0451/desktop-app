@@ -13,6 +13,10 @@
                 <ResourceDictionary Source="Styles/Scroll.xaml"/>
                 <ResourceDictionary Source="Styles/StackPanels.xaml"/>
                 <!--ResourceDictionary Source="Styles/Windows.xaml"/-->
+                <ResourceDictionary Source="Styles/Borders.xaml"/>
+                <ResourceDictionary Source="Styles/Images.xaml"/>
+                <ResourceDictionary Source="Styles/TabControls.xaml"/>
+                <ResourceDictionary Source="Styles/MenuItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>     
     </Application.Resources>
