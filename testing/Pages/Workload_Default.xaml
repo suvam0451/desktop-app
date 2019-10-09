@@ -22,7 +22,7 @@
             </-->
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Header, FallbackValue=Sample}"/>
+                    <TextBlock Text="{Binding Header, FallbackValue=Sample}" Foreground="{DynamicResource DarkMode_Tone5_Brush}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>

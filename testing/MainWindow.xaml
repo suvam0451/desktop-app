@@ -6,153 +6,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testing"
         mc:Ignorable="d"
-        WindowStyle="None"
+        WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
         MinWidth="{Binding WindowMinimumWidth}"
         MinHeight="{Binding WindowMinimumHeight}"
-        Title="MainWindow" Height="720" Width="1080">
+        Title="MainWindow" Height="720" Width="1080"
+        Background="{DynamicResource Nier_Level0_Brush}">
     <!--Start of window rendering.-->
-    <Window.Resources>
+    <!--Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <!--Start of window rendering.-->
                         <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=00}">
-                            <!--Main window putline (Use background tag for non-transparent).-->
                             <Grid>
-                                <!-- Opacity mask for corners on grid -->
                                 <Border x:Name="Container"
                                         Background="{StaticResource BackgroundLightBrush}"
                                         CornerRadius="{Binding WindowCornerRadius, FallbackValue=4}"/>
-                                <!--Main window putline.-->
                                 <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=4}"
                                         Background="{Binding ForegroundLightBrush, FallbackValue=White}">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
                                     </Border.Effect>
                                 </Border>
-
-                                <!--Main window putline.-->
                                 <Grid>
-                                    <!-- Corner clipping -->
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="23*"/>
+                                        <ColumnDefinition Width="49*"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Container}"/>
                                     </Grid.OpacityMask>
                                     <Grid.RowDefinitions>
-                                        <!-- Title Bar -->
                                         <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
-                                        <!-- Drop Shadow -->
                                         <RowDefinition Height="*"/>
-                                        <!-- Window Content -->
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Row 0 : Title Bar-->
-                                    <Grid  Grid.Row="0" Background="{StaticResource Nier_Menu0_Brush}" Panel.ZIndex="1">
+                                    <Grid  Grid.Row="0" Background="{StaticResource Nier_Menu0_Brush}" Panel.ZIndex="1" Grid.ColumnSpan="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <!-- Column 0 : Icon -->
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
                                             <Image Margin="5" Source="/images/logo/applogo.ico"/>
                                             <TextBlock Foreground="Azure" VerticalAlignment="Center" Margin="8 0 8 0" FontSize="18" Text="WinterWildfire Tools"/>
-                                            <!--/-->
-                                            <!--Viewbox Margin="0" HorizontalAlignment="Center">
-                                                <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome'}"/>
-                                            </-->
-                                        </StackPanel>
-
-
-                                        <!-- Column 1 : Title (Viewbox restricts expansion) -->
-                                        <StackPanel Grid.Column="1">
-                                            <!--Viewbox Grid.Column="1" Margin="0" HorizontalAlignment="Center">
-                                                <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome'}"/>
-                                            </-->
-                                        </StackPanel>
-
-
-                                        <!-- Column 2 : Window buttons -->
-                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowControlButton}" Content="_"/>
-                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowControlButton}" Content="[]"/>
-                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource W_CloseButton}" Content="x"/>
                                         </StackPanel>
                                     </Grid>
-                                    <!-- Row 2 : Post title. -->
-                                    <Grid Grid.Row="1">
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="2">
                                         <Grid.ColumnDefinitions>
-                                            <!-- Workload list -->
                                             <ColumnDefinition Width="60"/>
-                                            <!-- Main Content -->
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-
-                                        <!-- START : Left Sidebar section -->
+    
                                         <Grid Grid.Column="0">
                                             <Frame Content="{Binding Sidebar_Home_Content, Converter={local:ApplicationPageValueConverter}}"/>
                                         </Grid>
 
                                         <Grid Height="Auto" Grid.Column="1">
                                             <Grid.RowDefinitions>
-                                                <!-- Workload list -->
                                                 <RowDefinition Height="24"/>
-                                                <!-- Main Content -->
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-
-                                            <Menu Grid.Row="0" Style="{StaticResource WW_Menu_01}" DockPanel.Dock="Top" VerticalAlignment="Center" Height="24">
-                                                <!--Menu Grid.Row="0" Style="{StaticResource WW_Menu_01}" Background="{StaticResource NierDarkestBrush}" DockPanel.Dock="Top" Foreground="{StaticResource Nier_Level0_Brush}" VerticalAlignment="Center" Height="24"-->
-                                                <MenuItem FontSize="14" Header="_File">
-                                                    <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <Separator Height="2" Foreground="AliceBlue"/>
-                                                    <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                </MenuItem>
-                                                <MenuItem FontSize="14" Header="_Edit">
-                                                    <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <Separator />
-                                                    <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                </MenuItem>
-                                                <MenuItem FontSize="14" Header="_View">
-                                                    <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <Separator />
-                                                    <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                </MenuItem>
-                                                <MenuItem FontSize="14" Header="_Tools">
-                                                    <MenuItem Header="_Combine Textures" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_TextureCombine"/>
-                                                    <MenuItem Header="_OpenCV_Video" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_OpenCVVideo"/>
-                                                    <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <Separator />
-                                                    <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                </MenuItem>
-                                                <MenuItem FontSize="14" Header="_Help">
-                                                    <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                    <MenuItem Header="_I need hug" Foreground="{StaticResource Nier_Menu0_Brush}" Click="SendHelp"/>
-                                                    <Separator />
-                                                    <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
-                                                </MenuItem>
-                                            </Menu>
                                             <Border Grid.Row="1" Background="{StaticResource Nier_Level0_Brush}" Padding="{Binding InnerContentPadding, FallbackValue=0}">
                                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                                             </Border>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="2">
-                                        <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">
-                                            <ContentPresenter Content="{TemplateBinding Content}"/>
-                                        </Border>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -161,44 +82,115 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Window.Resources>
+    </Window.Resources-->
 
 
     <!--Start of window rendering.-->
-    <WindowChrome.WindowChrome>
+    <!--WindowChrome.WindowChrome>
         <WindowChrome 
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
             CornerRadius="0"
             GlassFrameThickness="0"
             />
-    </WindowChrome.WindowChrome>
+    </-->
+    <DockPanel>
+    <Menu Grid.Row="0" Style="{StaticResource WW_Menu_01}" DockPanel.Dock="Top" VerticalAlignment="Center" Height="24">
+        <MenuItem FontSize="14" Header="_File">
+            <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <Separator Height="2" Foreground="AliceBlue"/>
+            <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+        </MenuItem>
+        <MenuItem FontSize="14" Header="_Edit">
+            <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <Separator />
+            <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+        </MenuItem>
+        <MenuItem FontSize="14" Header="_View">
+            <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <Separator />
+            <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+        </MenuItem>
+        <MenuItem FontSize="14" Header="_Tools">
+            <MenuItem Header="_Combine Textures" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_TextureCombine"/>
+            <MenuItem Header="_OpenCV_Video" Foreground="{StaticResource Nier_Menu0_Brush}" Click="Start_OpenCVVideo"/>
+            <MenuItem Header="_Traffic Analysis" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding TrafficAnalysis}"/>
+            <Separator />
+        </MenuItem>
+        <MenuItem FontSize="14" Header="_Help">
+            <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+            <MenuItem Header="_I need hug" Foreground="{StaticResource Nier_Menu0_Brush}" Click="SendHelp"/>
+            <Separator />
+            <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+        </MenuItem>
+    </Menu>
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/-->
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <!-- Icon -->
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <!-- Title -->
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <!-- Icon -->
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="69*"/>
-            <!-- Title -->
-            <ColumnDefinition Width="130"/>
-            <ColumnDefinition Width="70"/>
-        </Grid.ColumnDefinitions>
+                <!-- Right side dock -->
+                <Grid Grid.Column="0">
+                    <Frame Content="{Binding Sidebar_Home_Content, Converter={local:ApplicationPageValueConverter}}"/>
+                </Grid>
+                <Border Padding="8" Grid.Column="2" Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0" Grid.ColumnSpan="2">
+                    <StackPanel>
+                        <TextBlock Text="Ambient Occlusion" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
+                        <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default Ambient Occlusion to assume, in case texture input is missing."></TextBox>
+                        <TextBlock Text="Roughness" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
+                        <TextBox Text="" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
+                        <TextBlock Text="Metallic" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
+                        <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
+                        <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1" />
+                        <Button Command="{Binding YeetOut}">Hello</Button>
+                    </StackPanel>
+                </Border>
 
-        <!-- Right side dock -->
-        <Border Padding="8" Grid.Column="2" Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0" Grid.ColumnSpan="2">
-            <StackPanel>
-                <TextBlock Text="Ambient Occlusion" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default Ambient Occlusion to assume, in case texture input is missing."></TextBox>
-                <TextBlock Text="Roughness" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                <TextBox Text="" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
-                <TextBlock Text="Metallic" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
-                <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1" />
-                <Button Command="{Binding YeetOut}">Hello</Button>
-            </StackPanel>
-        </Border>
-
-        <!-- Page which displays info on our workload. -->
-        <Frame Grid.Column="0" x:Name="Workspace_Home" NavigationUIVisibility="Hidden" Content="{Binding Workspace_Home_Content, Converter={local:WorkloadSectionValueConverter}}" Grid.ColumnSpan="2" />
-    </Grid>
+                <!-- Page which displays info on our workload. -->
+                <!--Frame Grid.Column="1" x:Name="Workspace_Home" NavigationUIVisibility="Hidden" Content="{Binding Workspace_Home_Content, Converter={local:WorkloadSectionValueConverter}}" Grid.ColumnSpan="1" /-->
+                <TabControl Grid.Column="1" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding TabBinding, FallbackValue='fb'}">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Header, FallbackValue=Sample}" Foreground="{DynamicResource DarkMode_Tone5_Brush}"/>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}">
+                                <Border Background="{StaticResource Nier_Level0_Brush}">
+                                    <!--TextBlock Text="{Binding Content, FallbackValue=Loli}"/-->
+                                    <Frame NavigationUIVisibility="Hidden" Grid.Column="0" x:Name="Workspace_Home" Content="{Binding Content, Converter={local:ApplicationPageValueConverter}}" Grid.ColumnSpan="2"/>
+                                </Border>
+                            </ScrollViewer>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">
+                    <!--ContentPresenter Content="{TemplateBinding Content}"/-->
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

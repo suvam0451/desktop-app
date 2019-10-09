@@ -5,11 +5,12 @@
     <Style x:Key="WW_Menu_01" TargetType="{x:Type Menu}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Background" Value="{StaticResource Nier_Menu0_Brush}"/>
+        <!--Setter Property="Background" Value="{StaticResource Nier_Menu0_Brush}"/-->
+        <Setter Property="Foreground" Value="{StaticResource NierBackgroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Menu}">
-                    <Border BorderThickness="2">
+                    <Border BorderThickness="0">
                         <Border.BorderBrush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <LinearGradientBrush.GradientStops>
@@ -21,7 +22,6 @@
                                     </GradientStopCollection>
                                 </LinearGradientBrush.GradientStops>
                             </LinearGradientBrush>
-
                         </Border.BorderBrush>
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">

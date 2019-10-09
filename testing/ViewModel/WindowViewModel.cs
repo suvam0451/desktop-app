@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using testing.DataModels;
+using testing.Models;
 
 namespace testing
 {
@@ -38,10 +40,12 @@ namespace testing
         /// True if the window should be borderless because it is docked or maximized
         public bool Borderless => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked);
 
+        public float OuterMarginSizeThickness { get; set; } = 0;
         /// The size of the resize border around the window
         public int ResizeBorder {
             get { return (mWindow.WindowState == WindowState.Maximized) ? 0 : 4; }
         }
+        public ObservableCollection<PageTabModel> TabBinding { get; set; }
 
         // This will be our current sidebar (Value converted)...
         public EPageList Sidebar_Home_Content { get; set; } = EPageList.Sidebar;
@@ -106,6 +110,8 @@ namespace testing
         public ICommand CloseCommand { get; set; }
         public ICommand MenuCommand { get; set; }
         public ICommand YeetOut { get; set; }
+        public ICommand TrafficAnalysis { get; set; }
+
         #endregion
 
         #region Constructor
@@ -120,7 +126,7 @@ namespace testing
             {
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
-                //OnPropertyChanged(nameof(OuterMarginSizeThickness));
+                OnPropertyChanged(nameof(OuterMarginSizeThickness));
                 OnPropertyChanged(nameof(WindowRadius));
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
@@ -131,14 +137,22 @@ namespace testing
             CloseCommand = new RelayCommand(() => mWindow.Close());
             YeetOut = new RelayCommand(Rambo);
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+            TrafficAnalysis = new RelayCommand(StartTrafficAnalysis);
 
             // Fix window resize issue...
-            var resizer = new WindowResizer(mWindow);
+            // var resizer = new WindowResizer(mWindow);
+
+            TabBinding = new ObservableCollection<PageTabModel>();
+            TabBinding.Add(new PageTabModel("Combine Textures", EPageList.CombineTexture));
         }
 
         private void Rambo() {
             MessageBox.Show("To carry children");
         }
+        private void StartTrafficAnalysis() {
+            TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
+        }
+
         #endregion
 
         #region Private Helpers

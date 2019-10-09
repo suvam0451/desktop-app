@@ -38,8 +38,8 @@ namespace testing.Pages
             //backend._consoleText = Console.Text;
             // Bind the console...
             backend._consoleref = Console;
-            backend._displayref = MainDisplay;
-            backend._dispatcherref = Dispatcher; 
+            
+            // backend._dispatcherref = Dispatcher; 
         }
         
         // Passes files from file drop event...
@@ -70,6 +70,7 @@ namespace testing.Pages
                 //    Thread.CurrentThread.IsBackground = true;
                 //    /* run your code here */
                 //    backend.HandleFileDrop(SaveMainImage, Fil
+                // backend.HandleFileDrop(SaveMainImage, Files, ConsoleDummy);
                 backend.HandleFileDrop(SaveMainImage, Files);
                 //new Thread(() =>es);
                 //    //Console.WriteLine("Hello, world");
@@ -103,12 +104,16 @@ namespace testing.Pages
         private void SaveMainImage(ImageSource _In) {
             _ImageSource = _In;
         }
+        private void ConsoleDummy(String _In)
+        {
+            // _ImageSource = _In;
+        }
 
         // Responsible for updating the texture preview...
         private void SetMainImage() {
             //MessageBox.Show("Okay reached here");
-            Dispatcher.BeginInvoke(
-                new ThreadStart(() => MainDisplay.Source = _ImageSource));
+            // Dispatcher.BeginInvoke(
+                // new ThreadStart(() => MainDisplay.Source = _ImageSource));
             //MainDisplay.Source = _In;
         }
 
@@ -145,7 +150,7 @@ namespace testing.Pages
 
             // Used for save file dialog...
             String outdir = System.AppDomain.CurrentDomain.BaseDirectory + "output\\";
-
+            
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "3 channel PNG(*.png)|*.png|3 channel JPG(*.jpg)|*.jpg";
             dlg.DefaultExt = "*.cs";
@@ -162,7 +167,7 @@ namespace testing.Pages
 
                 // Write out files
                 var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)MainDisplay.Source));
+                // encoder.Frames.Add(BitmapFrame.Create((BitmapSource)MainDisplay.Source));
                 using (FileStream stream = new FileStream(dlg.FileName, FileMode.Create))
                 encoder.Save(stream);
             }

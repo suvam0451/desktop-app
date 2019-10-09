@@ -34,35 +34,19 @@ namespace daedalus_clr {
 	public ref class TextureCombine_Type1_Backend
 	{
 	private:
-		// This array holds the paths for valid files in dictionary form.
 		Dictionary<String^, String^>^ FileData;
 
-		//HelperLibrary inst = new HelperLibrary;
-		// Function delegates...
 		delegate void ConsoleUpdateDel(String^ in);
 		delegate void ImageUpdateDel(ImageSource^ in);
 		delegate void SetImageSourceFromCVDel(String^ in);
 		delegate void UpdateImage(ImageSource^ in);
 
-
-
-		// declare unmanaged fucntion type
-		typedef int(__stdcall* ANSWERCB)(int, int);
-		static ANSWERCB cb;
 	public:
-		// This is the console that should be automatically updated..
 		int _size = 1024;
 
 		TextBlock^ _consoleref;
-		// This is the display board
-		Windows::Controls::Image^ _displayref;
-
-		// State to be referenced...
-		String^ ConsoleStatus;
 		ImageSource^ imgsrc;
-		BitmapImage^ yamete;
-		Dispatcher^ _dispatcherref = nullptr;
-		//ImageSource^ retval;
+		ConsoleUpdateDel^ _consoleDel;
 
 	public:
 #pragma region Constructor/ Destructor
@@ -75,8 +59,6 @@ namespace daedalus_clr {
 			// Delete heap allocated resources...
 			FileData->Clear();
 			delete(_consoleref);
-			delete(_displayref);
-			delete(FileData);
 			delete(imgsrc);
 			// Call post-delete...
 			this->!TextureCombine_Type1_Backend();
@@ -115,28 +97,6 @@ namespace daedalus_clr {
 
 			// Vic and jesco, what do i doooo :(
 			(connectivity[0][0] == 1) ? (minindex = 10) : (minindex = 0);
-			
-			
-			// for (int i = 0; i < Vertices; i++) {
-
-				// TERNARY ASSIGNMENTS : works
-				// This works. good.
-				// mincost = (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : mincost;
-
-				// This works. I can live with that.
-				// _ = (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : mincost;
-
-				// TERNARY EXPRESSIONS : do not work
-				// This does not work. Damn it C#
-				// (connectivity[a, i] == 1) ? Math.Min(cost[a, i], mincost) : true;
-
-				// This also does not work. This would have worked in C++
-				
-
-				// Vic and jesco, what do i doooo :(
-			//}
-
-
 
 			if (cap.isOpened()) {
 				// Handle not video file error
@@ -148,8 +108,6 @@ namespace daedalus_clr {
 					break;
 				
 				cv::imshow("RGB", frame);
-
-				// Decorator info text
 				cv::putText(frame, "Tortoise", cv::Point(10, 30), cv::FONT_HERSHEY_COMPLEX, 0.6, (0,255,0), 2);
 
 				// set console
@@ -188,7 +146,7 @@ namespace daedalus_clr {
 				
 
 				// UpdateConsole(cap.get(cv::CAP_PROP_FPS).ToString());
-				UpdateDisplay(HelperLibrary::GetImageSourceFromCV(frame));
+				// UpdateDisplay(HelperLibrary::GetImageSourceFromCV(frame));
 
 				char c = (char)cv::waitKey(1);
 				if (c == 27) 
@@ -200,17 +158,15 @@ namespace daedalus_clr {
 		}
 
 		// Handles event when items are dropped...
-		void HandleFileDrop(ImageDelegate^ imagedel, array<String^>^ strarr) {
-			
+		void HandleFileDrop(ImageDelegate^ imagedel, array<String^>^ strarr)
+		{
 			FileData->Clear();
 
-			// Check for maps using pattern matching...
 			for each (String^ it in strarr)
 			{
 				Regex^ rx;
 				MatchCollection^ matches;
 
-				// Check for maps...
 				rx = gcnew Regex("(albedo|color)+(.?)+(.png|.jpg)", RegexOptions::Compiled | RegexOptions::IgnoreCase);
 				matches = rx->Matches(it);
 				if (matches->Count > 0) { FileData->Add("albedo", it); continue; }
@@ -234,13 +190,7 @@ namespace daedalus_clr {
 				rx = gcnew Regex("(metal)+(.?)+(.png|.jpg)", RegexOptions::IgnoreCase | RegexOptions::Compiled);
 				matches = rx->Matches(it);
 				if (matches->Count > 0) { FileData->Add("metallic", it); continue; }
-
-				// local gc
-				delete(rx);
-				delete(matches);
 			}
-
-			_dispatcherref->BeginInvoke(gcnew ConsoleUpdateDel(this, &TextureCombine_Type1_Backend::UpdateConsole), "Completed");
 
 			String^ res;
 			// Allocate matrices. Fallback to defaulf if not caught...
@@ -251,14 +201,8 @@ namespace daedalus_clr {
 			cv::Mat metal = (FileData->TryGetValue("metal", res)) ? cv::imread(HelperLibrary::StringManagedToSTL(res)) : cv::Mat(cv::Size(_size, _size), CV_64FC1, cv::Scalar(0));
 			cv::Mat ao = (FileData->TryGetValue("ao", res)) ? cv::imread(HelperLibrary::StringManagedToSTL(res)) : cv::Mat(cv::Size(_size, _size), CV_64FC1, cv::Scalar(0));
 
-			delete(res);
-
-			// No need to allocate...
 			cv::Mat tmp1, tmp2, out, combined_01, combined_02;
-
-			// Temporary array to split channels...
 			cv::Mat* tmparr = new cv::Mat[3];
-			// Temporary array to hold channels to be merged...
 			cv::Mat* writearr = new cv::Mat[3];
 
 			// Start combining first combined array...
@@ -285,11 +229,11 @@ namespace daedalus_clr {
 			cv::vconcat(tmp1, tmp2, out);
 
 			imgsrc = HelperLibrary::GetImageSourceFromCV(out);
-			UpdateDisplay(imgsrc);
 
-			// gc 
-			// Using deallocate first WILL NOT not release memory...
-			// Advised to use release alone...
+			MessageBox::Show("Used to meet in the eastside");
+			imagedel(imgsrc);
+			// consoleDel(gcnew String("Completed Task"));
+
 			albedo.release();
 			normal.release();
 			height.release();
@@ -316,11 +260,6 @@ namespace daedalus_clr {
 		void UpdateConsole(String^ in)
 		{
 			_consoleref->Text = in;
-		}
-
-		void UpdateDisplay(ImageSource^ in)
-		{
-			_displayref->Source = in;
 		}
 
 	protected:

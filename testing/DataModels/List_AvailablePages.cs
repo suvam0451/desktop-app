@@ -17,5 +17,6 @@ namespace testing.DataModels
         HomePage = 4,
         //
         Sidebar = 5,
+        TrafficAnalysis = 6,
     }
 }

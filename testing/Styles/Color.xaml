@@ -131,5 +131,12 @@
     </LinearGradientBrush>
     
     <!-- Real deal starts here -->
+    <Color x:Key="DefaultText"></Color>
     <Color x:Key="TabItem_Selected">#4e4b42</Color>
+    <Color x:Key="TabItem_Deselected">#e8dfd7</Color>
+    <Color x:Key="Nier_Tone4">#4e4b42</Color>
+    <Color x:Key="DarkMode_Tone5">#202020</Color>
+    <SolidColorBrush x:Key="DarkMode_Tone5_Brush" Color="{DynamicResource DarkMode_Tone5}" />
+    <Color x:Key="DarkMode_Tone4">#161616</Color>
+    <SolidColorBrush x:Key="DarkMode_Tone4_Brush" Color="{DynamicResource DarkMode_Tone4}" />
 </ResourceDictionary>

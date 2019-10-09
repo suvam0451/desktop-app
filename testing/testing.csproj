@@ -85,6 +85,10 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -143,10 +147,17 @@
     <Compile Include="Pages\PlayVideo.xaml.cs">
       <DependentUpon>PlayVideo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TrafficAnalysis.xaml.cs">
+      <DependentUpon>TrafficAnalysis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Workload_Default.xaml.cs">
       <DependentUpon>Workload_Default.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\PlayVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TrafficAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +192,9 @@
     <Compile Include="ViewModel\VM_CVPlayVideo.cs" />
     <Compile Include="ViewModel\VM_DefaultPage.cs" />
     <Compile Include="ViewModel\VM_Sidebar.cs" />
+    <Compile Include="ViewModel\VM_TrafficAnalysis.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
     <Compile Include="ViewModel\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="MainWindow.xaml">

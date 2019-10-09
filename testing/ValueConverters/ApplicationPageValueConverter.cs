@@ -20,10 +20,13 @@ namespace testing
                     return new PlayVideo();
                 case EPageList.HomePage:
                     return new Workload_Default();
+                case EPageList.TrafficAnalysis:
+                    return new TrafficAnalysis();
 
                 // Sidebars
                 case EPageList.Sidebar:
                     return new Sidebar_Home();
+
 
                 // Defaults
                 default:

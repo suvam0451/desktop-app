@@ -10,136 +10,138 @@
       d:DesignHeight="450" d:DesignWidth="1000"
       Title="CombineTextures_Type1">
 
-    <Grid Height="Auto">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="275"/>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="8"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Padding="4" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="4" Margin="5" HorizontalAlignment="Left">
-            <Grid Background="{StaticResource Nier_Level0_Brush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="28"/>
-                    <RowDefinition Height="256"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}">
+        <Grid Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="275"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Padding="4" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="4" Margin="5" HorizontalAlignment="Left">
+                <Grid Background="{StaticResource Nier_Level0_Brush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28"/>
+                        <RowDefinition Height="256"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Padding="10 0 0 0" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="0 0 0 0" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Foreground="White" Text="{Binding CardTitle, FallbackValue='Metallic Roughness'}" FontSize="20"/>
-                        <Button Grid.Column="1" Command="{Binding CollapseDetails}">
-                            <Image Source="/images/flipui.png"/>
-                        </Button>
-                    </Grid>
-                </Border>
+                    <Border Grid.Row="0" Padding="10 0 0 0" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="0 0 0 0" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Foreground="White" Text="{Binding CardTitle, FallbackValue='Metallic Roughness'}" FontSize="20"/>
+                            <Button Grid.Column="1" Command="{Binding CollapseDetails}">
+                                <Image Source="/images/flipui.png"/>
+                            </Button>
+                        </Grid>
+                    </Border>
 
-                <!-- START : Image is displayed here... -->
-                <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10" AllowDrop="True" Drop="FilesDropped">
-                    <Image Source="/images/logo/airplane.png" />
-                </Border>
+                    <!-- START : Image is displayed here... -->
+                    <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10" AllowDrop="True" Drop="FilesDropped">
+                        <Image Source="/images/logo/airplane.png" />
+                    </Border>
 
 
-                <Border Grid.Row="2" Padding="10" CornerRadius="10 10 10 10">
-                    <StackPanel>
+                    <Border Grid.Row="2" Padding="10" CornerRadius="10 10 10 10">
                         <StackPanel>
-                            <!-- Button interfaces -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="Okaythen" Grid.Column="0" Margin="0 0 10 0"  Content="Test" Visibility="{Binding ShowDetails}"/>
-                                <Button Grid.Column="1" Margin="0 0 10 0" Content="Clear" Click="ClearPressed"/>
-                                <!--Button Grid.Column="2" Margin="10 0 0 0" Content="Save as" Click="SaveImage" Command="{Binding Path=SaveImage}"/-->
-                                <!--Button Command="{Binding SaveImage}" Grid.Column="2" Margin="10 0 0 0" Content="Save as"/-->
-                                <Button Command="{Binding SaveVideo}" Grid.Column="2" Margin="10 0 0 0" Content="{Binding ExampleTitle, FallbackValue= 'GraphViz test'}"/>
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel Style="{StaticResource CollapsibleSegment}">
-                            <TextBlock Text="{Binding CardDescription, FallbackValue='Description goes here.'}" FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"></TextBlock>
-                            <!-- Description -->
-                            <TextBlock Text="Description" FontWeight="Bold" Margin="2 0 0 6"></TextBlock>
-                            <!-- Row 1 : Gradient effect-->
-                            <Border Height="2" BorderThickness="0 2 0 0">
-                                <!-- Underline (Linear gradient from sides to mid)-->
-                                <Border.BorderBrush>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.0"/>
-                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.2"/>
-                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.8"/>
-                                        <GradientStop Color="{StaticResource Nier_Menu0}" Offset="1.0"/>
-                                    </LinearGradientBrush>
-                                </Border.BorderBrush>
-                            </Border>
-                            <TextBox Text="." Padding="2" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+                            <StackPanel>
+                                <!-- Button interfaces -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="Okaythen" Grid.Column="0" Margin="0 0 10 0"  Content="Test" Visibility="{Binding ShowDetails}"/>
+                                    <Button Grid.Column="1" Margin="0 0 10 0" Content="Clear" Click="ClearPressed"/>
+                                    <!--Button Grid.Column="2" Margin="10 0 0 0" Content="Save as" Click="SaveImage" Command="{Binding Path=SaveImage}"/-->
+                                    <!--Button Command="{Binding SaveImage}" Grid.Column="2" Margin="10 0 0 0" Content="Save as"/-->
+                                    <Button Command="{Binding SaveVideo}" Grid.Column="2" Margin="10 0 0 0" Content="{Binding ExampleTitle, FallbackValue= 'GraphViz test'}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource CollapsibleSegment}">
+                                <TextBlock Text="{Binding CardDescription, FallbackValue='Description goes here.'}" FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"></TextBlock>
+                                <!-- Description -->
+                                <TextBlock Text="Description" FontWeight="Bold" Margin="2 0 0 6"></TextBlock>
+                                <!-- Row 1 : Gradient effect-->
+                                <Border Height="2" BorderThickness="0 2 0 0">
+                                    <!-- Underline (Linear gradient from sides to mid)-->
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.0"/>
+                                            <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.2"/>
+                                            <GradientStop Color="{StaticResource Nier_Menu0}" Offset="0.8"/>
+                                            <GradientStop Color="{StaticResource Nier_Menu0}" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                </Border>
+                                <TextBox Text="." Padding="2" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
 
+                            </StackPanel>
                         </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" Margin="0 6" Padding="2" >
+                <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
+                    <StackPanel Grid.Column="2" >
                     </StackPanel>
                 </Border>
-            </Grid>
-        </Border>
-        <Border Grid.Column="2" Margin="0 6" Padding="2" >
-            <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
-                <StackPanel Grid.Column="2" >
-                </StackPanel>
             </Border>
-        </Border>
-        <Border Grid.Column="3" Margin="0 6" Padding="2">
-            <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
-                <StackPanel Grid.Column="2" >
-                </StackPanel>
+            <Border Grid.Column="3" Margin="0 6" Padding="2">
+                <Border CornerRadius="4" Background="{StaticResource Nier_Menu0_Brush}">
+                    <StackPanel Grid.Column="2" >
+                    </StackPanel>
+                </Border>
             </Border>
-        </Border>
-        <Border Grid.Column="4" Margin="0 8 8 8" Padding="10" CornerRadius="4" Height="Auto" Background="{StaticResource NierBackgroundBrush}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
+            <Border Grid.Column="4" Margin="0 8 8 8" Padding="10" CornerRadius="4" Height="Auto" Background="{StaticResource NierBackgroundBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
-                    <!-- Description section of documentation -->
-                    <!-- Input "bool IsMinimized" required -->
-                    <StackPanel Style="{StaticResource CollapsibleSegment}">
-                        <!-- START : Image is displayed here... -->
-                        <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10" AllowDrop="True" Drop="MovieDropped" Height="350">
-                            <Image x:Name="MainDisplay" Source="/images/logo/airplane.png" />
-                        </Border>
-                        <Grid Height="30" Background="{StaticResource Nier_Level0_Brush}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8"/>
-                                <ColumnDefinition Width="4"/>
-                                <ColumnDefinition Width="4"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <!-- Description section of documentation -->
+                        <!-- Input "bool IsMinimized" required -->
+                        <StackPanel Style="{StaticResource CollapsibleSegment}">
+                            <!-- START : Image is displayed here... -->
+                            <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10" AllowDrop="True" Drop="MovieDropped" Height="350">
+                                <Image x:Name="MainDisplay" Source="/images/logo/airplane.png" />
+                            </Border>
+                            <Grid Height="30" Background="{StaticResource Nier_Level0_Brush}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="4"/>
+                                    <ColumnDefinition Width="4"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0" Margin="0 0" Padding="0" >
-                                <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
-                                    <StackPanel Grid.Column="2" >
-                                    </StackPanel>
+                                <Border Grid.Column="0" Margin="0 0" Padding="0" >
+                                    <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
+                                        <StackPanel Grid.Column="2" >
+                                        </StackPanel>
+                                    </Border>
                                 </Border>
-                            </Border>
-                            <Border Grid.Column="2" Margin="0 0" Padding="0">
-                                <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
-                                    <StackPanel Grid.Column="2" >
-                                    </StackPanel>
+                                <Border Grid.Column="2" Margin="0 0" Padding="0">
+                                    <Border CornerRadius="0" Background="{StaticResource Nier_Menu0_Brush}">
+                                        <StackPanel Grid.Column="2" >
+                                        </StackPanel>
+                                    </Border>
                                 </Border>
-                            </Border>
-                            <TextBlock Grid.Column="3" x:Name="Console" Text="{Binding ConsoleMessage, Mode=TwoWay, FallbackValue='Console Text goes here'}" VerticalAlignment="Center" Margin="8 0 0 0" FontSize="16"/>
-                        </Grid>
-                        <ListBox ItemsSource="{Binding Collection}"
+                                <TextBlock Grid.Column="3" x:Name="Console" Text="{Binding ConsoleMessage, Mode=TwoWay, FallbackValue='Console Text goes here'}" VerticalAlignment="Center" Margin="8 0 0 0" FontSize="16"/>
+                            </Grid>
+                            <ListBox ItemsSource="{Binding Collection}"
                                  dd:DragDrop.DropHandler="{Binding}"
                                  dd:DragDrop.IsDropTarget="True"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>

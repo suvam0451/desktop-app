@@ -13,12 +13,7 @@ namespace testing.ViewModels
         public String ConsoleMessage { get; set; } = "Konichiwa Desu";
         public String ExampleTitle { get; set; } = "Konichiwa Desu";
         public String Yeeted { get; set; } = "Konichiwa Desu";
-
         public ObservableCollection<PageTabModel> TabBinding { get; set; }
-
-        // TabControl TabBinding { get; set; }
-
-
         public ICommand SaveVideo { get; set; }
 
         public VM_DefaultPage() {
@@ -26,7 +21,8 @@ namespace testing.ViewModels
 
             TabBinding = new ObservableCollection<PageTabModel>();
 
-            TabBinding.Add(new PageTabModel("Welcome", EPageList.CombineTexture));
+            TabBinding.Add(new PageTabModel("Welcome", EPageList.CombineTexture, true));
+            TabBinding[0].IsSelected = true;
             // TabBinding.Items.Add(newTabItem);
         }
 

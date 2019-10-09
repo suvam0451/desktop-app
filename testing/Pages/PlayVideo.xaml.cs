@@ -23,8 +23,8 @@ namespace testing.Pages
 
             // Bind references to dll
             backend._consoleref = Console;
-            backend._displayref = MainDisplay;
-            backend._dispatcherref = Dispatcher;
+            // backend._displayref = MainDisplay;
+            // backend._dispatcherref = Dispatcher;
         }
 
         // Handle media file drop...
