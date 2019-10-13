@@ -4,70 +4,94 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Configuration;
 
 namespace testing.Libraries
 {
     class Utility
     {
-        // Writes lines to files
-        public static void WriteLinesToFile(string filepath, List<string> InList)
-        {
-            using (StreamWriter outputFile = new StreamWriter(filepath)) {
-                foreach (string line in InList) {
+        public static void WriteLinesToFile(string filepath, string filename, List<string> InList) {
+            if (!Directory.Exists(filepath))
+                Directory.CreateDirectory(filepath);
+
+            String fullpath = Path.Combine(filepath, filename);
+            if (!File.Exists(fullpath))
+                File.Create(fullpath);
+
+            using (StreamWriter outputFile = new StreamWriter(fullpath)) {
+                foreach (string line in InList)
                     outputFile.WriteLine(line);
-                }
             }
+        }
+
+        public static void RunDOT(string filepath, string outputpath) {
+            String dot_path = ConfigurationManager.AppSettings.Get("dot_path");
+
         }
     }
 
     class clsGraph
     {
         private int Vertices;
-        private List<Int32>[] adj;
+        bool[] visited;
+        private Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
+        private List<KeyValuePair<int, int>> connectivity = new List<KeyValuePair<int, int>>();
 
-        public clsGraph(int v) {
-            Vertices = v;
-            adj = new List<Int32>[v];
-            // Instantiate adjacency matrix
-            for (int i = 0; i < v; i++) {
-                adj[i] = new List<int>();
-            }
+        public clsGraph(Dictionary<int, List<int>> In) {
+            adj = In;
+            Vertices = In.Count();
+            visited = new bool[Vertices];
         }
 
-        public void AddEdge(int v, int w) {
-            adj[v].Add(w);
-        }
-
-        public void BFS(int s) {
-            bool[] visited = new bool[Vertices];
-
-            // Queue for BFS
+        public List<int> BFS(int s) {
+            List<int> retval = new List<int>();
             Queue<int> queue = new Queue<int>();
             visited[s] = true;
             queue.Enqueue(s);
 
-            // loop through queue
             while (queue.Count != 0) {
                 s = queue.Dequeue();
-                Console.WriteLine("next->" + s);
+                
+                Console.WriteLine("next->" + (s + 1));
+                retval.Add(s + 1);
 
-                // Get all adjacent vertices of s
-                foreach(Int32 next in adj[s])
+                foreach (int next in adj[s + 1])
                 {
-                    if(!visited[next])
+                    if(!visited[next-1])
                     {
-                        visited[next] = true;
-                        queue.Enqueue(next);
+                        visited[next-1] = true;
+                        queue.Enqueue(next-1);
                     }
                 }
             }
+            return retval;
+        }
+
+        public void BuildConnectivity() {
+            foreach (var i in adj)
+                foreach (var j in adj[i.Key])
+                    connectivity.Add(new KeyValuePair<int, int>(i.Key, j));
+        }
+
+        public void WriteFile(string filepath) {
+            List<String> lines = new List<String>();
+
+            lines.Add("digraph G {");
+            foreach (var pair in connectivity) {
+                String line = "\t" + pair.Key + " -> " + pair.Value;
+                lines.Add(line);
+            }
+            lines.Add("}");
+
+            // string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string test = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
+            MessageBox.Show(test);
+            Utility.WriteLinesToFile(test, "Connectivity.dot", lines);
         }
 
         public void DFS(int s)
         {
-            bool[] visited = new bool[Vertices];
-
-            // For DFS, use stack
             Stack<int> stack = new Stack<int>();
             visited[s] = true;
             stack.Push(s);
@@ -152,7 +176,7 @@ namespace testing.Libraries
             lines.Add("}");
 
             string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            Utility.WriteLinesToFile(Path.Combine(DocPath, "Exmple.dot"), lines);
+            // Utility.WriteLinesToFile(Path.Combine(DocPath, "Exmple.dot"), lines);
         }
 
         public void primMST(int[,] graph)
