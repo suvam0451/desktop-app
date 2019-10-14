@@ -25,9 +25,20 @@ namespace testing.Libraries
             }
         }
 
-        public static void RunDOT(string filepath, string outputpath) {
-            String dot_path = ConfigurationManager.AppSettings.Get("dot_path");
+        public static void RunDOT(String filePath, String outputPath) {
+            String dot_path = Properties.Settings.Default.GraphViz_Path + "/dot";
 
+            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
+            Proc.StartInfo.WorkingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
+            Proc.StartInfo.FileName = @"cmd.exe";
+            Proc.StartInfo.RedirectStandardInput = true;
+            Proc.StartInfo.UseShellExecute = false;
+            Proc.Start();
+
+            StreamWriter myStream = Proc.StandardInput;
+            myStream.WriteLine("dot -Tpng Connectivity.dot > Connectivity.png");
+            myStream.Close();
+            Proc.WaitForExit();
         }
     }
 
@@ -44,6 +55,11 @@ namespace testing.Libraries
             visited = new bool[Vertices];
         }
 
+        public void RunDOT() {
+            String test = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.dot");
+            String outPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.png");
+            Utility.RunDOT(test, outPath);
+        }
         public List<int> BFS(int s) {
             List<int> retval = new List<int>();
             Queue<int> queue = new Queue<int>();
@@ -86,7 +102,7 @@ namespace testing.Libraries
 
             // string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string test = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
-            MessageBox.Show(test);
+            // MessageBox.Show(test);
             Utility.WriteLinesToFile(test, "Connectivity.dot", lines);
         }
 
@@ -161,7 +177,6 @@ namespace testing.Libraries
             cost[b, a] = value;
         }
 
-        // Print the MST
         public void printMST(int[] parent, int[,] graph) {
             List<String> lines = new List<String>();
             lines.Add("digraph G {");
@@ -179,14 +194,12 @@ namespace testing.Libraries
             // Utility.WriteLinesToFile(Path.Combine(DocPath, "Exmple.dot"), lines);
         }
 
-        public void primMST(int[,] graph)
-        {
+        public void primMST(int[,] graph) {
             int[] parent = new int[Vertices];
             int[] key = new int[Vertices];
             bool[] mstSet = new bool[Vertices];
 
-            for (int i = 0; i < Vertices; i++)
-            {
+            for (int i = 0; i < Vertices; i++) {
                 key[i] = int.MaxValue;
                 mstSet[i] = false;
             }

@@ -185,6 +185,7 @@
     <Compile Include="ValueConverters\VC_StringToIcon.cs" />
     <Compile Include="ValueConverters\WorkloadSectionValueConverter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Interfaces\ISidebarTarget.cs" />
     <Compile Include="ViewModel\Modules\CombineTextures\VM_CombineTexture_Type1.cs" />
     <Compile Include="ViewModel\Modules\CombineTextures\VM_CombineTextures_Home.cs">
       <Generator>MSBuild:Compile</Generator>

@@ -15,7 +15,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Padding" Value="6"/>
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -49,11 +49,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="SystemIconButton" BasedOn="{StaticResource Hoverless}">
-        <!--Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/-->
-    </Style>
-
-    
     <!-- Window Control Button -->
     <Style TargetType="{x:Type Button}" x:Key="WindowControlButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -88,15 +83,13 @@
     
     <!-- Icon button -->
     <Style x:Key="IconGrowButton" TargetType="{x:Type Button}" >
-
         <Setter Property="Background" Value="{StaticResource WordTransparentBlueBrush}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="30" />
         <Setter Property="Margin" Value="0" />
-
         <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
-
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -163,24 +156,17 @@
                 <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
             </Trigger>
         </Style.Triggers>
-
     </Style>
 
-    
     <!-- Regular buttons (Overridden from windows default buttons ) -->
     <Style TargetType="{x:Type Button}">
-
-        <!-- Background : Orange -->
         <Setter Property="Background" Value="{StaticResource Nier_Menu0_Brush}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
-        <!-- BorderThickness : Get rid of -->
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="12" />
-        <!--Setter Property="FontFamily" Value="{StaticResource LatoRegular}" /-->
         <Setter Property="Padding" Value="0 0" />
         <Setter Property="Margin" Value="0 0" />
         <Setter Property="Height" Value="28" />
-
         <!--Setter Property="local:IsBusyProperty.Value" Value="False" /-->
 
         <Setter Property="Template">

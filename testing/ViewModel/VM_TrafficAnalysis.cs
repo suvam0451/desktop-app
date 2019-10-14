@@ -16,7 +16,7 @@ using testing.Libraries;
 
 namespace testing.ViewModels
 {
-    public class VM_TrafficAnalysis : testing.BaseViewModel
+    public class VM_TrafficAnalysis : testing.BaseViewModel, ISidebarTarget
     {
         public String DummyTextBlock { get; set; } = "bheege naina";
         public ObservableCollection<SidebarModel> SidebarItems { get; set; }
@@ -31,7 +31,7 @@ namespace testing.ViewModels
         public ICommand AddToList { get; set; }
         public ICommand OpenFile { get; set; }
 
-        private String ExcelFilePath {get; set;} = null;
+        private String ExcelFilePath { get; set; } = null;
 
         public VM_TrafficAnalysis()
         {
@@ -46,9 +46,24 @@ namespace testing.ViewModels
             AddToList = new RelayCommand(AddingToList);
             OpenFile = new RelayCommand(OpenExcelFile);
         }
+
+        #region Sidebar Interaface
+
+        public int currentPage { get; set; } = 1;
+        public int MaximumPages { get; set; } = 5;
+        public String ConsoleText { get; set; } = "Lorem ipsum dolor sit amet";
+        
+        public void ChangePage(int In) => _ = (In < MaximumPages) ? 1 : (currentPage = In);
+        public void NextPage() => currentPage = (currentPage == MaximumPages) ? 1 : (currentPage + 1);
+
+        #endregion
+
         #region Method Calls
         private void AddingToList()
         {
+            // NextPage();
+            // System.Windows.MessageBox.Show(currentPage.ToString());
+
             Type officeType = Type.GetTypeFromProgID("Excel.Application");
             if (officeType == null || ExcelFilePath == null)
             {
@@ -58,14 +73,11 @@ namespace testing.ViewModels
             else
             {
                 Excel.Application xlApp = new Excel.Application();
-                // Excel.Workbook xlWorkbook = xlApp.Workbooks.Add("misValue");
                 Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ExcelFilePath);
-                // Excel._Worksheet _Sheet = (Excel.Worksheet)xlWorkbook.Worksheets.get_Item(1);
                 Excel._Worksheet xlWorkSheet = xlWorkbook.Sheets[1];
                 Excel.Range xlRange = xlWorkSheet.UsedRange;
 
                 int NodeCount = xlRange.Rows.Count;
-                // int[,] mine = new int[NodeCount,0];
                 Dictionary<int, List<int>> mine = new Dictionary<int, List<int>>();
                 for (int i = 1; i < NodeCount; i++) {
                     int tmp01 = (int)xlRange.Cells[i + 1, 1].Value2;
@@ -79,6 +91,7 @@ namespace testing.ViewModels
                 // lazy.BFS(4);
                 lazy.BuildConnectivity();
                 lazy.WriteFile("any");
+                lazy.RunDOT();
 
                 try {
                     xlWorkbook.SaveAs("example02.xlsx");
@@ -114,9 +127,6 @@ namespace testing.ViewModels
                     ConsoleMessage = "Could not open file. Check permissions";
                 }
             }
-            // if (diag.ShowDialog()) {
-                
-            // }
         }
         #endregion
     }

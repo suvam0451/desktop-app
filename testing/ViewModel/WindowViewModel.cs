@@ -17,8 +17,6 @@ namespace testing
         #region Private Member
         /// The window this view model controls
         private Window mWindow;
-        /// The window resizer helper that keeps the window size correct in various states
-        private WindowResizer mWindowResizer;
         /// The margin around the window to allow for a drop shadow
         private Thickness mOuterMarginSize = new Thickness(5);
         /// The radius of the edges of the window
@@ -61,10 +59,7 @@ namespace testing
         public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
         /// The margin around the window to allow for a drop shadow
-        public Thickness OuterMarginSize
-        {
-            // If it is maximized or docked, no border
-            //get => mWindow.WindowState == WindowState.Maximized ? mWindowResizer.CurrentMonitorMargin : (Borderless ? new Thickness(0) : mOuterMarginSize);
+        public Thickness OuterMarginSize {
             get
             {
                 return mWindow.WindowState == WindowState.Maximized ? new Thickness(0) : mOuterMarginSize;
@@ -73,12 +68,7 @@ namespace testing
         }
 
         /// The radius of the edges of the window
-        public int WindowRadius
-        {
-            // If it is maximized or docked, no border
-            //get => Borderless ? 0 : mWindowRadius;
-
-            // If app is maximized, return zero radius
+        public int WindowRadius {
             get => (mWindow.WindowState == WindowState.Maximized) ? 0 : mWindowRadius;
             set => mWindowRadius = value;
         }
@@ -105,11 +95,10 @@ namespace testing
 
         #region Commands
 
-        public ICommand MinimizeCommand { get; set; }
-        public ICommand MaximizeCommand { get; set; }
-        public ICommand CloseCommand { get; set; }
+        // public ICommand MinimizeCommand { get; set; }
+        // public ICommand MaximizeCommand { get; set; }
+        // public ICommand CloseCommand { get; set; }
         public ICommand MenuCommand { get; set; }
-        public ICommand YeetOut { get; set; }
         public ICommand TrafficAnalysis { get; set; }
 
         #endregion
@@ -132,10 +121,9 @@ namespace testing
             };
 
             // Create commands
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => mWindow.Close());
-            YeetOut = new RelayCommand(Rambo);
+            // MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            // MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            // CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
             TrafficAnalysis = new RelayCommand(StartTrafficAnalysis);
 
@@ -146,9 +134,6 @@ namespace testing
             TabBinding.Add(new PageTabModel("Combine Textures", EPageList.CombineTexture));
         }
 
-        private void Rambo() {
-            MessageBox.Show("To carry children");
-        }
         private void StartTrafficAnalysis() {
             TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
         }

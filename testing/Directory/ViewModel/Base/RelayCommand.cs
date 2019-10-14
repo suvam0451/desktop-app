@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace testing
-{
+namespace testing {
     class RelayCommand : ICommand
     {
         private Action mAction;
