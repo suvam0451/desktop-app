@@ -17,7 +17,8 @@ namespace testing.ViewModels
         public ICommand SaveVideo { get; set; }
 
         public VM_DefaultPage() {
-            SaveVideo = new RelayCommand(AllIs);
+            SaveVideo = new RelayCommand(o => { AllIs(); },
+                                        o => true );
 
             TabBinding = new ObservableCollection<PageTabModel>();
 

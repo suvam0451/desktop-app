@@ -77,47 +77,146 @@ namespace daedalus_clr {
 			
 		}
 
+		/*
+			Image Processinng function called from the wpf module.
+		*/
 		void HandleMediaDrop(String^ strarr)
 		{
+
+
+			/*
+			*	OpenCV Initialization
+			*/
+			std::string videoPath = HelperLibrary::StringManagedToSTL(strarr);
+			cv::VideoCapture cap;
+			cv::Mat imgFrame1;
+			cv::Mat imgFrame2;
+			std::vector<Blob> blobs;
+
+			cap.open(videoPath);
+
+			/*
+			*	State initialization using lua config file
+			*/
 			lua_State* L = luaL_newstate();
 			luaL_openlibs(L);
 			luaL_dofile(L, "lewdheh.lua");
-
-			cv::VideoCapture cap(HelperLibrary::StringManagedToSTL(strarr));
-
 			lua_getglobal(L, "max_frames");
-			// MessageBox::Show(lua_tonumber(L, -1).ToString());
-			cap.set(cv::CAP_PROP_FPS, lua_tonumber(L, -1));	
-
+			cap.set(cv::CAP_PROP_FPS, lua_tonumber(L, -1));
 			lua_close(L);
 
-			int mincost = INT32_MAX;
-			int** connectivity;
-			int minindex = 10;
+			
+			/*
+			*	OpenCV global variables
+			*/
+			const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0);
+			const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0);
+			const cv::Scalar SCALAR_BLUE = cv::Scalar(255.0, 0.0, 0.0);
+			const cv::Scalar SCALAR_GREEN = cv::Scalar(0.0, 200.0, 0.0);
+			const cv::Scalar SCALAR_RED = cv::Scalar(0.0, 0.0, 255.0);
 
-			// Vic and jesco, what do i doooo :(
-			(connectivity[0][0] == 1) ? (minindex = 10) : (minindex = 0);
-
-			if (cap.isOpened()) {
-				// Handle not video file error
+			/*
+			*	OpenCV Error handling
+			*/
+			if (!cap.isOpened()) {
+				std::cout << "\nerror reading video file" << std::endl << std::endl;      // show error message
+				return;
 			}
-			while (true) {
-				cv::Mat frame;
-				cap >> frame;
-				if (frame.empty())
-					break;
+
+			if (cap.get(cv::CAP_PROP_FRAME_COUNT) < 2) {
+				std::cout << "\nerror: video file must have at least two frames";
+				return;
+			}
+
+			cap.read(imgFrame1);
+			cap.read(imgFrame2);
+
+
+			/* 
+			*	OPENCV video loop 
+			*/
+			while (cap.isOpened()) {
+				// cv::Mat frame;
+				// cap >> frame;
+
+				cap >> imgFrame1; // Alternatively cap.read()
+				cap >> imgFrame2;
+
+				// if (frame.empty())
+				//	break;
 				
-				cv::imshow("RGB", frame);
-				cv::putText(frame, "Tortoise", cv::Point(10, 30), cv::FONT_HERSHEY_COMPLEX, 0.6, (0,255,0), 2);
+				// cv::imshow("RGB", frame);
+				// cv::putText(frame, "Tortoise", cv::Point(10, 30), cv::FONT_HERSHEY_COMPLEX, 0.6, (0,255,0), 2);
 
 				// set console
 				cap.get(cv::CAP_PROP_FPS).ToString();
 
+				cv::Mat imgFrame1Copy = imgFrame1.clone();
+				cv::Mat imgFrame2Copy = imgFrame2.clone();
+
+				cv::Mat imgDifference;
+				cv::Mat imgThresh;
+
+				cv::cvtColor(imgFrame1Copy, imgFrame1Copy, cv::COLOR_BGR2GRAY);
+				cv::cvtColor(imgFrame2Copy, imgFrame2Copy, cv::COLOR_BGR2GRAY);
+
+				// cv::imshow("Copy 1", imgFrame1);
+
+				cv::GaussianBlur(imgFrame1Copy, imgFrame1Copy, cv::Size(5, 5), 0);
+				cv::GaussianBlur(imgFrame2Copy, imgFrame2Copy, cv::Size(5, 5), 0);
+				
+				cv::absdiff(imgFrame1Copy, imgFrame2Copy, imgDifference);
+				
+				cv::threshold(imgDifference, imgThresh, 30, 255, cv::THRESH_BINARY);
+
+				cv::imshow("imgThresh", imgThresh);
+
+				cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
+				cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
+				cv::Mat structuringElement7x7 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(7, 7));
+				cv::Mat structuringElement9x9 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(9, 9));
+
+				cv::dilate(imgThresh, imgThresh, structuringElement5x5);
+				cv::dilate(imgThresh, imgThresh, structuringElement5x5);
+				cv::erode(imgThresh, imgThresh, structuringElement5x5);
+
+				cv::Mat imgThreshCopy = imgThresh.clone();
+
+				std::vector<std::vector<cv::Point>> contours;
+				cv::findContours(imgThreshCopy, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+				cv::Mat imgContours(imgThresh.size(), CV_8UC3, SCALAR_BLACK);
+
+				cv::drawContours(imgThresh, contours, -1, SCALAR_WHITE, -1);
+				cv::imshow("imgContours", imgContours);
+
+				std::vector<std::vector<cv::Point>> convexHulls(contours.size());
+				for (unsigned int i = 0; i < contours.size(); i++) {
+					cv::convexHull(contours[i], convexHulls[i]);
+				}
+
+				for (auto& convexHull : convexHulls) {
+					Blob possibleBlob(convexHull);
+
+					if (possibleBlob.boundingRect.area() > 100 &&
+						possibleBlob.dblAspectRatio >= 0.2 &&
+						possibleBlob.dblAspectRatio <= 1.2 &&
+						possibleBlob.boundingRect.width > 15 &&
+						possibleBlob.boundingRect.height > 20 &&
+						possibleBlob.dblDiagonalSize > 30.0)
+					{
+						blobs.push_back(possibleBlob);
+					}
+
+					cv::Mat imgConvexHulls(imgThresh.size(), CV_8UC3, SCALAR_BLACK);
+					convexHulls.clear();
+
+					for(autoi)
+				}
 				// Denoise
 				// cv::Mat output;
 				// cv::GaussianBlur(frame, output, cv::Size(3, 3), 0, 0);
 
-				frame = LaneDetector::deNoise(frame);
+				// frame = LaneDetector::deNoise(frame);
 				// frame = LaneDetector::edgeDetector(frame);
 
 				// cv::Mat output;

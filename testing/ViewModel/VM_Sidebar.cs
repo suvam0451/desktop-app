@@ -32,7 +32,8 @@ namespace testing.ViewModels
             this.TextElements.Add(new StringItemModel("Wheezie"));
             this.TextElements.Add(new StringItemModel("Wheezie"));
 
-            AddToList = new RelayCommand(AddingToList);
+            AddToList = new RelayCommand(o => { AddingToList(); },
+                                        o => true );
         }
 
         private void AddingToList() {

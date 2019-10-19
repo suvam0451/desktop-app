@@ -43,8 +43,12 @@ namespace testing.ViewModels
             this.TextElements.Add(new StringItemModel("Wheezie"));
             this.TextElements.Add(new StringItemModel("Wheezie"));
 
-            AddToList = new RelayCommand(AddingToList);
-            OpenFile = new RelayCommand(OpenExcelFile);
+            AddToList = new RelayCommand(
+                o => { AddingToList(); },
+                o => true );
+            OpenFile = new RelayCommand(
+                o => { OpenExcelFile(); },
+                o => true );
         }
 
         #region Sidebar Interaface

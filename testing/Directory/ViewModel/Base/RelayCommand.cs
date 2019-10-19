@@ -4,22 +4,27 @@ using System.Windows.Input;
 namespace testing {
     class RelayCommand : ICommand
     {
-        private Action mAction;
+        private Action<object> execute;
+        private Func<object, bool> canExecute;
 
         public bool _CanExecute { get; set; } = true;
 
-        #region ctor
-        public RelayCommand(Action action)
-        {
-            mAction = action;
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null) {
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
-        #endregion
 
-        // public bool CanExecute(object parameter) { return _CanExecute; }
-        public bool CanExecute(object parameter) { return true; }
-        public void Execute(object parameter) { mAction(); }
+        public bool CanExecute(object parameter) { 
+            return this.canExecute == null || this.canExecute(parameter); 
+        }
 
-        /// Event that is fired when CanExecute value has changed
-        public event EventHandler CanExecuteChanged = (sender, e) => { };
+        public void Execute(object parameter) {
+            this.execute(parameter); 
+        }
+
+        public event EventHandler CanExecuteChanged {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
     }
 }

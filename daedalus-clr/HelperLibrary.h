@@ -12,6 +12,17 @@ using namespace System::Drawing;
 using namespace System::Windows::Media;
 using namespace System::Windows::Media::Imaging;
 
+class Blob {
+public:
+	std::vector<cv::Point> contour;
+	cv::Rect boundingRect;
+	cv::Point centerPosition;
+	double dblDiagonalSize;
+	double dblAspectRatio;
+
+	Blob(std::vector<cv::Point> _contour);
+};
+
 struct TextureCombiner_Preset {
 	// Various nodes of the API  specify which textures should be looked up...
 	

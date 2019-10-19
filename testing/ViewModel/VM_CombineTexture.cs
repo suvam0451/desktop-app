@@ -34,7 +34,8 @@ namespace testing.ViewModels
 
             ImageCollection = new ObservableCollection<ImageObject>();
 
-            UpdateImageList = new RelayCommand(ListImagePaths);
+            UpdateImageList = new RelayCommand(o => { ListImagePaths(); },
+                                                o => true );
 
             backend = new TextureCombine_Type1_Backend();
         }

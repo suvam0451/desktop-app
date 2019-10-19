@@ -134,59 +134,14 @@ namespace testing
             };
 
             // Create commands
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+            MinimizeCommand = new RelayCommand(o => { mWindow.WindowState = WindowState.Minimized; }, o => true);
+            MaximizeCommand = new RelayCommand(o => { mWindow.WindowState ^= WindowState.Maximized; }, o => true);
+            CloseCommand = new RelayCommand(o => { mWindow.Close(); }, o => true);
+            MenuCommand = new RelayCommand(o => { SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()); },
+                                            o => true );
 
             // Fix window resize issue...
             var resizer = new WindowResizer(mWindow);
-            /*
-            // Listen out for the window resizing
-            mWindow.StateChanged += (sender, e) =>
-            {
-                // Fire off events for all properties that are affected by a resize
-                WindowResized();
-            };
-
-            // Create commands
-            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
-
-            /// Fix window resize issue
-            mWindowResizer = new WindowResizer(mWindow);
-
-            // Listen out for dock changes
-            mWindowResizer.WindowDockChanged += (dock) =>
-            {
-                // Store last position
-                mDockPosition = dock;
-
-                // Fire off resize events
-                WindowResized();
-            };
-
-            // On window being moved/dragged
-            mWindowResizer.WindowStartedMove += () =>
-            {
-                // Update being moved flag
-                BeingMoved = true;
-            };
-
-            // Fix dropping an undocked window at top which should be positioned at the
-            // very top of screen
-            mWindowResizer.WindowFinishedMove += () =>
-            {
-                // Update being moved flag
-                BeingMoved = false;
-
-                // Check for moved to top of window and not at an edge
-                if (mDockPosition == WindowDockPosition.Undocked && mWindow.Top == mWindowResizer.CurrentScreenSize.Top)
-                    // If so, move it to the true top (the border size)
-                    mWindow.Top = -OuterMarginSize.Top;
-            };*/
         }
 
         #endregion

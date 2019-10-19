@@ -23,6 +23,8 @@ namespace testing
         private int mWindowRadius = 4;
         /// The last known dock position
         private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
+
+        private bool[] InstanceActive { get; set; }
         #endregion
 
         #region Public Properties
@@ -95,11 +97,8 @@ namespace testing
 
         #region Commands
 
-        // public ICommand MinimizeCommand { get; set; }
-        // public ICommand MaximizeCommand { get; set; }
-        // public ICommand CloseCommand { get; set; }
         public ICommand MenuCommand { get; set; }
-        public ICommand TrafficAnalysis { get; set; }
+        public ICommand AppendPage { get; set; }
 
         #endregion
 
@@ -120,22 +119,29 @@ namespace testing
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
-            // Create commands
-            // MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
-            // MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
-            // CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
-            TrafficAnalysis = new RelayCommand(StartTrafficAnalysis);
-
-            // Fix window resize issue...
-            // var resizer = new WindowResizer(mWindow);
+            MenuCommand = new RelayCommand(
+                o => { SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()); }, 
+                o => true );
+            AppendPage = new RelayCommand(
+                o => { AppendPage_Impl(o); },
+                o => true );
 
             TabBinding = new ObservableCollection<PageTabModel>();
             TabBinding.Add(new PageTabModel("Combine Textures", EPageList.CombineTexture));
+
+            InstanceActive = new bool[6];
+
         }
 
-        private void StartTrafficAnalysis() {
-            TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
+        private void AppendPage_Impl(object parameter) {
+            int PageID = Convert.ToInt32(parameter);
+            switch (PageID) {
+                case 2: { TabBinding.Add(new PageTabModel("Combine textures", EPageList.CombineTexture)); break; }
+                case 3: { TabBinding.Add(new PageTabModel("OpenCV analysis", EPageList.PlayVideo)); break; }
+                case 4: { TabBinding.Add(new PageTabModel("Welcome", EPageList.HomePage)); break; }
+                case 6: { TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis)); break; }
+                default: break;
+            }
         }
 
         #endregion
@@ -155,9 +161,6 @@ namespace testing
 
         // Gets the mouse position (using user32.dll)
         private Point GetMousePosition() {
-            //Win32Point w32Mouse = new Win32Point();
-            //GetCursorPos(ref w32Mouse);
-
             var w32Mouse = Mouse.GetPosition(mWindow);
             // Window position added
             return new Point(w32Mouse.X + mWindow.Left, w32Mouse.Y + mWindow.Top);

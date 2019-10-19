@@ -50,7 +50,7 @@ namespace testing
         public DirectoryItemViewModel(string fullPath, DirectoryItemType type)
         {
             // Pass expand as the command to be executed by ICommand...
-            this.ExpandCommand = new RelayCommand(Expand);
+            this.ExpandCommand = new RelayCommand( o => { Expand(); }, o => true);
 
             // Set path and type
             this.FullPath = fullPath;

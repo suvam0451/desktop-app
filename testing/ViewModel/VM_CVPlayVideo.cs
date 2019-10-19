@@ -16,7 +16,8 @@ namespace testing.ViewModels
         public ICommand SaveVideo { get; set; }
 
         public VM_CVPlayVideo() {
-            SaveVideo = new RelayCommand(AllIs);
+            SaveVideo = new RelayCommand(o => { AllIs(); },
+                                        o => true );
         }
 
         
@@ -35,41 +36,10 @@ namespace testing.ViewModels
             dropInfo.Effects = DragDropEffects.Copy;
         }
 
-        private void Yeet() {
-            // ConsoleMessage = "Not again. Noob.";
-            ConsoleMessage = "Not ready yet.";
-            MessageBox.Show("yeeto");
-        }
-
         private void AllIs()
         {
             ConsoleMessage = "Not ready yet.";
            // MessageBox.Show("Okay then. That works.");
         }
-        // RelayCommand()
-        // public ICommand SaveVideo
-        // {
-        //     get
-        //     {
-        //         if (mUpdater == null)
-        //             mUpdater = new Updater();
-        //         return mUpdater;
-        //     }
-        //     set
-        //     {
-        //         mUpdater = value;
-        //     }
-        // }
-
-        // Gets the mouse position (using user32.dll)
-        // private Point GetMousePosition()
-        // {
-        //     //Win32Point w32Mouse = new Win32Point();
-        //     //GetCursorPos(ref w32Mouse);
-        // 
-        //     var w32Mouse = Mouse.GetPosition(mWindow);
-        //     // Window position added
-        //     return new Point(w32Mouse.X + mWindow.Left, w32Mouse.Y + mWindow.Top);
-        // }
     }
 }

@@ -49,17 +49,12 @@ namespace testing.Modules.CombineTextures
             _mPage = pageIn;
 
             // Routing commands
-            CollapseDetails = new RelayCommand(() => {
+            CollapseDetails = new RelayCommand(o => {
                 IsMinimized = (IsMinimized == false) ? true : false;
                 DetailSegment_Height = (DetailSegment_Height == Visibility.Visible) ? Visibility.Hidden : Visibility.Visible;
                 ShowDetails = (ShowDetails == Visibility.Visible) ? Visibility.Hidden : Visibility.Visible;
                 ModuleHeight = (ModuleHeight == 450) ? 300 : 450;
-            });
-
-            //HandleFileDrop = new RelayCommand(() => {
-            //    sender.
-            //    FilesDropped(sender,e);
-            //});
+            }, o => true );
         }
         #endregion
 
