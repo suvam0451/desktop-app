@@ -92,6 +92,7 @@ namespace daedalus_clr {
 			cv::Mat imgFrame1;
 			cv::Mat imgFrame2;
 			std::vector<Blob> blobs;
+			char chCheckForEscKey = 0;
 
 			cap.open(videoPath);
 
@@ -128,26 +129,17 @@ namespace daedalus_clr {
 				return;
 			}
 
-			cap.read(imgFrame1);
-			cap.read(imgFrame2);
+			// cap.read(imgFrame1);
+			// cap.read(imgFrame2);
 
 
 			/* 
 			*	OPENCV video loop 
 			*/
-			while (cap.isOpened()) {
-				// cv::Mat frame;
-				// cap >> frame;
-
+			while (cap.isOpened() && chCheckForEscKey != 27)
+			{
 				cap >> imgFrame1; // Alternatively cap.read()
 				cap >> imgFrame2;
-
-				// if (frame.empty())
-				//	break;
-				
-				// cv::imshow("RGB", frame);
-				// cv::putText(frame, "Tortoise", cv::Point(10, 30), cv::FONT_HERSHEY_COMPLEX, 0.6, (0,255,0), 2);
-
 				// set console
 				cap.get(cv::CAP_PROP_FPS).ToString();
 
@@ -159,8 +151,6 @@ namespace daedalus_clr {
 
 				cv::cvtColor(imgFrame1Copy, imgFrame1Copy, cv::COLOR_BGR2GRAY);
 				cv::cvtColor(imgFrame2Copy, imgFrame2Copy, cv::COLOR_BGR2GRAY);
-
-				// cv::imshow("Copy 1", imgFrame1);
 
 				cv::GaussianBlur(imgFrame1Copy, imgFrame1Copy, cv::Size(5, 5), 0);
 				cv::GaussianBlur(imgFrame2Copy, imgFrame2Copy, cv::Size(5, 5), 0);
@@ -183,13 +173,17 @@ namespace daedalus_clr {
 				cv::Mat imgThreshCopy = imgThresh.clone();
 
 				std::vector<std::vector<cv::Point>> contours;
+
 				cv::findContours(imgThreshCopy, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+				
 				cv::Mat imgContours(imgThresh.size(), CV_8UC3, SCALAR_BLACK);
 
 				cv::drawContours(imgThresh, contours, -1, SCALAR_WHITE, -1);
+
 				cv::imshow("imgContours", imgContours);
 
 				std::vector<std::vector<cv::Point>> convexHulls(contours.size());
+
 				for (unsigned int i = 0; i < contours.size(); i++) {
 					cv::convexHull(contours[i], convexHulls[i]);
 				}
@@ -206,51 +200,46 @@ namespace daedalus_clr {
 					{
 						blobs.push_back(possibleBlob);
 					}
-
-					cv::Mat imgConvexHulls(imgThresh.size(), CV_8UC3, SCALAR_BLACK);
-					convexHulls.clear();
-
-					for(autoi)
 				}
-				// Denoise
-				// cv::Mat output;
-				// cv::GaussianBlur(frame, output, cv::Size(3, 3), 0, 0);
 
-				// frame = LaneDetector::deNoise(frame);
-				// frame = LaneDetector::edgeDetector(frame);
+				cv::Mat imgConvexHulls(imgThresh.size(), CV_8UC3, SCALAR_BLACK);
 
-				// cv::Mat output;
-				// cv::Mat kernel;
-				// cv::Point anchor;
-				// Convert image from RGB to gray
-				
-				// Binarize gray image
-				// cv::threshold(output, output, 140, 255, cv::THRESH_BINARY);
+				convexHulls.clear();
 
-				// cv::Mat newout = LaneDetector::edgeDetector(frame);
+				for (auto& blob : blobs) {
+					convexHulls.push_back(blob.contour);
+				}
 
-				cv::Mat vicky;
+				cv::drawContours(imgConvexHulls, convexHulls, -1, SCALAR_WHITE, -1);
 
-				// cv::cvtColor(frame, vicky, cv::COLOR_RGB2GRAY);
-				// Create the kernel [-1 0 1]
-				// This kernel is based on the one found in the
-				// Lane Departure Warning System by Mathworks
-				// anchor = cv::Point(-1, -1);
-				// kernel = cv::Mat(1, 3, CV_32F);
-				// kernel.at<float>(0, 0) = -1;
-				// kernel.at<float>(0, 1) = 0;
-				// kernel.at<float>(0, 2) = 1;
-				// Filter the binary image to obtain the edges
-				// cv::filter2D(output, output, -1, kernel, anchor, 0, cv::BORDER_DEFAULT);
-				
+				cv::imshow("imgConvexHulls", imgConvexHulls);
+					
+				// get another copy of frame 2 since we changed the previous frame 2 copy in the processing above
+				imgFrame2Copy = imgFrame2.clone();
 
-				// UpdateConsole(cap.get(cv::CAP_PROP_FPS).ToString());
-				// UpdateDisplay(HelperLibrary::GetImageSourceFromCV(frame));
+				// Draws box around blobs, circle at center
+				for (auto& blob : blobs) {
+					cv::rectangle(imgFrame2Copy, blob.boundingRect, SCALAR_RED, 2);
+					cv::circle(imgFrame2Copy, blob.centerPosition, 3, SCALAR_GREEN, -1);		
+				}
 
-				char c = (char)cv::waitKey(1);
-				if (c == 27) 
+				cv::imshow("imgFrame2Copy", imgFrame2Copy);
+
+				imgFrame1 = imgFrame2.clone(); // Move frame 1 upto frame 2
+
+				if ((cap.get(cv::CAP_PROP_POS_FRAMES) + 1)
+					< cap.get(cv::CAP_PROP_FRAME_COUNT)) {
+					cap.read(imgFrame2);
+				}
+				else {
 					break;
+				}
+
+				chCheckForEscKey = cv::waitKey(1);
 			}
+				// char c = (char)cv::waitKey(1);
+				// if (c == 27) 
+				//	break;
 			// Release memory
 			cap.release();
 			cv::destroyAllWindows();
