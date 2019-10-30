@@ -9,7 +9,6 @@ using System.Windows.Media.Imaging;
 using daedalus_clr;
 using Microsoft.Win32;
 using System.IO;
-using NLua;
 using testing.Libraries;
 using testing.ViewModels;
 
@@ -47,12 +46,12 @@ namespace testing.Pages
         {
             // MessageBox.Show("yeet");
 
-            Lua state = new Lua();
+            // Lua state = new Lua();
 
             // int res = (int)state.DoString("return 10 + 3*(5 + 2)")[0];
-            var res = state.DoString("return 10 + 3*(5 + 2)")[0];
+            // var res = state.DoString("return 10 + 3*(5 + 2)")[0];
 
-            MessageBox.Show(res.ToString());
+            // MessageBox.Show(res.ToString());
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -166,10 +165,19 @@ namespace testing.Pages
             if (dlg.ShowDialog() == true) {
 
                 // Write out files
-                var encoder = new PngBitmapEncoder();
-                // encoder.Frames.Add(BitmapFrame.Create((BitmapSource)MainDisplay.Source));
-                using (FileStream stream = new FileStream(dlg.FileName, FileMode.Create))
-                encoder.Save(stream);
+                try
+                {
+                    // Try to write the resulting image.
+                    var encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageSource.Source));
+                    using (FileStream stream = new FileStream(dlg.FileName, FileMode.Create))
+                        encoder.Save(stream);
+
+                    Console.Text = "Output image created successfully.";
+                }
+                catch (NotSupportedException) {
+                    Console.Text = "Failed to save image. Did you forget to feed images ?";
+                }
             }
         }
 

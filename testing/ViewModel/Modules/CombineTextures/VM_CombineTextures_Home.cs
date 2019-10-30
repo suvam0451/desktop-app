@@ -16,7 +16,7 @@ namespace testing
         /// The window this view model controls
         private Window mWindow;
         /// The window resizer helper that keeps the window size correct in various states
-        private WindowResizer mWindowResizer;
+        // private WindowResizer mWindowResizer;
         /// The margin around the window to allow for a drop shadow
         private Thickness mOuterMarginSize = new Thickness(5);
         /// The radius of the edges of the window

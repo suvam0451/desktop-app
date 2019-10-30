@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using testing.Libraries;
+using daedalus_clr;
 
 namespace testing.ViewModels
 {
@@ -31,7 +32,9 @@ namespace testing.ViewModels
         public ICommand AddToList { get; set; }
         public ICommand OpenFile { get; set; }
 
-        private String ExcelFilePath { get; set; } = null;
+        public String ExcelInputFile_01 { get; set; } = null;
+        public String ExcelInputFile_02 { get; set; } = null;
+        public String ExcelOutputFile_01 { get; set; } = null;
 
         public VM_TrafficAnalysis()
         {
@@ -65,54 +68,11 @@ namespace testing.ViewModels
         #region Method Calls
         private void AddingToList()
         {
-            // NextPage();
-            // System.Windows.MessageBox.Show(currentPage.ToString());
-
-            Type officeType = Type.GetTypeFromProgID("Excel.Application");
-            if (officeType == null || ExcelFilePath == null)
-            {
-                ConsoleMessage = "Error: At least Excel 2016 is required to run this feature.";
-                return;
-            }
-            else
-            {
-                Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ExcelFilePath);
-                Excel._Worksheet xlWorkSheet = xlWorkbook.Sheets[1];
-                Excel.Range xlRange = xlWorkSheet.UsedRange;
-
-                int NodeCount = xlRange.Rows.Count;
-                Dictionary<int, List<int>> mine = new Dictionary<int, List<int>>();
-                for (int i = 1; i < NodeCount; i++) {
-                    int tmp01 = (int)xlRange.Cells[i + 1, 1].Value2;
-                    mine.Add(tmp01, new List<int>());
-
-                    String tmp = (String)xlRange.Cells[i + 1, 2].Value2.ToString();
-                    
-                    mine[tmp01] = tmp.Split(',').Select(int.Parse).ToList();
-                }
-                clsGraph lazy = new clsGraph(mine);
-                // lazy.BFS(4);
-                lazy.BuildConnectivity();
-                lazy.WriteFile("any");
-                lazy.RunDOT();
-
-                try {
-                    xlWorkbook.SaveAs("example02.xlsx");
-                }
-                catch {
-                    ConsoleMessage = "File could not be accessed. Make sure you are not editing the file.";
-                }
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();       
-                Marshal.ReleaseComObject(xlRange);
-                xlWorkbook.Close();
-                Marshal.ReleaseComObject(xlWorkSheet);
-                Marshal.ReleaseComObject(xlWorkbook);
-                xlApp.Quit();
-                Marshal.ReleaseComObject(xlApp);
-            }
+            Dictionary<int, List<int>> mine = new Dictionary<int, List<int>>();
+            ExcelParsers.FetchConnectivityMatrix<int, int>(mine, ExcelInputFile_01, true);
+            DotHelpers.BuildConnectivityGraph(mine);
+            
+            ExcelHelper.UniformFactorMethod(ExcelInputFile_01, true);
         }
 
         private void OpenExcelFile() {
@@ -124,8 +84,8 @@ namespace testing.ViewModels
 
             if (diag.CheckFileExists == true) {
                 try {
-                    ExcelFilePath = diag.FileName;
-                    ConsoleMessage = "File: " + ExcelFilePath + " loaded.";
+                    ExcelInputFile_01 = diag.FileName;
+                    ConsoleMessage = "File: " + ExcelInputFile_01 + " loaded.";
                 }
                 catch {
                     ConsoleMessage = "Could not open file. Check permissions";

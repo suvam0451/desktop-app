@@ -33,7 +33,7 @@ namespace testing
         public String Yeet { get; set; } = "Yeeto";
         /// The smallest height the window can go to
         public double WindowMinimumHeight { get; set; } = 500;
-
+        public String AppStatus { get; set; } = "Idle";
         /// True if the window is currently being moved/dragged
         public bool BeingMoved { get; set; }
 
@@ -46,7 +46,10 @@ namespace testing
             get { return (mWindow.WindowState == WindowState.Maximized) ? 0 : 4; }
         }
         public ObservableCollection<PageTabModel> TabBinding { get; set; }
+        public int SelectedTabIndex { get; set; }
+        public Dictionary<EPageList, bool> TabTracking { get; set; }
 
+        // public PageTabModel CurrentTabBinding { get; set; }
         // This will be our current sidebar (Value converted)...
         public EPageList Sidebar_Home_Content { get; set; } = EPageList.Sidebar;
         public Application_Workload Workspace_Home_Content { get; set; } = Application_Workload.Default;
@@ -126,8 +129,19 @@ namespace testing
                 o => { AppendPage_Impl(o); },
                 o => true );
 
+            // Initialize Dictionary
+            TabTracking = new Dictionary<EPageList, bool>();
+
+
             TabBinding = new ObservableCollection<PageTabModel>();
             TabBinding.Add(new PageTabModel("Combine Textures", EPageList.CombineTexture));
+            TabTracking.Add(TabBinding[0].Content, true);
+
+            // TabBinding[0].Content
+            // 
+            // CurrentTabBinding = TabBinding[0];
+            SelectedTabIndex = 0;
+
 
             InstanceActive = new bool[6];
 
@@ -136,10 +150,28 @@ namespace testing
         private void AppendPage_Impl(object parameter) {
             int PageID = Convert.ToInt32(parameter);
             switch (PageID) {
-                case 2: { TabBinding.Add(new PageTabModel("Combine textures", EPageList.CombineTexture)); break; }
-                case 3: { TabBinding.Add(new PageTabModel("OpenCV analysis", EPageList.PlayVideo)); break; }
-                case 4: { TabBinding.Add(new PageTabModel("Welcome", EPageList.HomePage)); break; }
-                case 6: { TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis)); break; }
+                case 2: { 
+                        if (TabTracking.ContainsKey(EPageList.CombineTexture))
+                        {
+                            AppStatus = "Workspace for Texture Assembler already exists.";
+                        }
+                        else {
+                            TabBinding.Add(new PageTabModel("Combine textures", EPageList.CombineTexture));
+                            AppStatus = "Created workspace for Combining Textures";
+                        }
+                    break; }
+                case 3: { 
+                    TabBinding.Add(new PageTabModel("OpenCV analysis", EPageList.PlayVideo));
+                    AppStatus = "Created workspace for OpenCV CPU demo";
+                    break; }
+                case 4: { 
+                    TabBinding.Add(new PageTabModel("Welcome", EPageList.HomePage));
+                    AppStatus = "Created workspace for OpenCV CPU demo";
+                    break; }
+                case 6: { 
+                    TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
+                    AppStatus = "Created workspace for Traffic Analysis";
+                    break; }
                 default: break;
             }
         }

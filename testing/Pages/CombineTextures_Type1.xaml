@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:testing.Pages"
-      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
@@ -34,16 +33,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Foreground="White" Text="Metallic Roughness" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Foreground="White" Text="Texture Assembler" FontSize="20"/>
                         <Button Grid.Column="1" Command="{Binding CollapseDetails}">
                             <Image Source="/images/flipui.png"/>
                         </Button>
                     </Grid>
                 </Border>
                 <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10">
-                    <!--Image x:Name="MainDisplay" Source="/images/logo/airplane.png" /-->
-                    <Image Source="{Binding ImageSource, FallbackValue=/images/logo/heart.png}" />
-                    <!--Image Source="{Binding ImageReference, FallbackValue=/images/logo/airplane.png}" /-->
+                    <Image x:Name="ImageSource" Source="{Binding ImageSource, FallbackValue=/images/logo/heart.png}" />
                 </Border>
                 <Border Grid.Row="2" Padding="10">
                     <StackPanel Height="auto">
@@ -107,10 +104,8 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0">
-                <!-- Description section of documentation -->
-                <!-- Input "bool IsMinimized" required -->
-                <StackPanel Style="{StaticResource CollapsibleSegment}">
+                <StackPanel Grid.Row="0">
+                    <StackPanel Style="{StaticResource CollapsibleSegment}">
                     <TextBlock FontSize="20" FontWeight="Bold">Description.</TextBlock>
                     <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
                     <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Module:</Bold> Combines texture maps into one texture( <Italic>4 * {RGB}</Italic> ).</TextBlock>

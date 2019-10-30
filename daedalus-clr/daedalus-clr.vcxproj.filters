@@ -27,7 +27,7 @@
     <ClInclude Include="HelperLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CT_T1_Core.h">
+    <ClInclude Include="ExcelHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="HelperLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CT_T1_Core.cpp">
+    <ClCompile Include="ExcelHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

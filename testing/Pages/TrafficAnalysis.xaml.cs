@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using testing.ViewModels;
 
 namespace testing.Pages
@@ -22,6 +22,27 @@ namespace testing.Pages
         {
             InitializeComponent();
             DataContext = new VM_TrafficAnalysis();
+        }
+
+        private void UpdateUI(Object sender, RoutedEventArgs e) {
+            FrameworkElement feSource = e.Source as FrameworkElement;
+
+            var path = Path.Combine(Environment.CurrentDirectory, "Projects", "Sample", "Connectivity.png");
+            var uri = new Uri(path);
+            try
+            {
+                Image ToAdd = new Image();
+                BitmapImage ConnectivityGraph = new BitmapImage(uri);
+                ToAdd.Source = ConnectivityGraph;
+                ToAdd.Stretch = Stretch.None;
+                // ToAdd.MaxWidth = ToAdd.ActualWidth;
+
+                MainStackPanel.Children.Add(ToAdd);
+                Console.Text = "Successfully updated the Interface.";
+            }
+            catch (DirectoryNotFoundException) {
+                Console.Text = "Connectivity.png missing.";
+            }
         }
     }
 }

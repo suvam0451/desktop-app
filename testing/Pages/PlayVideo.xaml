@@ -4,13 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:testing.Modules.CombineTextures"
-      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:custom="clr-namespace:testing.UserControls"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
       Title="CombineTextures_Type1">
 
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}">
+    <!--ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}"-->
         <Grid Height="Auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="275"/>
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Padding="4" Background="{StaticResource Nier_Menu0_Brush}" CornerRadius="4" Margin="5" HorizontalAlignment="Left">
-                <Grid Background="{StaticResource Nier_Level0_Brush}">
+                <Grid Background="{StaticResource Nier_Level0_Brush}" Width="256">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="28"/>
                         <RowDefinition Height="256"/>
@@ -33,8 +33,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Foreground="White" Text="{Binding CardTitle, FallbackValue='Metallic Roughness'}" FontSize="20"/>
-                            <Button Grid.Column="1" Command="{Binding CollapseDetails}">
+                            <TextBlock Grid.Column="0" Foreground="White" Text="{Binding CardTitle, FallbackValue='OpenCV Demo'}" FontSize="20"/>
+                            <Button Grid.Column="1" Command="{Binding CollapseImage}">
                                 <Image Source="/images/flipui.png"/>
                             </Button>
                         </Grid>
@@ -61,9 +61,44 @@
                                     <!--Button Grid.Column="2" Margin="10 0 0 0" Content="Save as" Click="SaveImage" Command="{Binding Path=SaveImage}"/-->
                                     <!--Button Command="{Binding SaveImage}" Grid.Column="2" Margin="10 0 0 0" Content="Save as"/-->
                                     <Button Command="{Binding SaveVideo}" Grid.Column="2" Margin="10 0 0 0" Content="{Binding ExampleTitle, FallbackValue= 'GraphViz test'}"/>
+                                    
                                 </Grid>
                             </StackPanel>
                             <StackPanel Style="{StaticResource CollapsibleSegment}">
+                                <Grid Margin="0 10 5 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.ColumnSpan="4">
+                                    <!--custom:FilePickField Secret="{Binding VideoPath, Mode=OneWayToSource}" Filter="{StaticResource FileRegex_Excel}"/-->
+                                    <custom:FilePickField Secret="{Binding VideoPath, Mode=OneWayToSource}" Filter="{StaticResource FileRegex_Excel}"/>
+                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Aspect Ratio Settings" FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"></TextBlock>
+                                </StackPanel>
+
+                                <Image Grid.Row="1" Margin="0 4 4 4" Grid.Column="1" Source="/images/logo/link.png" ToolTip="Lock/Unlock scaling controls.">
+                                    <Image.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding InvertRescaleControls}" />
+                                    </Image.InputBindings>
+                                </Image>
+
+                                <TextBox Grid.Row="1" Margin="0 0 5 0" FontSize="14" Tag="X (inherit)" Grid.Column="0" Text="{Binding X_Rescale}" IsReadOnly="{Binding Rescale_Locked}" IsEnabled="{Binding Rescale_Enabled}" TextAlignment="Center"/>
+                                <ComboBox Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding AspectRatios, FallbackValue=none}" SelectedIndex="{Binding SelectedAspectRatio, FallbackValue=0, Mode=TwoWay}"/>
+
+
+                                <TextBox Grid.Row="1" Margin="0 0 5 0" FontSize="14" Tag="Y (inherit)" Grid.Column="2" Text="{Binding Y_Rescale}" IsReadOnly="{Binding Rescale_Locked}" IsEnabled="{Binding Rescale_Enabled}" TextAlignment="Center"/>
+                                    <Button Grid.Row="1" Margin="5 0 0 0" Grid.Column="3" Content="Set" Command="{Binding OpenFile}"/>
+                                </Grid>
+
+                                
                                 <TextBlock Text="{Binding CardDescription, FallbackValue='Description goes here.'}" FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"></TextBlock>
                                 <!-- Description -->
                                 <TextBlock Text="Description" FontWeight="Bold" Margin="2 0 0 6"></TextBlock>
@@ -109,6 +144,20 @@
                         <!-- Description section of documentation -->
                         <!-- Input "bool IsMinimized" required -->
                         <StackPanel Style="{StaticResource CollapsibleSegment}">
+                            <TextBlock FontSize="20" FontWeight="Bold">Description.</TextBlock>
+                            <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
+                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Module:</Bold> Demonstration of portable OpenCV integration via C++/clr.</TextBlock>
+                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>SubModule:</Bold> Car Counting => This submodule demonstrates a crude car-counting code derived from a python implementation rewritten in C++.</TextBlock>
+                            <TextBlock/>
+
+                            <StackPanel>
+                                <TextBlock FontSize="20" FontWeight="Bold">Interface</TextBlock>
+                                <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
+                                <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Input</Bold> : You can drag drop a video file to start analysis.</TextBlock>
+                                <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Rescaling</Bold> : Since some devices are going to be slow at computation due to hardware limitation, the rescaling field on the menu on left allows you to override rescaling values and optionally lock(save) it.</TextBlock>
+                                <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Clear</Bold> : Clear data before working on next set of textures. (<Italic>to avoid collision/override</Italic>).</TextBlock>
+                                <TextBlock/>
+                            </StackPanel>
                             <!-- START : Image is displayed here... -->
                             <Border Grid.Row="1" Margin="10" Padding="10 10 10 10" Background="{StaticResource NierDarkestBrush}" CornerRadius="10" AllowDrop="True" Drop="MovieDropped" Height="350">
                                 <Image x:Name="MainDisplay" Source="/images/logo/airplane.png" />
@@ -143,5 +192,5 @@
                 </Grid>
             </Border>
         </Grid>
-    </ScrollViewer>
+    <!--/ScrollViewer-->
 </Page>

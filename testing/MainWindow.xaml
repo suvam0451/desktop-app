@@ -53,40 +53,37 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="24"/>
+                <RowDefinition Height="22"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <!-- Icon -->
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="135*"/>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="687*"/>
+                    <ColumnDefinition Width="56"/>
+                    <ColumnDefinition Width="*"/>
                     <!-- Title -->
-                    <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Right side dock -->
                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,135,0">
                     <Frame Content="{Binding Sidebar_Home_Content, Converter={local:ApplicationPageValueConverter}}"/>
                 </Grid>
-                <Border Padding="8" Grid.Column="4" Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0" Grid.ColumnSpan="2">
+                <Border Grid.Column="2" Padding="8"  Background="{StaticResource NierDarkestBrush}" Margin="0,0,0,0" Grid.ColumnSpan="2">
                     <StackPanel>
                         <TextBlock Text="Ambient Occlusion" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                        <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default Ambient Occlusion to assume, in case texture input is missing."></TextBox>
+                        <TextBox Text="" FontSize="16" Padding="2" Tag="Range: 0-255" ToolTip="Default Ambient Occlusion to assume, in case texture input is missing."></TextBox>
                         <TextBlock Text="Roughness" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                        <TextBox Text="" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
+                        <TextBox Text="" FontSize="16" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
                         <TextBlock Text="Metallic" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
-                        <TextBox Text="" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
+                        <TextBox Text="" FontSize="16" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
                         <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1" />
                         <Button Command="{Binding YeetOut}">Hello</Button>
                     </StackPanel>
                 </Border>
 
                 <!-- Page which displays info on our workload. -->
-                <TabControl Grid.Column="1" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding TabBinding, FallbackValue='fb'}" Grid.ColumnSpan="3">
+                <TabControl Grid.Column="1" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding TabBinding, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=0}" Grid.ColumnSpan="1">
                     <TabControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Header, FallbackValue=Sample}" Foreground="{DynamicResource DarkMode_Tone5_Brush}"/>
@@ -105,6 +102,36 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="54"/>
+                            <!-- Section for error counting -->
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" CornerRadius="10" Margin="0 0 10 0" >
+                            <Label Background="Green" Margin="0"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Image Margin="3" Source="/images/logo/notification.png"/>
+                            <TextBlock Text="{Binding WarnijngCount, FallbackValue=0}" VerticalAlignment="Center" FontSize="16" Foreground="PeachPuff"/>
+                            <Image Margin="3" Grid.Column="3" Source="/images/logo/cancel.png"/>
+                            <TextBlock Text="{Binding ErrorCount, FallbackValue=0}" VerticalAlignment="Center" FontSize="16" Foreground="PeachPuff"/>
+                            <Border Grid.Column="2" Background="Black" CornerRadius="2" Width="1" Margin="8 1.5 8 1.5"></Border>
+                            <TextBlock Grid.Column="2" Text="Status: " VerticalAlignment="Center" FontSize="16" Foreground="PeachPuff"/>
+                            <TextBlock Grid.Column="3" Text="{Binding AppStatus, FallbackValue=Idle...}" VerticalAlignment="Center" FontSize="16" Foreground="PeachPuff"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4" Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="2.5" Source="/images/logo/notification.png" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center" FontSize="16" Text="Output: "/>
+                                <TextBlock Text="{Binding Count, FallbackValue=0}" VerticalAlignment="Center" FontSize="16" Foreground="PeachPuff"/>
+                            </StackPanel>
+                            <Border Grid.Column="2" Background="Black" CornerRadius="2" Width="1" Margin="8 1.5 8 1.5"></Border>
+                            <Image Margin="2.5" Source="/images/logo/notification.png" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>

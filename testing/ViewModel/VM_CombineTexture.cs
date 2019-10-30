@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using testing.Models;
 using GongSolutions.Wpf.DragDrop;
@@ -24,7 +22,7 @@ namespace testing.ViewModels
 
         public String ConsoleOutput { get; set; } = "Idle";
         public ImageObject SelectedFileObject;
-        public ImageSource ImageSource { get; set; } = new BitmapImage(new Uri($"pack://application:,,,/images/logo/heart.png"));
+        public ImageSource ImageSource { get; set; } = new BitmapImage(new Uri($"pack://application:,,,/images/logo/layers.png"));
         public Image MainDisplay { get; set; } = new Image();
         public ObservableCollection<ImageObject> ImageCollection { get; set; }
         public ICommand UpdateImageList { get; set; }
@@ -42,8 +40,8 @@ namespace testing.ViewModels
         private void ListImagePaths() {
             this.ImageCollection.Add(new ImageObject
             {
-                displayName = "Kombawan",
-                location = "Nyaruhodo"
+                displayName = "Testing",
+                location = "Nowhere"
             });
         }
         private string path = @"C:\Users\pcName\Downloads\Gifs";

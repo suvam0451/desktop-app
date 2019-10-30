@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ExcelHelper.h"
 #include <string>
 #include <opencv2/opencv.hpp>
 
@@ -14,13 +15,22 @@ using namespace System::Windows::Media::Imaging;
 
 class Blob {
 public:
-	std::vector<cv::Point> contour;
-	cv::Rect boundingRect;
-	cv::Point centerPosition;
-	double dblDiagonalSize;
-	double dblAspectRatio;
+	std::vector<cv::Point> currentContour;
+	cv::Rect currentBoundingRect;
+
+	std::vector<cv::Point> centerPositions;
+
+	double dblCurrentDiagonalSize;
+	double dblCurrentAspectRatio;
+
+	bool blnCurrentMatchFoundOrNewBlob;
+	bool blnStillBeingTracked;
+	int intNumOfConsecutiveFramesWithoutAMatch;
+
+	cv::Point predictedNextPosition;
 
 	Blob(std::vector<cv::Point> _contour);
+	void predictNextPosition(void);
 };
 
 struct TextureCombiner_Preset {
@@ -49,55 +59,10 @@ struct TextureCombiner_Preset {
 class HelperLibrary
 {
 public:
-	static std::string StringManagedToSTL(String^ In)
-	{
-		const char* mine = (const char*)Marshal::StringToHGlobalAnsi(In).ToPointer();
-		std::string retval = mine;
-		Marshal::FreeHGlobal(IntPtr((void*)mine));
-		//delete(mine);
-		return retval;
-	}
+	static std::string StringManagedToSTL(String^ In);
+	static void DummyFunction(String^ _In);
 
-	// static String^ StringSTLToManaged(std::string In)
-	// {
-	// 	const char* mine = (const char*)Marshal::StringToHGlobalAnsi(In).ToPointer();
-	// 	std::string retval = mine;
-	// 	Marshal::FreeHGlobal(IntPtr((void*)mine));
-	// 	//delete(mine);
-	// 	return String^();
-	// }
-
-	//static ImageSource^ GetImageSourceFromCV(cv::Mat &In) {
-	static BitmapImage^ GetImageSourceFromCV(cv::Mat& In) {
-		// Convern OpenCV image to Bitmap...
-		System::IntPtr ptr(In.ptr());
-		Bitmap^ bitmap = gcnew Bitmap(In.cols, In.rows, In.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr);
-		// Declare a bitmap image and read the streame...
-		BitmapImage^ image = gcnew BitmapImage();
-		// Stream image data to stream...
-		MemoryStream^ ms = gcnew MemoryStream();
-
-		bitmap->Save(ms, System::Drawing::Imaging::ImageFormat::Bmp);
-		ms->Seek(0, SeekOrigin::Begin);
-		
-		// Write stream to ImageSource...
-		image->BeginInit();
-		image->StreamSource = ms;
-		image->EndInit();
-
-		// gc(Unmanaged)
-		// ms->Close();
-
-		// gc(Managed)
-		// delete(bitmap);
-		// delete(ms);
-
-		return image;
-	}
-
-	//static void TextureCombiner_Parse(Dictionary<String^, String^>^ &FileData, ) {
-		
-	//}
+	static BitmapImage^ GetImageSourceFromCV(cv::Mat& In);
 };
 
 class LaneDetector {

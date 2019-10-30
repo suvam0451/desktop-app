@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Configuration;
 
 namespace testing.Libraries
 {
@@ -55,9 +52,10 @@ namespace testing.Libraries
             visited = new bool[Vertices];
         }
 
-        public void RunDOT() {
+        public void RunDOT(bool RunInDebugMode = true) {
             String test = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.dot");
             String outPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.png");
+            if (RunInDebugMode) { MessageBox.Show("Writing result of " + test + " to " + outPath); }
             Utility.RunDOT(test, outPath);
         }
         public List<int> BFS(int s) {
@@ -124,22 +122,6 @@ namespace testing.Libraries
                 }
             }
         }
-
-        public void PrintAdjacencyMatrix()
-        {
-            for (int i = 0; i < Vertices; i++) {
-                Console.Write(i + ":[");
-                string s = "";
-                foreach (var k in adj[i])
-                {
-                    s = s + (k + ",");
-                }
-                s = s.Substring(0, s.Length - 1);
-                s = s + "]";
-                Console.Write(s);
-                Console.WriteLine();
-            }
-        }
     }
 
     class MST
@@ -177,23 +159,6 @@ namespace testing.Libraries
             cost[b, a] = value;
         }
 
-        public void printMST(int[] parent, int[,] graph) {
-            List<String> lines = new List<String>();
-            lines.Add("digraph G {");
-
-            Console.WriteLine("Edge \tWeight");
-            for (int i = 1; i < Vertices; i++) {
-                String line = parent[i] + " -> " + i + " [label=\"" + graph[i, parent[i]] + "\"];";
-                Console.WriteLine(line);
-                lines.Add(line);
-                Console.WriteLine(parent[i] + " - " + i + "\t" + graph[i, parent[i]]);
-            }
-            lines.Add("}");
-
-            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            // Utility.WriteLinesToFile(Path.Combine(DocPath, "Exmple.dot"), lines);
-        }
-
         public void primMST(int[,] graph) {
             int[] parent = new int[Vertices];
             int[] key = new int[Vertices];
@@ -221,8 +186,6 @@ namespace testing.Libraries
                     }
                 }
             }
-
-            printMST(parent, graph);
         }
 
         public void PrimsMST(int a) {
@@ -230,7 +193,7 @@ namespace testing.Libraries
             visited[a] |= true;
             int mincost = int.MaxValue;
             int minindex = a;
-            Queue<int> toprocess;
+            // Queue<int> toprocess;
 
             for (int i = 0; i < Vertices; i++) {
 

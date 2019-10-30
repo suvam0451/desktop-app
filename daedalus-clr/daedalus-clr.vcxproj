@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{30DA40C9-3A0C-4F20-9DFD-04A424693D3A}</ProjectGuid>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>daedalusclr</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -117,11 +117,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\libs\lua535\include;D:\Suvam\libs\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\libs\OpenXLSX\include;D:\Program Files\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D:\Suvam\libs\opencv\build\x64\vc15\lib\opencv_world411d.lib;lua53.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\libs\boost_1_70_0\lib64-msvc-14.1;D:\Suvam\libs\opencv\build\x64\vc15\lib;D:\libs\lua535\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world411d.lib;OpenXLSX.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files\opencv\build\x64\vc14\lib;D:\libs\OpenXLSX\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,16 +137,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CT_T1_Core.h" />
     <ClInclude Include="daedalus-clr.h" />
+    <ClInclude Include="ExcelHelper.h" />
     <ClInclude Include="HelperLibrary.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="CT_T1_Core.cpp" />
     <ClCompile Include="daedalus-clr.cpp" />
+    <ClCompile Include="ExcelHelper.cpp" />
     <ClCompile Include="HelperLibrary.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

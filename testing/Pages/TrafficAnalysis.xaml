@@ -50,13 +50,26 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="56"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Margin="0 0 10 0" Content="Open File" Command="{Binding OpenFile}"/>
-                                <Button Grid.Column="1" Margin="10 0 0 0" Content="Run Analytics" Command="{Binding AddToList}"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="8"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox Margin="0 0 0 0" FontSize="14" Tag="Input File 01" Grid.Row="0" Grid.Column="0" Text="{Binding ExcelInputFile_01}"/>
+                                <Button Grid.Row="0" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
+
+                                <TextBox Margin="0 0 0 0" FontSize="14" Tag="Output to (default path)" Grid.Row="2" Grid.Column="0" Text="{Binding ExcelInputFile_02}"/>
+                                <Button Grid.Row="2" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
+                                
+                                <Button Grid.Row="3" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Run Analytics" Command="{Binding AddToList}"/>
+                                <Button Grid.Row="4" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Update UI" Click="UpdateUI"/>
                             </Grid>
                         </StackPanel>
-                        <StackPanel Style="{StaticResource CollapsibleSegment}" Margin="0 10 0 0" >
+                        <StackPanel Style="{StaticResource CollapsibleSegment}" Margin="0 10 0 10" >
                             <!--Border BorderThickness="1,1,1,1" Style="{StaticResource AcceptDrop}" Height="50"  AllowDrop="True" Drop="FilesDropped"-->
                             <Border BorderThickness="1,1,1,1" Style="{StaticResource AcceptDrop}" Height="50"  AllowDrop="True" 
                                         dd:DragDrop.DropHandler="{Binding}"
@@ -65,6 +78,7 @@
                             </Border>
 
                         </StackPanel>
+                        <Button Margin="40 10 40 0">Open Output Folder</Button>
                     </StackPanel>
                 </Border>
                 <Border Grid.Row="4" Padding="10">
@@ -106,7 +120,7 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
+                <StackPanel x:Name="MainStackPanel" Grid.Row="0">
                     <!-- Description section of documentation -->
                     <!-- Input "bool IsMinimized" required -->
                     <StackPanel Style="{StaticResource CollapsibleSegment}">
@@ -161,7 +175,7 @@
                                 </StackPanel>
                             </Border>
                         </Border>
-                        <TextBlock Grid.Column="3" x:Name="Console" Text="{Binding ConsoleMessage, FallbackValue='Lorem ipsum dolor sit amet'}" VerticalAlignment="Center" Margin="8 0 0 0" FontSize="14"/>
+                        <TextBlock Grid.Column="3" x:Name="Console" Text="{Binding ConsoleMessage, FallbackValue='Lorem ipsum dolor sit amet', Mode=TwoWay}" VerticalAlignment="Center" Margin="8 0 0 0" FontSize="14"/>
                     </Grid>
                 </StackPanel>
             </Grid>

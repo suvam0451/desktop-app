@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="testing.UserControls.FilePickField"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:testing.UserControls"
+             mc:Ignorable="d" 
+             Name="spoilerWindow"
+             d:DesignHeight="28" d:DesignWidth="300">
+    <Grid>
+        <Grid x:Name="contentGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*" MaxWidth="100"/>
+            </Grid.ColumnDefinitions>
+
+            
+            <TextBox x:Name="theTextBox" Margin="0 0 0 0" FontSize="14" Tag="No File Selected" Grid.Column="0" Text="{Binding Secret, ElementName=spoilerWindow}" ToolTip="{Binding Secret, ElementName=spoilerWindow}" IsReadOnly="True"/>
+            <Button x:Name="theButton" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Click="TestFunc"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -14,22 +14,21 @@
     <!-- TextBox (Overridden from windows default TextBox ) -->
     <Style TargetType="{x:Type TextBox}">
 
-        <Setter Property="Padding" Value="10" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="Margin" Value="0 5 0 5" />
         <Setter Property="BorderBrush" Value="{StaticResource WordBlueBrush}" />
         <Setter Property="BorderThickness" Value="0 0 0 1" />
         <Setter Property="Background" Value="{StaticResource NierBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundVeryDarkBrush}" />
-        <Setter Property="Height" Value="36"/>
+        <Setter Property="Height" Value="26"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0"/>
-                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="26"/>
                             <RowDefinition Height="0"/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" x:Name="border" 
@@ -41,8 +40,7 @@
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
 
-                        <StackPanel Grid.Row="0"></StackPanel>
-                        <TextBlock Grid.Row="1" IsHitTestVisible="False"
+                        <TextBlock Grid.Row="0" IsHitTestVisible="False"
                                    Text="{TemplateBinding Tag}"
                                    x:Name="placeholder"
                                    Padding="{TemplateBinding Padding}"
@@ -58,7 +56,7 @@
                                         <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
                                             <Setter Property="Visibility" Value="Visible" />
                                             <Setter Property="Opacity" Value="0.5"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="VerticalAlignment" Value="Bottom"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
