@@ -7,3 +7,9 @@ bin/
 
 # Location where builds are stored(inside)...
 .vs/*
+
+# Exceptions
+!opencv_world411.dll
+!opencv_world411d.dll
+!CsvHelper.dll
+!OpenXLSX.dll
