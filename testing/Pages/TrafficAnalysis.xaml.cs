@@ -38,10 +38,10 @@ namespace testing.Pages
                 // ToAdd.MaxWidth = ToAdd.ActualWidth;
 
                 MainStackPanel.Children.Add(ToAdd);
-                Console.Text = "Successfully updated the Interface.";
+                ConsoleOutput.Message = "Successfully updated the Interface.";
             }
             catch (DirectoryNotFoundException) {
-                Console.Text = "Connectivity.png missing.";
+                ConsoleOutput.Message = "Connectivity.png missing.";
             }
         }
     }

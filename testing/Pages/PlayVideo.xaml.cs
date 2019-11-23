@@ -20,11 +20,6 @@ namespace testing.Pages
             DataContext = new VM_CVPlayVideo();
             // this.DataContext = new WindowViewModel(this);
             backend = new TextureCombine_Type1_Backend();
-
-            // Bind references to dll
-            backend._consoleref = Console;
-            // backend._displayref = MainDisplay;
-            // backend._dispatcherref = Dispatcher;
         }
 
         // Handle media file drop...

@@ -91,11 +91,12 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\libs\lua535\include;D:\Suvam\libs\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Program Files\opencv\build\include;D:\libs\OpenXLSX\include;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D:\Suvam\libs\opencv\build\x64\vc15\lib\opencv_world411.lib;lua53.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\libs\boost_1_70_0\lib64-msvc-14.1;D:\Suvam\libs\opencv\build\x64\vc15\lib;D:\libs\lua535\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world411.lib;OpenXLSX.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files\opencv\build\x64\vc15\lib;D:\libs</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -117,12 +118,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\libs\OpenXLSX\include;D:\Program Files\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Program Files\opencv\build\include;D:\libs\OpenXLSX\include;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opencv_world411d.lib;OpenXLSX.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\Program Files\opencv\build\x64\vc14\lib;D:\libs\OpenXLSX\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world411d.lib;OpenXLSX.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Program Files\opencv\build\x64\vc15\lib;D:\libs</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,6 +132,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
