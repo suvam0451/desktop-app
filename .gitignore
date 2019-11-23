@@ -9,7 +9,8 @@ bin/
 .vs/*
 
 # Exceptions
-!opencv_world411.dll
-!opencv_world411d.dll
+
+!testing/bin/x64/Release/opencv_world411.dll
+!testing/bin/x64/Debug/opencv_world411d.dll
 !CsvHelper.dll
 !OpenXLSX.dll
