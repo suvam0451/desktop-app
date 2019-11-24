@@ -129,6 +129,9 @@
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\PageTabModel.cs" />
     <Compile Include="Models\SidebarModel.cs" />
+    <Compile Include="Pages\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sidebar_Home.xaml.cs">
       <DependentUpon>Sidebar_Home.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
     <Compile Include="Pages\Workload_Default.xaml.cs">
       <DependentUpon>Workload_Default.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PlayVideo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Borders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckBoxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,6 +189,9 @@
     <Compile Include="UserControls\FilePickField.xaml.cs">
       <DependentUpon>FilePickField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Verbose_FilePicker.xaml.cs">
+      <DependentUpon>Verbose_FilePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\HeaderToImageConverter.cs" />
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
@@ -193,6 +207,7 @@
     <Compile Include="ViewModel\VM_CombineTexture.cs" />
     <Compile Include="ViewModel\VM_CVPlayVideo.cs" />
     <Compile Include="ViewModel\VM_DefaultPage.cs" />
+    <Compile Include="ViewModel\VM_SettingsPage.cs" />
     <Compile Include="ViewModel\VM_Sidebar.cs" />
     <Compile Include="ViewModel\VM_TrafficAnalysis.cs">
       <Generator>MSBuild:Compile</Generator>
@@ -248,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\FilePickField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Verbose_FilePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

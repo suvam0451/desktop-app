@@ -14,7 +14,6 @@
                 <ColumnDefinition Width="*" MaxWidth="100"/>
             </Grid.ColumnDefinitions>
 
-            
             <TextBox x:Name="theTextBox" Margin="0 0 0 0" FontSize="14" Tag="No File Selected" Grid.Column="0" Text="{Binding Secret, ElementName=spoilerWindow}" ToolTip="{Binding Secret, ElementName=spoilerWindow}" IsReadOnly="True"/>
             <Button x:Name="theButton" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Click="TestFunc"/>
         </Grid>

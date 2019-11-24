@@ -159,19 +159,28 @@ namespace testing
                             TabBinding.Add(new PageTabModel("Combine textures", EPageList.CombineTexture));
                             AppStatus = "Created workspace for Combining Textures";
                         }
-                    break; }
+                    break;
+                }
                 case 3: { 
                     TabBinding.Add(new PageTabModel("OpenCV analysis", EPageList.PlayVideo));
                     AppStatus = "Created workspace for OpenCV CPU demo";
-                    break; }
+                    break;
+                }
                 case 4: { 
                     TabBinding.Add(new PageTabModel("Welcome", EPageList.HomePage));
                     AppStatus = "Created workspace for OpenCV CPU demo";
-                    break; }
+                    break;
+                }
                 case 6: { 
                     TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
                     AppStatus = "Created workspace for Traffic Analysis";
-                    break; }
+                    break; 
+                }
+                case 7: {
+                    TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.Settings));
+                    AppStatus = "Created workspace for Settings Page";
+                    break;
+                }
                 default: break;
             }
         }

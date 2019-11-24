@@ -34,5 +34,41 @@ namespace testing.Properties {
                 this["GraphViz_Path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons")]
+        public string Darknet_Path {
+            get {
+                return ((string)(this["Darknet_Path"]));
+            }
+            set {
+                this["Darknet_Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool USE_CUDA {
+            get {
+                return ((bool)(this["USE_CUDA"]));
+            }
+            set {
+                this["USE_CUDA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool USE_HIGH_RAM {
+            get {
+                return ((bool)(this["USE_HIGH_RAM"]));
+            }
+            set {
+                this["USE_HIGH_RAM"] = value;
+            }
+        }
     }
 }

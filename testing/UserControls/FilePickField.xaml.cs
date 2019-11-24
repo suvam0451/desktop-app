@@ -21,24 +21,30 @@ namespace testing.UserControls
     /// </summary>
     public partial class FilePickField : System.Windows.Controls.UserControl
     {
-        public String Secret
-        {
+        public String Secret {
             get { return (String)GetValue(SecretProperty); }
             set { SetValue(SecretProperty, value); }
         }
+        public static readonly DependencyProperty SecretProperty =
+            DependencyProperty.Register("Secret", typeof(String), typeof(FilePickField), new PropertyMetadata("No file assigned."));
+
 
         public String Filter
         {
             get { return (String)GetValue(FilterProperty); }
             set { SetValue(FilterProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for Secret.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SecretProperty =
-            DependencyProperty.Register("Secret", typeof(String), typeof(FilePickField), new PropertyMetadata("No file assigned."));
-
         public static readonly DependencyProperty FilterProperty =
             DependencyProperty.Register("Filter", typeof(String), typeof(FilePickField), new PropertyMetadata("Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx"));
+
+
+        public bool DirectoryMode
+        {
+            get { return (bool)GetValue(DirectoryModeProperty); }
+            set { SetValue(DirectoryModeProperty, value); }
+        }
+        public static readonly DependencyProperty DirectoryModeProperty =
+            DependencyProperty.Register("DirectoryMode", typeof(bool), typeof(FilePickField), new PropertyMetadata(true));
 
 
         public FilePickField()
@@ -46,24 +52,28 @@ namespace testing.UserControls
             InitializeComponent();
         }
 
-        private void TestFunc(object sender, RoutedEventArgs e) {
- 
+        private void TestFunc(object sender, RoutedEventArgs e)
+        {
+            // Store value to revert back later...
+            String previous = Secret;
 
-            OpenFileDialog diag = new OpenFileDialog();
-            diag.Filter = Filter;
-            diag.DefaultExt = "*.xlxs";
-            diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            diag.ShowDialog();
-
-            if (diag.CheckFileExists == true)
+            if (DirectoryMode)
             {
-                try
-                {
-                    Secret = diag.FileName;
-                }
-                catch
-                {
-                }
+                FolderBrowserDialog diag = new FolderBrowserDialog();
+                diag.RootFolder = Environment.SpecialFolder.MyComputer;
+                diag.ShowDialog();
+
+                Secret = diag.SelectedPath;
+            }
+            else
+            {
+                OpenFileDialog diag = new OpenFileDialog();
+                diag.Filter = Filter;
+                diag.DefaultExt = "*.xlxs";
+                diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                diag.ShowDialog();
+
+                Secret = (diag.CheckFileExists == true && diag.FileName!="") ? diag.FileName : previous;
             }
         }
     }

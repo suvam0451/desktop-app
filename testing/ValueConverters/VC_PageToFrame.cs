@@ -31,6 +31,8 @@ namespace testing
                     return new CombineTextures_Type1();
                 case EPageList.PlayVideo:
                     return new PlayVideo();
+                case EPageList.Settings:
+                    return new Settings();
                 default:
                     Debugger.Break();
                     return null;

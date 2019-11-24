@@ -23,6 +23,7 @@
                                             Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
                                             <!--EasingColorKeyFrame KeyTime="0" Value="#FFAAAAAA"/-->
                                             <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Nier_Menu0}"/>
+                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Nier_Menu0}"/>
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames
                                             Storyboard.TargetName="Foreground"
@@ -35,12 +36,12 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <TabPanel x:Name="HeaderPanel"
-                                  Grid.Row="0"
-                                  Panel.ZIndex="1"
-                                  Margin="0,0,0,0"
-                                  IsItemsHost="True"
-                                  KeyboardNavigation.TabIndex="1"
-                                  Background="Transparent"/>
+                                      Grid.Row="0"
+                                      Panel.ZIndex="1"
+                                      Margin="0,0,0,0"
+                                      IsItemsHost="True"
+                                      KeyboardNavigation.TabIndex="1"
+                                      Background="Transparent"/>
                         <Border x:Name="Border"
                                 Grid.Row="1"
                                 BorderThickness="0"

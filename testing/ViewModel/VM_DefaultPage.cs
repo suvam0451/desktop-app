@@ -24,13 +24,10 @@ namespace testing.ViewModels
 
             TabBinding.Add(new PageTabModel("Welcome", EPageList.CombineTexture, true));
             TabBinding[0].IsSelected = true;
-            // TabBinding.Items.Add(newTabItem);
         }
 
         private void AllIs() {
             TabBinding.Add(new PageTabModel("Content", EPageList.PlayVideo));
-
-            // MessageBox.Show("Okay then. That works.");
         }
     }
 }

@@ -5,5 +5,14 @@
     <Setting Name="GraphViz_Path" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Program Files (x86)\Graphviz2.38\bin</Value>
     </Setting>
+    <Setting Name="Darknet_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Suvam\desktop-app-addons</Value>
+    </Setting>
+    <Setting Name="USE_CUDA" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="USE_HIGH_RAM" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

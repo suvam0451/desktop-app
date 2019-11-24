@@ -59,6 +59,10 @@
     <Color x:Key="WordGreen">#00c541</Color>
     <SolidColorBrush x:Key="WordGreenBrush" Color="{StaticResource WordGreen}" />
 
+    <!--Background="{StaticResource NierBackgroundBrush}"-->
+    <Color x:Key="Nier_Yellow">#e6ddaf</Color>
+    <SolidColorBrush x:Key="NierBrush_Yellow" Color="{StaticResource Nier_Yellow}" />
+    
     <!--Control colors.-->
     <Color x:Key="WindowColor">#FFE8EDF9</Color>
     <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>

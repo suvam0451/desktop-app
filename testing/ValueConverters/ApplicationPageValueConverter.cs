@@ -26,7 +26,8 @@ namespace testing
                 // Sidebars
                 case EPageList.Sidebar:
                     return new Sidebar_Home();
-
+                case EPageList.Settings:
+                    return new Settings();
 
                 // Defaults
                 default:

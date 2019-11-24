@@ -25,6 +25,7 @@
                 <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                 <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}"/>
                 <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}"/>
+                <MenuItem Header="_Settings" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="7"/>
                 <Separator />
                 <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
             </MenuItem>

@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="testing.UserControls.Verbose_FilePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:uc="clr-namespace:testing.UserControls"
+             xmlns:local="clr-namespace:testing.UserControls"
+             mc:Ignorable="d" 
+             Name="VerboseFilePicker"
+             d:DesignHeight="50" d:DesignWidth="300">
+    <StackPanel>
+        <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Title, ElementName=VerboseFilePicker}"/>
+        <uc:FilePickField x:Name="FilePick" 
+                          DirectoryMode="{Binding SetDirectoryMode, ElementName=VerboseFilePicker}"
+                          Secret="{Binding CurrentVal, ElementName=VerboseFilePicker}"/>
+    </StackPanel>
+</UserControl>
