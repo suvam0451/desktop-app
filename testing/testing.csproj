@@ -127,6 +127,9 @@
     <Compile Include="Libraries\FileSystemHelpers.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
     <Compile Include="Models\ImageModel.cs" />
+    <Compile Include="Models\ITab.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
     <Compile Include="Models\PageTabModel.cs" />
     <Compile Include="Models\SidebarModel.cs" />
     <Compile Include="Pages\Settings.xaml.cs">

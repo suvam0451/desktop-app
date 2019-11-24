@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using testing.DataModels;
 using testing.Models;
+using testing.Interfaces;
 
 namespace testing
 {
@@ -28,6 +29,10 @@ namespace testing
         #endregion
 
         #region Public Properties
+
+        public ICollection<ITab> Tabs { get; }
+
+
         /// The smallest width the window can go to
         public double WindowMinimumWidth { get; set; } = 1080;
         public String Yeet { get; set; } = "Yeeto";
@@ -145,6 +150,7 @@ namespace testing
 
             InstanceActive = new bool[6];
 
+            Tabs = new ObservableCollection<ITab>();
         }
 
         private void AppendPage_Impl(object parameter) {

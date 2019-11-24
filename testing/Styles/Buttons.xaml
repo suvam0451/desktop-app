@@ -146,7 +146,6 @@
         </Setter>
     </Style>
     
-    
     <!-- Override for windows close button-->
     <!-- Window Close Button. Derives from WindowControlButton -->
     <Style TargetType="{x:Type Button}" x:Key="W_CloseButton" BasedOn="{StaticResource WindowControlButton}">
@@ -164,10 +163,7 @@
         <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Padding" Value="0 0" />
-        <Setter Property="Margin" Value="0 0" />
         <Setter Property="Height" Value="28" />
-        <!--Setter Property="local:IsBusyProperty.Value" Value="False" /-->
 
         <Setter Property="Template">
             <Setter.Value>
@@ -268,7 +264,6 @@
                             <Setter Property="Background" TargetName="border" Value="{StaticResource ForegroundDarkBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
