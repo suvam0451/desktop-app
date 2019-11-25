@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:testing.Pages"
       xmlns:custom="clr-namespace:testing.UserControls"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+      xmlns:uc="clr-namespace:testing.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TrafficAnalysis">
@@ -63,8 +64,11 @@
                                 <TextBox Margin="0 0 0 0" FontSize="14" Tag="Input File 01" Grid.Row="0" Grid.Column="0" Text="{Binding ExcelInputFile_01}"/>
                                 <Button Grid.Row="0" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
 
-                                <TextBox Margin="0 0 0 0" FontSize="14" Tag="Output to (default path)" Grid.Row="2" Grid.Column="0" Text="{Binding ExcelInputFile_02}"/>
-                                <Button Grid.Row="2" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
+                                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <uc:Verbose_FilePicker Title="Onii-chan"/>
+                                </StackPanel>
+                                <!--TextBox Margin="0 0 0 0" FontSize="14" Tag="Output to (default path)" Grid.Row="2" Grid.Column="0" Text="{Binding ExcelInputFile_02}"/>
+                                <Button Grid.Row="2" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/-->
                                 
                                 <Button Grid.Row="3" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Run Analytics" Command="{Binding AddToList}"/>
                                 <Button Grid.Row="4" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Update UI" Click="UpdateUI"/>

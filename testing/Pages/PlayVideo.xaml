@@ -6,8 +6,9 @@
       xmlns:local="clr-namespace:testing.Modules.CombineTextures"
       xmlns:custom="clr-namespace:testing.UserControls"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="1000"
+      mc:Ignorable="d"
+      xmlns:uc="clr-namespace:testing.UserControls"
+      d:DesignHeight="2000" d:DesignWidth="1000"
       Title="CombineTextures_Type1">
 
     <!--ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}"-->
@@ -114,9 +115,8 @@
                                         </LinearGradientBrush>
                                     </Border.BorderBrush>
                                 </Border>
-                                <TextBox Text="." Padding="2" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
-
-                            </StackPanel>
+                            <TextBox Text="." Padding="2" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+                        </StackPanel>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -146,23 +146,20 @@
                         <StackPanel Style="{StaticResource CollapsibleSegment}">
                             <TextBlock FontSize="20" FontWeight="Bold">Description.</TextBlock>
                             <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
-                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Module:</Bold> Demonstration of portable OpenCV integration via C++/clr.</TextBlock>
-                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>SubModule:</Bold> Car Counting => This submodule demonstrates a crude car-counting code derived from a python implementation rewritten in C++.</TextBlock>
-                            <TextBlock/>
+                            <uc:MD_Definition Term="Module" Description="Demonstration of portable OpenCV integration via C++/clr." ExtraInfo=""/>
+                            <uc:MD_Definition Term="SubModule" Description="Car Counting => This submodule demonstrates a crude car-counting code derived from a python implementation rewritten in C++." ExtraInfo=""/>
+                        <TextBlock/>
 
                         <StackPanel>
                             <TextBlock FontSize="20" FontWeight="Bold">Interface</TextBlock>
                             <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 10"/>
-                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Input</Bold> : You can drag drop a video file to start analysis.</TextBlock>
-                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Rescaling</Bold> : Since some devices are going to be slow at computation due to hardware limitation, the rescaling field on the menu on left allows you to override rescaling values and optionally lock(save) it.</TextBlock>
-                            <TextBlock FontSize="16" TextWrapping="Wrap"><Bold>Clear</Bold> : Clear data before working on next set of textures. (<Italic>to avoid collision/override</Italic>).</TextBlock>
+                            <uc:MD_Definition Term="Input" Description="You can drag drop a video file to start analysis." ExtraInfo=""/>
+                            <uc:MD_Definition Term="Rescaling" Description="Since some devices are going to be slow at computation due to hardware limitation, the rescaling field on the menu on left allows you to override rescaling values and optionally lock(save) it." ExtraInfo=""/>
+                            <uc:MD_Definition Term="Clear" Description="Clear data before working on next set of textures." ExtraInfo="(to avoid collision/override)"/>
                             <TextBlock/>
                         </StackPanel>
                         <custom:CustomConsole Margin="0 10" Message="{Binding ConsoleMessage, Mode=TwoWay, FallbackValue=Idle...}"/>
-                        <!--ListBox ItemsSource="{Binding Collection}"
-                                 dd:DragDrop.DropHandler="{Binding}"
-                                 dd:DragDrop.IsDropTarget="True"/-->
-                        </StackPanel>
+                    </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>

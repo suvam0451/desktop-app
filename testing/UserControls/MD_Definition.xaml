@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="testing.UserControls.MD_Definition"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:testing.UserControls"
+             mc:Ignorable="d" 
+             Name="MD_Definition_N"
+             d:DesignHeight="24" d:DesignWidth="480">
+    <Grid>
+        <StackPanel>
+            <TextBlock FontSize="16" TextWrapping="Wrap">
+                <Bold><Run Text="{Binding Term, ElementName=MD_Definition_N}"/></Bold>
+                :
+                <Run Text="{Binding Description, ElementName=MD_Definition_N}"/>
+                <Italic FontSize="14"><Run Text="{Binding ExtraInfo, ElementName=MD_Definition_N}"/></Italic>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

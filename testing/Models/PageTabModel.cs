@@ -11,7 +11,6 @@ namespace testing.Models
     {
         public bool IsSelected { get; set; } = false;
         public String Header { get; set; } = "MyHeader";
-        // public String Content { get; set; } = "MyContent";
         public EPageList Content { get; set; } = EPageList.None;
 
         public PageTabModel(String _Header, EPageList _Content, bool _IsSelected = false)

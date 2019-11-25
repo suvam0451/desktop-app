@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:testing"
         mc:Ignorable="d"
+        xmlns:uc="clr-namespace:testing.UserControls"
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
         MinWidth="{Binding WindowMinimumWidth}"
@@ -78,33 +79,51 @@
                         <TextBox Text="" FontSize="16" Padding="2" Tag="{Binding Yeet}" ToolTip="Default roughness to assume, in case texture input is missing."></TextBox>
                         <TextBlock Text="Metallic" FontWeight="Bold" Foreground="{StaticResource Nier_Level0_Brush}"></TextBlock>
                         <TextBox Text="" FontSize="16" Padding="2" Tag="Range: 0-255" ToolTip="Default metallic to assume, in case texture input is missing."></TextBox>
-                        <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1" />
-                        <Button Command="{Binding YeetOut}">Hello</Button>
+                        <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="1"/>
+                        <Button Command="{Binding TestButton}" Content="TestButton"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Page which displays info on our workload. -->
-                <TabControl Grid.Column="1" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding TabBinding, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=0}" Grid.ColumnSpan="1">
-                    <TabControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Header, FallbackValue=Sample}" Foreground="{DynamicResource DarkMode_Tone5_Brush}"/>
-                                <TextBlock HorizontalAlignment="Right" Margin="10 0 0 0">
-                                    <Hyperlink Command="{Binding CloseTabCommand}">X</Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
-                    <TabControl.ContentTemplate>
-                        <DataTemplate>
-                            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}">
-                                <Border Background="{StaticResource Nier_Level0_Brush}">
-                                    <Frame NavigationUIVisibility="Hidden" Grid.Column="0" x:Name="Workspace_Home" Content="{Binding Content, Converter={local:ApplicationPageValueConverter}}" Grid.ColumnSpan="2"/>
-                                </Border>
-                            </ScrollViewer>
-                        </DataTemplate>
-                    </TabControl.ContentTemplate>
-                </TabControl>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="*" MaxHeight="256"/>
+                    </Grid.RowDefinitions>
+
+                    <TabControl Grid.Row="0" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding Tabs, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=0}" Grid.ColumnSpan="1">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name, FallbackValue=Sample}" Foreground="{DynamicResource DarkMode_Tone5_Brush}"/>
+                                    <TextBlock HorizontalAlignment="Right" Margin="10 0 0 0">
+                                        <Hyperlink Command="{Binding CloseCommand}">X</Hyperlink>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Background="{StaticResource Nier_Level0_Brush}">
+                                    <Border Background="{StaticResource Nier_Level0_Brush}">
+                                        <Frame NavigationUIVisibility="Hidden" Grid.Column="0" x:Name="Workspace_Home" Content="{Binding Content, Converter={local:ApplicationPageValueConverter}}" Grid.ColumnSpan="2"/>
+                                    </Border>
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+                    <GridSplitter Grid.Row="1" Height="10" HorizontalAlignment="Stretch" Background="Blue"/>
+                    <StackPanel Grid.Row="2">
+                        <ItemsControl ItemsSource="{Binding ConsoleStackPanel}"/>
+                        <Grid>
+                            
+                        </Grid>
+                        <uc:MD_Definition Term="Excelsior"/>
+                        <!--TextBlock Grid.Row="2">Onii-chan</-->
+                    </StackPanel>
+
+                </Grid>
             </Grid>
             <Grid Grid.Row="1">
                 <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">

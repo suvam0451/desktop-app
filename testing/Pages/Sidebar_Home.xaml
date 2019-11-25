@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:testing.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
+      xmlns:uc="clr-namespace:testing.UserControls"
       d:DesignHeight="600" d:DesignWidth="{Binding DesignWidth, FallbackValue=50}"
       Title="Sidebar">
 

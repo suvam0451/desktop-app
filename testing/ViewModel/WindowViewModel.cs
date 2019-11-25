@@ -10,6 +10,8 @@ using System.Windows.Input;
 using testing.DataModels;
 using testing.Models;
 using testing.Interfaces;
+using System.Collections.Specialized;
+using System.Windows.Controls;
 
 namespace testing
 {
@@ -31,7 +33,10 @@ namespace testing
         #region Public Properties
 
         public ICollection<ITab> Tabs { get; }
+        private readonly ObservableCollection<ITab> tabs;
 
+        public ObservableCollection<PageTabModel> TabBinding { get; set; }
+        public ObservableCollection<FrameworkElement> ConsoleStackPanel { get; set; }
 
         /// The smallest width the window can go to
         public double WindowMinimumWidth { get; set; } = 1080;
@@ -50,7 +55,6 @@ namespace testing
         public int ResizeBorder {
             get { return (mWindow.WindowState == WindowState.Maximized) ? 0 : 4; }
         }
-        public ObservableCollection<PageTabModel> TabBinding { get; set; }
         public int SelectedTabIndex { get; set; }
         public Dictionary<EPageList, bool> TabTracking { get; set; }
 
@@ -107,6 +111,7 @@ namespace testing
 
         public ICommand MenuCommand { get; set; }
         public ICommand AppendPage { get; set; }
+        public ICommand TestButton { get; set; }
 
         #endregion
 
@@ -128,69 +133,87 @@ namespace testing
             };
 
             MenuCommand = new RelayCommand(
-                o => { SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()); }, 
-                o => true );
+                o => { SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()); },  o => true );
             AppendPage = new RelayCommand(
-                o => { AppendPage_Impl(o); },
-                o => true );
+                o => { AppendPage_Impl(o); }, o => true );
+            TestButton = new RelayCommand(
+                o => { ApplicationConsoleEventsHandler(o, EventArgs.Empty); }, o => true);
 
             // Initialize Dictionary
             TabTracking = new Dictionary<EPageList, bool>();
 
 
             TabBinding = new ObservableCollection<PageTabModel>();
+
             TabBinding.Add(new PageTabModel("Combine Textures", EPageList.CombineTexture));
             TabTracking.Add(TabBinding[0].Content, true);
 
-            // TabBinding[0].Content
-            // 
-            // CurrentTabBinding = TabBinding[0];
             SelectedTabIndex = 0;
 
 
             InstanceActive = new bool[6];
 
-            Tabs = new ObservableCollection<ITab>();
+            tabs = new ObservableCollection<ITab>();
+            ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
+            ConsoleStackPanel.Add(new Button { Content = "Yamete" });
+            tabs.CollectionChanged += Tabs_CollectionChanged;
+
+            Tabs = tabs;
+            
+            Tabs.Add(new MainPageTabs("Combine Textures", EPageList.CombineTexture));
+            Tabs.Add(new MainPageTabs("OpenCV test", EPageList.PlayVideo));
+        }
+
+        private void Tabs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            
+            ITab tab;
+            
+            switch (e.Action) {
+                case NotifyCollectionChangedAction.Add:
+                    tab = (ITab)e.NewItems[0];
+                    tab.CloseRequested += OnTabCloseRequested;
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    tab = (ITab)e.OldItems[0];
+                    tab.CloseRequested -= OnTabCloseRequested;
+                    break;
+            }
+        }
+
+        private void OnTabCloseRequested(object sender, EventArgs e) {
+            Tabs.Remove((ITab)sender);
         }
 
         private void AppendPage_Impl(object parameter) {
             int PageID = Convert.ToInt32(parameter);
+            if (TabTracking.ContainsKey((EPageList)PageID)) {
+                AppStatus = "Workspace already exists.";
+                return;
+            };
+
             switch (PageID) {
                 case 2: { 
-                        if (TabTracking.ContainsKey(EPageList.CombineTexture))
-                        {
-                            AppStatus = "Workspace for Texture Assembler already exists.";
-                        }
-                        else {
-                            TabBinding.Add(new PageTabModel("Combine textures", EPageList.CombineTexture));
-                            AppStatus = "Created workspace for Combining Textures";
-                        }
-                    break;
+                    Tabs.Add(new MainPageTabs("Combine textures", EPageList.CombineTexture)); break;
                 }
                 case 3: { 
-                    TabBinding.Add(new PageTabModel("OpenCV analysis", EPageList.PlayVideo));
-                    AppStatus = "Created workspace for OpenCV CPU demo";
-                    break;
+                    Tabs.Add(new MainPageTabs("OpenCV analysis", EPageList.PlayVideo)); break;
                 }
                 case 4: { 
-                    TabBinding.Add(new PageTabModel("Welcome", EPageList.HomePage));
-                    AppStatus = "Created workspace for OpenCV CPU demo";
-                    break;
+                    Tabs.Add(new MainPageTabs("Welcome", EPageList.HomePage)); break;
                 }
                 case 6: { 
-                    TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.TrafficAnalysis));
-                    AppStatus = "Created workspace for Traffic Analysis";
-                    break; 
+                    Tabs.Add(new MainPageTabs("Traffic Analysis", EPageList.TrafficAnalysis)); break; 
                 }
                 case 7: {
-                    TabBinding.Add(new PageTabModel("Traffic Analysis", EPageList.Settings));
-                    AppStatus = "Created workspace for Settings Page";
-                    break;
+                    Tabs.Add(new MainPageTabs("Traffic Analysis", EPageList.Settings)); break;
                 }
                 default: break;
             }
         }
 
+        private void ApplicationConsoleEventsHandler(object sender, EventArgs e) { 
+           MessageBox.Show(DateTime.Now.ToString());
+        }
         #endregion
 
         #region Private Helpers

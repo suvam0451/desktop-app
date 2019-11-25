@@ -192,6 +192,9 @@
     <Compile Include="UserControls\FilePickField.xaml.cs">
       <DependentUpon>FilePickField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MD_Definition.xaml.cs">
+      <DependentUpon>MD_Definition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Verbose_FilePicker.xaml.cs">
       <DependentUpon>Verbose_FilePicker.xaml</DependentUpon>
     </Compile>
@@ -266,6 +269,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\FilePickField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MD_Definition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
