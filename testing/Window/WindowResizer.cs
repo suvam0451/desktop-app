@@ -10,28 +10,17 @@ namespace testing
     /// The dock position of the window
     public enum WindowDockPosition
     {
-        /// Not docked
         Undocked = 0,
-        /// Docked to the left of the screen
         Left = 1,
-        /// Docked to the right of the screen
         Right = 2,
-        /// Docked to the top/bottom of the screen
         TopBottom = 3,
-        /// Docked to the top-left of the screen
         TopLeft = 4,
-        /// Docked to the top-right of the screen
         TopRight = 5,
-        /// Docked to the bottom-left of the screen
         BottomLeft = 6,
-        /// Docked to the bottom-right of the screen
         BottomRight = 7,
     }
 
 
-    /// <summary>
-    /// Fixes the issue with Windows of Style <see cref="WindowStyle.None"/> covering the taskbar
-    /// </summary>
     public class WindowResizer
     {
         #region Private Members

@@ -14,5 +14,8 @@
     <Setting Name="USE_HIGH_RAM" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="OpenCV_DefaultVideo" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\Suvam\desktop-app-addons\OpenCV_Samples\CarsDrivingUnderBridge.mp4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

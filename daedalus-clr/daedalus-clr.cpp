@@ -172,12 +172,12 @@ void daedalus_clr::TextureCombine_Type1_Backend::HandleMediaDrop(String^ strarr)
 
 		bInFirstFrame = false;
 		frameCount++;
+		
 		chCheckForEscKey = cv::waitKey(1);
 
 		if (chCheckForEscKey != 27) {
 			cv::waitKey(0);
 		}
-		chCheckForEscKey = cv::waitKey(1);
 	}
 	cap.release();
 	cv::destroyAllWindows();
@@ -395,7 +395,7 @@ void daedalus_clr::TextureCombine_Type1_Backend::HandleFileDrop(ImageDelegate^ i
 
 	imgsrc = HelperLibrary::GetImageSourceFromCV(out);
 
-	MessageBox::Show("Used to meet in the eastside");
+	// MessageBox::Show("Used to meet in the eastside");
 	imagedel(imgsrc);
 	// consoleDel(gcnew String("Completed Task"));
 

@@ -70,5 +70,14 @@ namespace testing.Properties {
                 this["USE_HIGH_RAM"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons\\OpenCV_Samples\\CarsDrivingUnderBridge.mp4")]
+        public string OpenCV_DefaultVideo {
+            get {
+                return ((string)(this["OpenCV_DefaultVideo"]));
+            }
+        }
     }
 }

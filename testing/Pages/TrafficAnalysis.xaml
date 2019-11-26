@@ -65,7 +65,10 @@
                                 <Button Grid.Row="0" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
 
                                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <uc:Verbose_FilePicker Title="Onii-chan"/>
+                                    <uc:Verbose_FilePicker Title="Path to graph" 
+                                                           SelectedPath="{Binding ExcelInputFile_01, Mode=TwoWay, FallbackValue='No path selected'}"
+                                                           DirectoryMode="False"
+                                                           FileFilter="{StaticResource FileRegex_Excel}"/>
                                 </StackPanel>
                                 <!--TextBox Margin="0 0 0 0" FontSize="14" Tag="Output to (default path)" Grid.Row="2" Grid.Column="0" Text="{Binding ExcelInputFile_02}"/>
                                 <Button Grid.Row="2" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/-->

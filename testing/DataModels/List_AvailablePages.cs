@@ -18,6 +18,7 @@ namespace testing.DataModels
         //
         Sidebar = 5,
         TrafficAnalysis = 6,
-        Settings = 7
+        Settings = 7,
+        YOLOSample = 8
     }
 }

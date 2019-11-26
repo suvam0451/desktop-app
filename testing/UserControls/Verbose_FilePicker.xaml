@@ -9,9 +9,21 @@
              Name="VerboseFilePicker"
              d:DesignHeight="50" d:DesignWidth="300">
     <StackPanel>
-        <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Title, ElementName=VerboseFilePicker}"/>
-        <uc:FilePickField x:Name="FilePick" 
-                          DirectoryMode="{Binding SetDirectoryMode, ElementName=VerboseFilePicker}"
-                          Secret="{Binding CurrentVal, ElementName=VerboseFilePicker}"/>
+
+        <StackPanel>
+            <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Title, ElementName=VerboseFilePicker, FallbackValue=Onii}"/>
+            <Grid x:Name="contentGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*" MaxWidth="100"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="theTextBox" Margin="0 0 0 0" FontSize="14" Tag="No File Selected" Grid.Column="0" 
+                     Text="{Binding SelectedPath, ElementName=VerboseFilePicker, FallbackValue='No Path selected'}" 
+                     ToolTip="{Binding SelectedPath, ElementName=VerboseFilePicker, FallbackValue='No Path selected'}"
+                     IsReadOnly="True"/>
+                <Button x:Name="theButton" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Click="TestFunc" />
+            </Grid>
+        </StackPanel>
     </StackPanel>
 </UserControl>

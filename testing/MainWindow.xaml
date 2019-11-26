@@ -38,16 +38,17 @@
                 <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
             </MenuItem>
             <MenuItem FontSize="14" Header="_Tools">
-                <MenuItem Header="_Combine Textures" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="2" />
-                <MenuItem Header="_OpenCV_Video" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="3" />
-                <MenuItem Header="_Traffic Analysis" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="6"/>
+                <MenuItem Header="_TexCombine" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="2" />
+                <MenuItem Header="_OpenCV_demo" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="3" />
+                <MenuItem Header="_Analytics_demo" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="6"/>
+                <MenuItem Header="_YOLO_demo" Foreground="{StaticResource Nier_Menu0_Brush}" Command="{Binding AppendPage}" CommandParameter="8"/>
+
                 <Separator />
             </MenuItem>
             <MenuItem FontSize="14" Header="_Help">
                 <MenuItem Header="_New" Foreground="{StaticResource Nier_Menu0_Brush}" />
                 <MenuItem Header="_Open" Foreground="{StaticResource Nier_Menu0_Brush}" />
                 <MenuItem Header="_Save" Foreground="{StaticResource Nier_Menu0_Brush}" />
-                <MenuItem Header="_I need hug" Foreground="{StaticResource Nier_Menu0_Brush}" />
                 <Separator />
                 <MenuItem Header="_Exit" Foreground="{StaticResource Nier_Menu0_Brush}"/>
             </MenuItem>
@@ -88,7 +89,7 @@
                 <Grid Grid.Column="1" Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*" MaxHeight="256"/>
                     </Grid.RowDefinitions>
 
@@ -113,18 +114,20 @@
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                     </TabControl>
-                    <GridSplitter Grid.Row="1" Height="10" HorizontalAlignment="Stretch" Background="Blue"/>
-                    <StackPanel Grid.Row="2">
-                        <ItemsControl ItemsSource="{Binding ConsoleStackPanel}"/>
-                        <Grid>
-                            
-                        </Grid>
-                        <uc:MD_Definition Term="Excelsior"/>
-                        <!--TextBlock Grid.Row="2">Onii-chan</-->
-                    </StackPanel>
+                    
+                    <!-- Splitter -->
+                    <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" Background="{StaticResource Nier_Menu0_Brush}"/>
 
+                    <!-- Console Area -->
+                    <Border Grid.Row="2" Padding="10" BorderThickness="2" BorderBrush="{StaticResource Nier_Menu0_Brush}">
+                        <StackPanel Grid.Row="2">
+                            <ItemsControl ItemsSource="{Binding ConsoleStackPanel}"/>
+                            <uc:MD_Definition Term="Excelsior"/>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </Grid>
+            
             <Grid Grid.Row="1">
                 <Border Grid.Row="1" Background="Purple" Padding="{Binding InnerContentPadding, FallbackValue=0}">
                     <Grid>

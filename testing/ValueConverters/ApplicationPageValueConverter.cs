@@ -28,8 +28,10 @@ namespace testing
                     return new Sidebar_Home();
                 case EPageList.Settings:
                     return new Settings();
+                case EPageList.YOLOSample:
+                    return new YOLO_Sample();
 
-                // Defaults
+ 
                 default:
                     Debugger.Break();
                     return null;

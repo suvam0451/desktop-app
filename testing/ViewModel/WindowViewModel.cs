@@ -193,20 +193,24 @@ namespace testing
 
             switch (PageID) {
                 case 2: { 
-                    Tabs.Add(new MainPageTabs("Combine textures", EPageList.CombineTexture)); break;
+                    Tabs.Add(new MainPageTabs("TexCombine", EPageList.CombineTexture)); break;
                 }
                 case 3: { 
-                    Tabs.Add(new MainPageTabs("OpenCV analysis", EPageList.PlayVideo)); break;
+                    Tabs.Add(new MainPageTabs("OpenCV demo", EPageList.PlayVideo)); break;
                 }
                 case 4: { 
-                    Tabs.Add(new MainPageTabs("Welcome", EPageList.HomePage)); break;
+                    Tabs.Add(new MainPageTabs("HomePage", EPageList.HomePage)); break;
                 }
                 case 6: { 
-                    Tabs.Add(new MainPageTabs("Traffic Analysis", EPageList.TrafficAnalysis)); break; 
+                    Tabs.Add(new MainPageTabs("Aanlytics demo", EPageList.TrafficAnalysis)); break; 
                 }
                 case 7: {
-                    Tabs.Add(new MainPageTabs("Traffic Analysis", EPageList.Settings)); break;
+                    Tabs.Add(new MainPageTabs("Settings", EPageList.Settings)); break;
                 }
+                case 8: {
+                    Tabs.Add(new MainPageTabs("YOLO Sample", EPageList.YOLOSample)); break;
+                }
+
                 default: break;
             }
         }

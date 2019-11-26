@@ -1,4 +1,5 @@
-﻿using GongSolutions.Wpf.DragDrop;
+﻿using daedalus_clr;
+using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,9 @@ namespace testing.ViewModels
         public String CardDescription { get; set; } = "Processes a Metallic Roughness set of textures.";
         public String VideoPath { get; set; } = "";
 
+        // Backend application
+        private TextureCombine_Type1_Backend backend;
+
         public Page _mWindow;
 
         // Boolean State Switches
@@ -30,20 +34,28 @@ namespace testing.ViewModels
         public ICommand SaveVideo { get; set; }
         public ICommand InvertRescaleControls { get; set; }
         public ICommand CollapseImage { get; set; }
+        public ICommand RunOpenCV { get; set; }
 
         // Control Bindings
         public ObservableCollection<String> AspectRatios { get; set; }
         public IList<String> AspectRatio = new List<String>();
 
         public VM_CVPlayVideo() {
-            SaveVideo = new RelayCommand(o => { AllIs(); },
-                                        o => true );
+            SaveVideo = new RelayCommand(o => { Validate_Impl(); }, o => true );
             InvertRescaleControls = new RelayCommand(o => { InverseRescale(); }, o => true);
             CollapseImage = new RelayCommand(o => { FlipBoolean(); }, o => true);
+            RunOpenCV = new RelayCommand(o => { RunOpenCV_Impl(); }, o => true);
+
 
             AspectRatios = new ObservableCollection<string>();
             this.AspectRatios.Add("1280 x 720");
             this.AspectRatios.Add("1920 x 1080");
+
+            // Fill application level default keys
+            VideoPath = Properties.Settings.Default.OpenCV_DefaultVideo;
+
+            // Initialize the backend program..
+            backend = new TextureCombine_Type1_Backend();
         }
 
         
@@ -66,11 +78,14 @@ namespace testing.ViewModels
             // State = !State;
         }
 
-        private void AllIs()
+        private void Validate_Impl()
         {
             MessageBox.Show("Path stored is: " + VideoPath);
-            // ConsoleMessage = "Not ready yet.";
-           // MessageBox.Show("Okay then. That works.");
+        }
+
+        private void RunOpenCV_Impl() {
+            MessageBox.Show("Lets do this...");
+            backend.HandleMediaDrop(VideoPath);
         }
 
         private void InverseRescale() {
