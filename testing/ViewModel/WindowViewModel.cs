@@ -12,6 +12,7 @@ using testing.Models;
 using testing.Interfaces;
 using System.Collections.Specialized;
 using System.Windows.Controls;
+using testing.UserControls;
 
 namespace testing
 {
@@ -155,7 +156,14 @@ namespace testing
 
             tabs = new ObservableCollection<ITab>();
             ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
-            ConsoleStackPanel.Add(new Button { Content = "Yamete" });
+            ConsoleStackPanel.Add(new Button { Content = "Console Area" });
+            ConsoleStackPanel.Add(new MD_Definition
+            {
+                Term = DateTime.Now.ToLongTimeString(),
+                Description = "Application initalization compelte",
+                ExtraInfo = "(Name of current workspace : \"Samples\")"
+            });
+
             tabs.CollectionChanged += Tabs_CollectionChanged;
 
             Tabs = tabs;
@@ -193,8 +201,11 @@ namespace testing
 
             switch (PageID) {
                 case 2: { 
-                    Tabs.Add(new MainPageTabs("TexCombine", EPageList.CombineTexture)); break;
-                }
+                    Tabs.Add(new MainPageTabs("TexCombine", EPageList.CombineTexture)); 
+                        ConsoleStackPanel.Add(new MD_Definition { Term = DateTime.Now.ToString(),
+                                                    Description = "Initialized TexCombine workspace."});
+                        break;
+                    }
                 case 3: { 
                     Tabs.Add(new MainPageTabs("OpenCV demo", EPageList.PlayVideo)); break;
                 }
@@ -208,7 +219,14 @@ namespace testing
                     Tabs.Add(new MainPageTabs("Settings", EPageList.Settings)); break;
                 }
                 case 8: {
-                    Tabs.Add(new MainPageTabs("YOLO Sample", EPageList.YOLOSample)); break;
+                    Tabs.Add(new MainPageTabs("YOLO Sample", EPageList.YOLOSample));
+                    ConsoleStackPanel.Add(new MD_Definition
+                    {
+                        
+                            Term = DateTime.Now.ToLongTimeString(),
+                            Description = "Initialized YOLO sample workspace."
+                    }); 
+                    break;
                 }
 
                 default: break;
@@ -220,25 +238,32 @@ namespace testing
         }
         #endregion
 
-        #region Private Helpers
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
+        private Point GetMousePosition()
         {
-            public Int32 X;
-            public Int32 Y;
-        };
-
-        // Gets the mouse position (using user32.dll)
-        private Point GetMousePosition() {
             var w32Mouse = Mouse.GetPosition(mWindow);
             // Window position added
             return new Point(w32Mouse.X + mWindow.Left, w32Mouse.Y + mWindow.Top);
         }
-        #endregion
     }
 }
+
+#region Private Helpers
+
+// [DllImport("user32.dll")]
+// [return: MarshalAs(UnmanagedType.Bool)]
+// internal static extern bool GetCursorPos(ref Win32Point pt);
+// 
+// [StructLayout(LayoutKind.Sequential)]
+// internal struct Win32Point
+// {
+//     public Int32 X;
+//     public Int32 Y;
+// };
+// 
+// // Gets the mouse position (using user32.dll)
+// private Point GetMousePosition() {
+//     var w32Mouse = Mouse.GetPosition(mWindow);
+//     // Window position added
+//     return new Point(w32Mouse.X + mWindow.Left, w32Mouse.Y + mWindow.Top);
+// }
+#endregion

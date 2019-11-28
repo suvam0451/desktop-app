@@ -18,7 +18,7 @@ namespace testing.Libraries
         /// </summary>
         public static bool FetchConnectivityMatrix<S, T>(Dictionary<int, List<int>> array, String path, bool SkipFirstRow = false)
         {
-            MessageBox.Show("Running connectivity matrix query");
+            // MessageBox.Show("Running connectivity matrix query");
             Type officeType = Type.GetTypeFromProgID("Excel.Application");
             if (officeType == null || path == null) { return false; }
 

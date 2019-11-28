@@ -72,6 +72,7 @@ namespace testing.ViewModels
         }
 
         private void OpenExcelFile() {
+            
             OpenFileDialog diag = new OpenFileDialog();
             diag.Filter = "Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx";
             diag.DefaultExt = "*.xlxs";

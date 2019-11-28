@@ -6,7 +6,7 @@
       <Value Profile="(Default)">D:\Program Files (x86)\Graphviz2.38\bin</Value>
     </Setting>
     <Setting Name="Darknet_Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Suvam\desktop-app-addons</Value>
+      <Value Profile="(Default)">D:\Suvam\desktop-app-addons\darknet\darknet.exe</Value>
     </Setting>
     <Setting Name="USE_CUDA" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -14,7 +14,7 @@
     <Setting Name="USE_HIGH_RAM" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="OpenCV_DefaultVideo" Type="System.String" Scope="Application">
+    <Setting Name="OpenCV_DefaultVideo" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Suvam\desktop-app-addons\OpenCV_Samples\CarsDrivingUnderBridge.mp4</Value>
     </Setting>
   </Settings>

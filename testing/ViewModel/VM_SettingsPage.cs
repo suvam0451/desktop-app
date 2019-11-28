@@ -39,6 +39,8 @@ namespace testing.ViewModel
             Properties.Settings.Default.USE_HIGH_RAM = USE_HIGH_RAM;
 
             Properties.Settings.Default.Save();
+
+            MessageBox.Show("Settings Updated Successfully.");
         }
     }
 }

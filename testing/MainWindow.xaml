@@ -88,9 +88,9 @@
                 <!-- Page which displays info on our workload. -->
                 <Grid Grid.Column="1" Grid.Row="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*" MaxHeight="256"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <TabControl Grid.Row="0" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding Tabs, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=0}" Grid.ColumnSpan="1">
@@ -122,7 +122,6 @@
                     <Border Grid.Row="2" Padding="10" BorderThickness="2" BorderBrush="{StaticResource Nier_Menu0_Brush}">
                         <StackPanel Grid.Row="2">
                             <ItemsControl ItemsSource="{Binding ConsoleStackPanel}"/>
-                            <uc:MD_Definition Term="Excelsior"/>
                         </StackPanel>
                     </Border>
                 </Grid>

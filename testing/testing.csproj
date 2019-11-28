@@ -129,7 +129,6 @@
     <Compile Include="Directory\ViewModel\DirectoryStructureViewModel.cs" />
     <Compile Include="Libraries\DotHelpers.cs" />
     <Compile Include="Libraries\ExcelParsers.cs" />
-    <Compile Include="Libraries\FileSystemHelpers.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ITab.cs">

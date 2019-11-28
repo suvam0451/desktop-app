@@ -37,7 +37,7 @@ namespace testing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons\\darknet\\darknet.exe")]
         public string Darknet_Path {
             get {
                 return ((string)(this["Darknet_Path"]));
@@ -71,12 +71,15 @@ namespace testing.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons\\OpenCV_Samples\\CarsDrivingUnderBridge.mp4")]
         public string OpenCV_DefaultVideo {
             get {
                 return ((string)(this["OpenCV_DefaultVideo"]));
+            }
+            set {
+                this["OpenCV_DefaultVideo"] = value;
             }
         }
     }

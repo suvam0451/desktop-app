@@ -19,8 +19,8 @@
                 <TextBlock FontSize="20" FontWeight="Bold">Settings</TextBlock>
                 <Border Height="2" Background="{StaticResource Nier_Menu0_Brush}" Margin="0 5 5 16"/>
 
-                <uc:Verbose_FilePicker Title="GraphViz Path" DirectoryMode="True" SelectedPath="{Binding GraphViz_Path}"/>
-                <uc:Verbose_FilePicker Title="Darknet Path" DirectoryMode="True" SelectedPath="{Binding Darknet_Path}" Margin="0 0 0 16"/>
+                <uc:Verbose_FilePicker Title="GraphViz Path" DirectoryMode="True" SelectedPath="{Binding GraphViz_Path, Mode=TwoWay}"/>
+                <uc:Verbose_FilePicker Title="Darknet Path" DirectoryMode="True" SelectedPath="{Binding Darknet_Path, Mode=TwoWay}" Margin="0 0 0 16"/>
 
                 <CheckBox Style="{StaticResource UpScaled}" IsChecked="{Binding USE_CUDA}">
                     <TextBlock><Bold>Use CUDA compute</Bold> (requires NVIDIA GPU)</TextBlock>

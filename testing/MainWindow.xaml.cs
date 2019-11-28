@@ -9,16 +9,5 @@ namespace testing
             InitializeComponent();
             DataContext = new WindowViewModel(this);
         }
-
-        // #region DLL imports
-        // [DllImport("devops_test.dll", CallingConvention = CallingConvention.Cdecl)]
-        // static extern int receiveIR(uint[] data, int length);
-        // 
-        // [DllImport("devops_test.dll", CallingConvention = CallingConvention.Cdecl)]
-        // static extern int Add(int first, int second);
-        // 
-        // [DllImport("devops_test.dll", CallingConvention = CallingConvention.Cdecl)]
-        // static extern int ReturnIntArraySize(int[] initial, int size);
-        // #endregion
     }
 }
