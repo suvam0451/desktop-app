@@ -11,6 +11,10 @@ bin/
 # Exceptions
 
 !testing/bin/x64/Release/opencv_world411.dll
+!testing/bin/x64/Release/CsvHelper.dll
+!testing/bin/x64/Release/OpenXLSX.dll
+
 !testing/bin/x64/Debug/opencv_world411d.dll
-!CsvHelper.dll
+!testing/bin/x64/Debug/CsvHelper.dll
+!testing/bin/x64/Debug/OpenXLSX.dll
 !OpenXLSX.dll

@@ -130,6 +130,7 @@
     <Compile Include="Libraries\DotHelpers.cs" />
     <Compile Include="Libraries\ExcelParsers.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
+    <Compile Include="Libraries\HandlerLibrary.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ITab.cs">
       <Generator>MSBuild:Compile</Generator>

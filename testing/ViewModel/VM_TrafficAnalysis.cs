@@ -29,8 +29,8 @@ namespace testing.ViewModels
         public float SidebarWidth { get; set; } = 50.0f;
         public ImageSource ImageSource { get; set; } = new BitmapImage(new Uri($"pack://application:,,,/images/logo/document.png"));
 
-        public ICommand AddToList { get; set; }
-        public ICommand OpenFile { get; set; }
+        public ICommand RunDFS { get; set; }
+        // public ICommand OpenFile { get; set; }
 
         public String ExcelInputFile_01 { get; set; } = null;
         public String ExcelInputFile_02 { get; set; } = null;
@@ -46,8 +46,8 @@ namespace testing.ViewModels
             this.TextElements.Add(new StringItemModel("Wheezie"));
             this.TextElements.Add(new StringItemModel("Wheezie"));
 
-            AddToList = new RelayCommand( o => { AddingToList(); }, o => true );
-            OpenFile = new RelayCommand( o => { OpenExcelFile(); }, o => true );
+            RunDFS = new RelayCommand( o => { AddingToList(); }, o => true );
+            // OpenFile = new RelayCommand( o => { OpenExcelFile(); }, o => true );
         }
 
         #region Sidebar Interaface
@@ -71,24 +71,24 @@ namespace testing.ViewModels
             ExcelHelper.UniformFactorMethod(ExcelInputFile_01, true);
         }
 
-        private void OpenExcelFile() {
-            
-            OpenFileDialog diag = new OpenFileDialog();
-            diag.Filter = "Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx";
-            diag.DefaultExt = "*.xlxs";
-            diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            diag.ShowDialog();
-
-            if (diag.CheckFileExists == true) {
-                try {
-                    ExcelInputFile_01 = diag.FileName;
-                    ConsoleMessage = "File: " + ExcelInputFile_01 + " loaded.";
-                }
-                catch {
-                    ConsoleMessage = "Could not open file. Check permissions";
-                }
-            }
-        }
+        // private void OpenExcelFile() {
+        //     
+        //     OpenFileDialog diag = new OpenFileDialog();
+        //     diag.Filter = "Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx";
+        //     diag.DefaultExt = "*.xlxs";
+        //     diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //     diag.ShowDialog();
+        // 
+        //     if (diag.CheckFileExists == true) {
+        //         try {
+        //             ExcelInputFile_01 = diag.FileName;
+        //             ConsoleMessage = "File: " + ExcelInputFile_01 + " loaded.";
+        //         }
+        //         catch {
+        //             ConsoleMessage = "Could not open file. Check permissions";
+        //         }
+        //     }
+        // }
         #endregion
     }
 }

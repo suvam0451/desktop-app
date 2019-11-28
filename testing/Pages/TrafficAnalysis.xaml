@@ -35,7 +35,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Foreground="White" Text="Metallic Roughness" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Foreground="White" Text="Analytics Demo" FontSize="20"/>
                         <Button Grid.Column="1" Command="{Binding CollapseDetails}">
                             <Image Source="/images/flipui.png"/>
                         </Button>
@@ -49,33 +49,12 @@
                 <Border Grid.Row="2" Padding="10">
                     <StackPanel Height="auto">
                         <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="56"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="8"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBox Margin="0 0 0 0" FontSize="14" Tag="Input File 01" Grid.Row="0" Grid.Column="0" Text="{Binding ExcelInputFile_01}"/>
-                                <Button Grid.Row="0" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/>
-
-                                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <uc:Verbose_FilePicker Title="Path to graph" 
+                            <uc:Verbose_FilePicker Title="Path to connectivity graph" 
                                                            SelectedPath="{Binding ExcelInputFile_01, Mode=TwoWay, FallbackValue='No path selected'}"
                                                            DirectoryMode="False"
                                                            FileFilter="{StaticResource FileRegex_Excel}"/>
-                                </StackPanel>
-                                <!--TextBox Margin="0 0 0 0" FontSize="14" Tag="Output to (default path)" Grid.Row="2" Grid.Column="0" Text="{Binding ExcelInputFile_02}"/>
-                                <Button Grid.Row="2" Grid.Column="1" Margin="5 0 0 0" Content="Browse" Command="{Binding OpenFile}"/-->
-                                
-                                <Button Grid.Row="3" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Run Analytics" Command="{Binding AddToList}"/>
-                                <Button Grid.Row="4" Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Update UI" Click="UpdateUI"/>
-                            </Grid>
+                            <Button Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Run DFS" Command="{Binding RunDFS}"/>
+                            <Button Margin="40 10 40 0" Grid.ColumnSpan="2" Content="Update UI" Click="UpdateUI" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource CollapsibleSegment}" Margin="0 10 0 10" >
                             <!--Border BorderThickness="1,1,1,1" Style="{StaticResource AcceptDrop}" Height="50"  AllowDrop="True" Drop="FilesDropped"-->
