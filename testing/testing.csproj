@@ -82,6 +82,9 @@
     <ApplicationIcon>images\logo\applogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.12.2.1\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.2.1.0\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
@@ -210,6 +213,9 @@
     <Compile Include="UserControls\MD_h3.xaml.cs">
       <DependentUpon>MD_h3.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\OutputLog.xaml.cs">
+      <DependentUpon>OutputLog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Verbose_FilePicker.xaml.cs">
       <DependentUpon>Verbose_FilePicker.xaml</DependentUpon>
     </Compile>
@@ -295,6 +301,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MD_h3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\OutputLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

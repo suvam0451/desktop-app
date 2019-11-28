@@ -6,6 +6,6 @@
     <!-- List of Regex patterns for FilePickers -->
     <clr:String x:Key="FileRegex_Excel">"Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx"</clr:String>
     <clr:String x:Key="FileRegex_Video">"MP4 File(*.mp4)|*.mp4|MOV File(*.mov)|*.mov|FLV File(*.flv)|*.flv"</clr:String>
+    <clr:String x:Key="FileRegex_CSV">"CSV File(*.csv)|*.csv"</clr:String>
     <clr:String x:Key="FileRegex_Music">"MP3 File(*.mp3)|*.mp3"</clr:String>
-    
 </ResourceDictionary>

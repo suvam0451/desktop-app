@@ -124,29 +124,32 @@
         <Border Grid.Column="4" Margin="0 8 8 8" Padding="10" CornerRadius="4" Height="Auto" Background="{StaticResource NierBackgroundBrush}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <!-- Description section of documentation -->
-                    <!-- Input "bool IsMinimized" required -->
-                    <StackPanel Style="{StaticResource CollapsibleSegment}">
-                        <uc:MD_h3 Title="Description."/>
-                        <uc:MD_Definition Term="Module" Description="Demonstration of portable OpenCV integration via C++/clr." ExtraInfo=""/>
-                        <uc:MD_Definition Term="SubModule" Description="Car Counting => This submodule demonstrates a crude car-counting code derived from a python implementation rewritten in C++." ExtraInfo=""/>
+                    <uc:MD_h3 Title="Description."/>
+                    <uc:MD_Definition Term="Module" Description="Demonstration of portable OpenCV integration via C++/clr." ExtraInfo=""/>
+                    <uc:MD_Definition Term="SubModule" Description="Car Counting => This submodule demonstrates a crude car-counting code derived from a python implementation rewritten in C++." ExtraInfo=""/>
+                    <uc:MD_h3 Title="Interface" Margin="0 16 0 0"/>
+                    <uc:MD_Definition Term="Input" Description="You can drag drop a video file to start analysis." ExtraInfo=""/>
+                    <uc:MD_Definition Term="Rescaling" Description="Since some devices are going to be slow at computation due to hardware limitation, the rescaling field on the menu on left allows you to override rescaling values and optionally lock(save) it." ExtraInfo=""/>
+                    <uc:MD_Definition Term="Clear" Description="Clear data before working on next set of textures." ExtraInfo="(to avoid collision/override)"/>
 
-                        <StackPanel Margin="0 12 0 16">
-                            <uc:MD_h3 Title="Interface"/>
-                            <uc:MD_Definition Term="Input" Description="You can drag drop a video file to start analysis." ExtraInfo=""/>
-                            <uc:MD_Definition Term="Rescaling" Description="Since some devices are going to be slow at computation due to hardware limitation, the rescaling field on the menu on left allows you to override rescaling values and optionally lock(save) it." ExtraInfo=""/>
-                            <uc:MD_Definition Term="Clear" Description="Clear data before working on next set of textures." ExtraInfo="(to avoid collision/override)"/>
-                        </StackPanel>
 
-                        <!-- Console Area -->
                         <custom:CustomConsole Margin="0 10" Message="{Binding ConsoleMessage, Mode=TwoWay, FallbackValue=Idle...}"/>
-                    </StackPanel>
                 </StackPanel>
+                <!-- Console Area -->
+                <Border Grid.Row="1" Padding="10" BorderThickness="2" BorderBrush="{StaticResource Nier_Menu0_Brush}">
+                    <StackPanel>
+                        <Button Content="Console Area"/>
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding ConsoleStackPanel}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
             </Grid>
         </Border>
     </Grid>

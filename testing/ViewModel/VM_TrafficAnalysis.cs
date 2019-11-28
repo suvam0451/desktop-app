@@ -14,9 +14,18 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using testing.Libraries;
 using daedalus_clr;
+using testing.Library;
+using CsvHelper;
+using System.IO;
+using System.Threading;
 
 namespace testing.ViewModels
 {
+    public class Foo {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
     public class VM_TrafficAnalysis : testing.BaseViewModel, ISidebarTarget
     {
         public String DummyTextBlock { get; set; } = "bheege naina";
@@ -27,17 +36,22 @@ namespace testing.ViewModels
         public String ConsoleMessage { get; set; } = "Lorem ipsum dolor sit amet";
         public String ProjectPrefix { get; set; } = "Default_";
         public float SidebarWidth { get; set; } = 50.0f;
-        public ImageSource ImageSource { get; set; } = new BitmapImage(new Uri($"pack://application:,,,/images/logo/document.png"));
+        public ImageSource TestImageSource { get; set; } = new BitmapImage(new Uri($"pack://application:,,,/images/logo/document.png"));
+
+
 
         public ICommand RunDFS { get; set; }
+        public ICommand CSVTest { get; set; }
         // public ICommand OpenFile { get; set; }
 
         public String ExcelInputFile_01 { get; set; } = null;
         public String ExcelInputFile_02 { get; set; } = null;
         public String ExcelOutputFile_01 { get; set; } = null;
+        public String CsvInputFile { get; set; }
 
         public VM_TrafficAnalysis()
         {
+            CsvInputFile = "F:\\WinterWildfire\\YOLO_Sample\\Archive.csv";
             this.SidebarItems = new ObservableCollection<SidebarModel>();
             this.TextElements = new ObservableCollection<StringItemModel>();
 
@@ -47,6 +61,7 @@ namespace testing.ViewModels
             this.TextElements.Add(new StringItemModel("Wheezie"));
 
             RunDFS = new RelayCommand( o => { AddingToList(); }, o => true );
+            CSVTest = new RelayCommand(o => { CSVTest_Impl(); }, o => true);
             // OpenFile = new RelayCommand( o => { OpenExcelFile(); }, o => true );
         }
 
@@ -62,33 +77,46 @@ namespace testing.ViewModels
         #endregion
 
         #region Method Calls
+        private async void CSVTest_Impl()
+        {
+            Dictionary<int, List<int>> mine = new Dictionary<int, List<int>>();
+            var reader = new StreamReader(CsvInputFile);
+            var config = new CsvHelper.Configuration.Configuration();
+            config.HasHeaderRecord = false;
+
+            using (var csv = new CsvReader(reader, config)) {
+               
+                var records = csv.GetRecords<Foo>();
+                // System.Windows.MessageBox.Show("Number of entries found: " + records.Count().ToString());
+                foreach(var record in records)
+                {
+                    // System.Windows.MessageBox.Show(record.Id.ToString() + " has value of " + record.Name);
+                    mine[record.Id] = record.Name.Split(',').Select(int.Parse).ToList();
+                }
+                DotHelpers.BuildConnectivityGraph(mine);
+                // ExcelHelper.UniformFactorMethod(ExcelInputFile_01, true);
+            }
+            reader.Dispose();
+
+            var path = Path.Combine(Environment.CurrentDirectory, "Projects", "Sample", "Connectivity.png");
+
+            // For not locking the image...
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.UriSource = new Uri(path);
+            image.EndInit();
+            TestImageSource = image;
+        }
+
         private void AddingToList()
         {
             Dictionary<int, List<int>> mine = new Dictionary<int, List<int>>();
             ExcelParsers.FetchConnectivityMatrix<int, int>(mine, ExcelInputFile_01, true);
             DotHelpers.BuildConnectivityGraph(mine);
-            
-            ExcelHelper.UniformFactorMethod(ExcelInputFile_01, true);
         }
 
-        // private void OpenExcelFile() {
-        //     
-        //     OpenFileDialog diag = new OpenFileDialog();
-        //     diag.Filter = "Connectivity Sheet(*.xlsx)|*.xlsx|Connectivity Sheet(old format)(*.xlsx)|*.xlsx";
-        //     diag.DefaultExt = "*.xlxs";
-        //     diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        //     diag.ShowDialog();
-        // 
-        //     if (diag.CheckFileExists == true) {
-        //         try {
-        //             ExcelInputFile_01 = diag.FileName;
-        //             ConsoleMessage = "File: " + ExcelInputFile_01 + " loaded.";
-        //         }
-        //         catch {
-        //             ConsoleMessage = "Could not open file. Check permissions";
-        //         }
-        //     }
-        // }
         #endregion
     }
 }

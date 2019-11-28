@@ -84,7 +84,7 @@ namespace testing.ViewModels
         }
 
         private void RunOpenCV_Impl() {
-            MessageBox.Show("Lets do this...");
+            // MessageBox.Show("Lets do this...");
             backend.HandleMediaDrop(VideoPath);
         }
 

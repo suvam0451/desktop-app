@@ -18,6 +18,7 @@ using GongSolutions.Wpf.DragDrop;
 using System.IO;
 using testing.UserControls;
 using System.Windows.Threading;
+using testing.Library;
 
 namespace testing.ViewModels
 {
@@ -89,17 +90,10 @@ namespace testing.ViewModels
             String DarknetDir = Properties.Settings.Default.Darknet_Path;
             String WorkspaceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
 
-            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
-            Proc.StartInfo.WorkingDirectory = DarknetDir;
-            Proc.StartInfo.FileName = @"cmd.exe";
-            Proc.StartInfo.RedirectStandardInput = true;
-            Proc.StartInfo.UseShellExecute = false;
 
-
+            CmdProcess Proc = new CmdProcess(DarknetDir);
             foreach (string str in ImageQueue)
             {
-                Proc.Start();
-
                 // Section to copy over image
                 String ImageCopyStartPath = Path.Combine(DarknetDir, "predictions.jpg");
                 String ImageCopyEndPath = Path.Combine(WorkspaceDir, "ImageTag", Path.GetFileName(str));
@@ -109,36 +103,19 @@ namespace testing.ViewModels
                 String ResultFileEndPath = Path.Combine(WorkspaceDir, "ImageData", Path.GetFileName(str) + ".txt");
 
 
-                StreamWriter myStream = Proc.StandardInput;
                 if (ShowResultImage)
                 {
-                    myStream.WriteLine(@"darknet.exe detect" +
-                        " cfg/yolov3.cfg " +
-                        "weights/yolov3.weights " + str);
-                    // " > resultant.txt");
-
-
-                    if (File.Exists(ImageCopyEndPath)) { File.Delete(ImageCopyEndPath); }
-                    if (File.Exists(ResultFileEndPath)) { File.Delete(ResultFileEndPath); }
-
-                    myStream.WriteLine("copy " + ImageCopyStartPath + " " + ImageCopyEndPath);
-                    myStream.WriteLine("copy " + ResultFileStartPath + " " + ResultFileEndPath);
+                    Proc.AddToQueue(@"darknet.exe detect cfg/yolov3.cfg weights/yolov3.weights " + str);
+                    Proc.QueueCopy(ImageCopyStartPath, ImageCopyEndPath);
                 }
                 else
                 {
-                    myStream.WriteLine(@"darknet.exe detect" +
-                        " cfg/yolov3.cfg " +
-                        "-dont_show" +
-                        "weights/yolov3.weights " + str);
-
-
-                    if (File.Exists(ResultFileEndPath)) { File.Delete(ResultFileEndPath); }
-
-                    myStream.WriteLine("copy " + ResultFileStartPath + " " + ResultFileEndPath);
+                    Proc.AddToQueue(@"darknet.exe detect cfg/yolov3.cfg -dont_show weights/yolov3.weights " + str);
                 }
-                myStream.Close();
-                Proc.WaitForExit();
+                Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
             }
+            Proc.Execute();
+            Proc.Destroy();
         }
 
 

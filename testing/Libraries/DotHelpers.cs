@@ -15,7 +15,7 @@ namespace testing.Libraries
             lazy.BuildConnectivity();
             lazy.WriteFile("any");
             lazy.RunDOT();
-            MessageBox.Show("finished generating image...");
+            // MessageBox.Show("finished generating image...");
             return true;
         }
     }

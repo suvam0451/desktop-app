@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using testing.Library;
 
 namespace testing.Libraries
 {
@@ -22,20 +23,13 @@ namespace testing.Libraries
             }
         }
 
-        public static void RunDOT(String filePath, String outputPath) {
-            String dot_path = Properties.Settings.Default.GraphViz_Path + "/dot";
+        public static void RunDOT(String filePath, String outputPath)
+        {
+            String CWD = Properties.Settings.Default.GraphViz_Path;
 
-            System.Diagnostics.Process Proc = new System.Diagnostics.Process();
-            Proc.StartInfo.WorkingDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
-            Proc.StartInfo.FileName = @"cmd.exe";
-            Proc.StartInfo.RedirectStandardInput = true;
-            Proc.StartInfo.UseShellExecute = false;
-            Proc.Start();
-
-            StreamWriter myStream = Proc.StandardInput;
-            myStream.WriteLine("dot -Tpng Connectivity.dot > Connectivity.png");
-            myStream.Close();
-            Proc.WaitForExit();
+            CmdProcess Proc = new CmdProcess(CWD);
+            Proc.AddToQueue("dot -Tpng " + filePath + " > " + outputPath);
+            Proc.ExecuteAndDestroy();
         }
     }
 
@@ -52,10 +46,10 @@ namespace testing.Libraries
             visited = new bool[Vertices];
         }
 
-        public void RunDOT(bool RunInDebugMode = true) {
+        public void RunDOT(bool RunInDebugMode = true)
+        {
             String test = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.dot");
             String outPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample", "Connectivity.png");
-            if (RunInDebugMode) { MessageBox.Show("Writing result of " + test + " to " + outPath); }
             Utility.RunDOT(test, outPath);
         }
         public List<int> BFS(int s) {
