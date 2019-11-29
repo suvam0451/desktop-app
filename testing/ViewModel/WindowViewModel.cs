@@ -13,6 +13,7 @@ using testing.Interfaces;
 using System.Collections.Specialized;
 using System.Windows.Controls;
 using testing.UserControls;
+using System.IO;
 
 namespace testing
 {
@@ -120,8 +121,18 @@ namespace testing
 
         /// Default constructor
         public WindowViewModel(Window window)
-        // public WindowViewModel()
         {
+            if (Properties.Settings.Default.DefaultSettings == true)
+            {
+                Properties.Settings.Default.GraphViz_Path = Path.Combine(Environment.CurrentDirectory, "modules\\Graphviz2.38\\bin");
+                Properties.Settings.Default.Darknet_Path = Path.Combine(Environment.CurrentDirectory, "modules\\darknet");
+                Properties.Settings.Default.ProjectDir = Path.Combine(Environment.CurrentDirectory, "Projects", 
+                                                            Properties.Settings.Default.ProjectName);
+                Properties.Settings.Default.Save();
+
+                MessageBox.Show(Properties.Settings.Default.ProjectDir);
+            }
+
             mWindow = window;
 
             mWindow.StateChanged += (sender, e) =>

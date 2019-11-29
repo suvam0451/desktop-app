@@ -17,5 +17,14 @@
     <Setting Name="OpenCV_DefaultVideo" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Suvam\Application\Requests\CarsDrivingUnderBridge.mp4</Value>
     </Setting>
+    <Setting Name="DefaultSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ProjectDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ProjectName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Sample</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

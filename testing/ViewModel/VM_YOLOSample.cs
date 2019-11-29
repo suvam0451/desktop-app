@@ -10,7 +10,6 @@ using testing.Models;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-// using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using testing.Libraries;
 using daedalus_clr;
@@ -19,6 +18,7 @@ using System.IO;
 using testing.UserControls;
 using System.Windows.Threading;
 using testing.Library;
+using System.Diagnostics;
 
 namespace testing.ViewModels
 {
@@ -52,69 +52,49 @@ namespace testing.ViewModels
 
         #region DragDrop_Impl
 
-        void RunDarknetVideo_Impl() {
-            String DarknetDir = Properties.Settings.Default.Darknet_Path;
-            String WorkspaceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", 
-                                                    "Sample");
+        private async void RunDarknetVideo_Impl() 
+        {
+            ConsoleLog("Tagging " + Path.GetFileName(VideoPath) + " in the background.");
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
 
-            CmdProcess Proc = new CmdProcess(DarknetDir);
+            await (Task.Run(Async_VideoTagging_Start));
 
-            if (ShowResultImage)
-            {
-                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath);
-                // darknet.exe detector demo data/ coco.data yolov3.cfg yolov3.weights http://192.168.0.80:8080/video?dummy=param.mjpg -i 0
-
-                // Proc.QueueCopy(ImageCopyStartPath, ImageCopyEndPath);
-            }
-            else
-            {
-                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg -dont_show weights/yolov3.weights -dont_show " + VideoPath);
-            }
-            Proc.ExecuteAndDestroy();
-            // Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
+            watch.Stop();
+            ConsoleLog("Video tagged in " + watch.Elapsed);       
         }
 
         void ClearCommand_Impl() { ImageQueue.Clear(); }
+
 
         /* Runs YOLO Image classification for the queued list of images. */
         private async void RunYOLO_Impl()
         {
             if (ShowResultImage)
             {
-                ConsoleStackPanel.Add(new MD_Definition
-                {
-                    Term = DateTime.Now.ToLongTimeString(),
-                    Description = "Tagging " + ImageQueue.Count + " images.",
-                    ExtraInfo = "(Images will be displayed everytime.)"
-                });
+                ConsoleLog("Tagging " + ImageQueue.Count.ToString() + " images.", "(Images will be displayed everytime.)");
             }
             else {
-                ConsoleStackPanel.Add(new MD_Definition
-                {
-                    Term = DateTime.Now.ToLongTimeString(),
-                    Description = "Tagging " + ImageQueue.Count + " images.",
-                    ExtraInfo = "(Data will be collected in background.)"
-                });
+                ConsoleLog("Tagging " + ImageQueue.Count + " images.", "(Data will be collected in background.)");
             }
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
 
             await (Task.Run(Async_ImageTagging_Start));
 
-            ConsoleStackPanel.Add(new MD_Definition
-            {
-                Term = DateTime.Now.ToLongTimeString(),
-                Description = "Tagged " + ImageQueue.Count + " images. Results can be found in /ImageData.",
-                ExtraInfo = "(Showing tagged images as well.)"
-            });
+            watch.Stop();
+            ConsoleLog("Tagged " + ImageQueue.Count + " images in " + Benchmarking.TimePassed(watch), "(Showing tagged images as well.)");
         }
+
 
         /* Processes individual image entries one by one.
          * NOTE: There is an overhead for reading the weight file every iteration.
          * Route to the other async function to batch process files
          */
-        private async void Async_ImageTagging_Start() {
+        private async void Async_ImageTagging_Start()
+        {
             String DarknetDir = Properties.Settings.Default.Darknet_Path;
-            String WorkspaceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", "Sample");
-
+            String WorkspaceDir = Properties.Settings.Default.ProjectDir;
 
             CmdProcess Proc = new CmdProcess(DarknetDir);
             foreach (string str in ImageQueue)
@@ -143,6 +123,23 @@ namespace testing.ViewModels
             Proc.Destroy();
         }
 
+        private async void Async_VideoTagging_Start()
+        {
+            String DarknetDir = Properties.Settings.Default.Darknet_Path;
+            String WorkspaceDir = Properties.Settings.Default.ProjectDir;
+
+            CmdProcess Proc = new CmdProcess(DarknetDir);
+
+            if (ShowResultImage)
+            {
+                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " > videodata.txt");
+            }
+            else
+            {
+                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg -dont_show weights/yolov3.weights " + VideoPath + "-dont_show > videodata.txt");
+            }
+            Proc.ExecuteAndDestroy();
+        }
 
         void IDropTarget.DragOver(IDropInfo dropInfo) {
             dropInfo.Effects = DragDropEffects.Copy;

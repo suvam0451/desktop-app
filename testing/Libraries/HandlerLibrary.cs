@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,14 @@ namespace testing.Library
         }
     }
 
+    public class Benchmarking {
+        public static String TimePassed(Stopwatch watch)
+        {
+            TimeSpan ts = watch.Elapsed;
+            String elapsedTime = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
+            return elapsedTime;
+        }
+    }
 
     public class FileHandler
     {
