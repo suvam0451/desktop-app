@@ -98,9 +98,12 @@ namespace testing.ViewModels
             }
             reader.Dispose();
 
+
+            
             var path = Path.Combine(Environment.CurrentDirectory, "Projects", "Sample", "Connectivity.png");
 
-            // For not locking the image...
+            /* This is part of an asynchronous function */
+            // For preventing file-locking...
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
