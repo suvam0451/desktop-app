@@ -15,7 +15,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="OpenCV_DefaultVideo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Suvam\desktop-app-addons\OpenCV_Samples\CarsDrivingUnderBridge.mp4</Value>
+      <Value Profile="(Default)">D:\Suvam\Application\Requests\CarsDrivingUnderBridge.mp4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

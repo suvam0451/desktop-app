@@ -59,8 +59,15 @@
                                 <Button Command="{Binding RunYOLO}" Grid.Column="1" Margin="10 0 0 0" Content="Run test" IsEnabled="True" />
                             </Grid>
 
+                            <uc:Verbose_FilePicker Title="Path to Video" 
+                                                       Margin="0 10 0 0"
+                                                               FileFilter="{StaticResource FileRegex_Video}" 
+                                                               SelectedPath="{Binding VideoPath, Mode=TwoWay, FallbackValue='No file selected'}"
+                                                               DirectoryMode="False"/>
+                            <Button Command="{Binding RunDarknetVideo}" Grid.Column="1" Margin="10 10 10 0" Content="Run Video test" />
+                            
                             <!-- Bound to whether an image is produced. Also dictates if the tagged image is to be shown at the end of process. -->
-                            <uc:MD_h3 Title="Basic" Margin="0 10 0 0"/>
+                            <uc:MD_h3 Title="Basic Settings" Margin="0 10 0 0"/>
                             <CheckBox Style="{StaticResource UpScaled}" IsChecked="{Binding ShowResultImage}">
                                 <TextBlock>Display image everytime</TextBlock>
                             </CheckBox>
@@ -72,14 +79,8 @@
                             <CheckBox Style="{StaticResource UpScaled}" IsChecked="{Binding ProcessInBatch}">
                                 <TextBlock>Process in batch</TextBlock>
                             </CheckBox>
-                            <uc:Verbose_FilePicker Title="Path to Video" 
-                                                       Margin="0 10 0 0"
-                                                               FileFilter="{StaticResource FileRegex_Video}" 
-                                                               SelectedPath="{Binding VideoPath, Mode=TwoWay, FallbackValue='No file selected'}"
-                                                               DirectoryMode="False"/>
 
 
-                            
                             <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Aspect Ratio Settings" FontWeight="Bold" Margin="0 10" TextWrapping="Wrap"/>
                             
 

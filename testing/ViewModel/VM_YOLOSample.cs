@@ -25,6 +25,7 @@ namespace testing.ViewModels
     public class VM_YOLOSample : testing.BaseViewModel, GongSolutions.Wpf.DragDrop.IDropTarget
     {
         public String Title { get; set; } = "YOLO Sample";
+        public String VideoPath { get; set; }
 
         public ObservableCollection<String> ImageQueue { get; }
         public ObservableCollection<String> VideoQueue { get; }
@@ -33,12 +34,14 @@ namespace testing.ViewModels
         // Commands
         public ICommand ClearCommand { get; }
         public ICommand RunYOLO { get; }
+        public ICommand RunDarknetVideo { get; }
 
         public VM_YOLOSample()
         {
             ImageQueue = new ObservableCollection<String>();
             ClearCommand = new RelayCommand(o => { ClearCommand_Impl(); }, o => true);
             RunYOLO = new RelayCommand(o => { RunYOLO_Impl(); }, o => true);
+            RunDarknetVideo = new RelayCommand(o => { RunDarknetVideo_Impl(); }, o => true);
 
             ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
         }
@@ -48,6 +51,28 @@ namespace testing.ViewModels
         public bool ProcessInBatch { get; set; } = false;
 
         #region DragDrop_Impl
+
+        void RunDarknetVideo_Impl() {
+            String DarknetDir = Properties.Settings.Default.Darknet_Path;
+            String WorkspaceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Projects", 
+                                                    "Sample");
+
+            CmdProcess Proc = new CmdProcess(DarknetDir);
+
+            if (ShowResultImage)
+            {
+                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath);
+                // darknet.exe detector demo data/ coco.data yolov3.cfg yolov3.weights http://192.168.0.80:8080/video?dummy=param.mjpg -i 0
+
+                // Proc.QueueCopy(ImageCopyStartPath, ImageCopyEndPath);
+            }
+            else
+            {
+                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg -dont_show weights/yolov3.weights -dont_show " + VideoPath);
+            }
+            Proc.ExecuteAndDestroy();
+            // Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
+        }
 
         void ClearCommand_Impl() { ImageQueue.Clear(); }
 

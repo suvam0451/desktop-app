@@ -73,7 +73,7 @@ namespace testing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\desktop-app-addons\\OpenCV_Samples\\CarsDrivingUnderBridge.mp4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Suvam\\Application\\Requests\\CarsDrivingUnderBridge.mp4")]
         public string OpenCV_DefaultVideo {
             get {
                 return ((string)(this["OpenCV_DefaultVideo"]));
