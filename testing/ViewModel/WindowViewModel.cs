@@ -130,7 +130,8 @@ namespace testing
                                                             Properties.Settings.Default.ProjectName);
                 Properties.Settings.Default.Save();
 
-                MessageBox.Show(Properties.Settings.Default.ProjectDir);
+                // MessageBox.Show(Properties.Settings.Default.ProjectDir);
+                MessageBox.Show(Environment.CurrentDirectory);
             }
 
             mWindow = window;
