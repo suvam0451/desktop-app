@@ -26,5 +26,11 @@
     <Setting Name="ProjectName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sample</Value>
     </Setting>
+    <Setting Name="VideoToImageCommand" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="das" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

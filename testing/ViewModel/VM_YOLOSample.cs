@@ -19,6 +19,7 @@ using testing.UserControls;
 using System.Windows.Threading;
 using testing.Library;
 using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace testing.ViewModels
 {
@@ -26,10 +27,11 @@ namespace testing.ViewModels
     {
         public String Title { get; set; } = "YOLO Sample";
         public String VideoPath { get; set; }
-
+        public int FramesToDrop { get; set; }
         public ObservableCollection<String> ImageQueue { get; }
         public ObservableCollection<String> VideoQueue { get; }
         public ObservableCollection<FrameworkElement> ConsoleStackPanel { get; }
+        public List<int> FramesToDropList { get; }
 
         // Commands
         public ICommand ClearCommand { get; }
@@ -44,11 +46,21 @@ namespace testing.ViewModels
             RunDarknetVideo = new RelayCommand(o => { RunDarknetVideo_Impl(); }, o => true);
 
             ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
+
+            FramesToDropList = new List<int>();
+            FramesToDropList.Add(5);
+            FramesToDropList.Add(10);
+            FramesToDropList.Add(15);
+            FramesToDropList.Add(20);
+
+            // If a valid path to video was configured, open up the controls.
+            if (VideoPath != "") { VideoIsValid = true; }
         }
 
         // Boolean switches
         public bool ShowResultImage { get; set; } = true;
         public bool ProcessInBatch { get; set; } = false;
+        public bool VideoIsValid { get; set; } = false;
 
         #region DragDrop_Impl
 
@@ -61,7 +73,7 @@ namespace testing.ViewModels
             await (Task.Run(Async_VideoTagging_Start));
 
             watch.Stop();
-            ConsoleLog("Video tagged in " + watch.Elapsed);       
+            ConsoleLog("Video tagged in " + Benchmarking.TimePassed(watch));       
         }
 
         void ClearCommand_Impl() { ImageQueue.Clear(); }
@@ -70,9 +82,10 @@ namespace testing.ViewModels
         /* Runs YOLO Image classification for the queued list of images. */
         private async void RunYOLO_Impl()
         {
+            // MessageBox.Show(FramesToDrop.ToString());
             if (ShowResultImage)
             {
-                ConsoleLog("Tagging " + ImageQueue.Count.ToString() + " images.", "(Images will be displayed everytime.)");
+                ConsoleLog("Tagging " + ImageQueue.Count + " images.", "(Images will be displayed everytime.)");
             }
             else {
                 ConsoleLog("Tagging " + ImageQueue.Count + " images.", "(Data will be collected in background.)");
@@ -119,31 +132,24 @@ namespace testing.ViewModels
                 }
                 Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
             }
-            Proc.Execute();
-            Proc.Destroy();
+            Proc.ExecuteAndDestroy();
         }
 
         private async void Async_VideoTagging_Start()
         {
             String DarknetDir = Properties.Settings.Default.Darknet_Path;
             String WorkspaceDir = Properties.Settings.Default.ProjectDir;
+            String VideoName = Path.GetFileName(VideoPath);
 
             CmdProcess Proc = new CmdProcess(DarknetDir);
-
-            if (ShowResultImage)
-            {
-                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " > videodata.txt");
-            }
-            else
-            {
-                Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg -dont_show weights/yolov3.weights " + VideoPath + "-dont_show > videodata.txt");
-            }
+            Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " -out_filename " + VideoName);
+            Proc.QueueCopy(Path.Combine(DarknetDir, VideoName), Path.Combine(WorkspaceDir, "Videos"));
+            Proc.AddToQueue("del " + VideoName);
             Proc.ExecuteAndDestroy();
         }
 
         void IDropTarget.DragOver(IDropInfo dropInfo) {
             dropInfo.Effects = DragDropEffects.Copy;
-            
         }
 
         void IDropTarget.Drop(IDropInfo dropInfo)
@@ -152,21 +158,20 @@ namespace testing.ViewModels
             int Counter = 0;
             foreach (String str in dragFileList)
             {
-                if (System.IO.Path.GetExtension(str).ToUpperInvariant() == ".JPG") {
-                    ImageQueue.Add(str);
-                    Counter++;
-                }
-                else if (System.IO.Path.GetExtension(str).ToUpperInvariant() == ".PNG")
+                if ((System.IO.Path.GetExtension(str).ToUpperInvariant() == ".JPG") || 
+                    (System.IO.Path.GetExtension(str).ToUpperInvariant() == ".PNG"))
                 {
                     ImageQueue.Add(str);
                     Counter++;
                 }
             }
-            dropInfo.Effects = DragDropEffects.Copy;
 
-            ConsoleLog(Counter + " files out of " + dragFileList.Count + " files are valid.");
+            dropInfo.Effects = DragDropEffects.Copy;
+            ConsoleLog(Counter + "/" + dragFileList.Count + " files are valid entries.");
         }
 
+
+        /* Utility function to update the local console */
         void ConsoleLog(String _Description, String _ExtraInfo = "") {
             ConsoleStackPanel.Add(new MD_Definition
             {

@@ -65,6 +65,15 @@
                                                                SelectedPath="{Binding VideoPath, Mode=TwoWay, FallbackValue='No file selected'}"
                                                                DirectoryMode="False"/>
                             <Button Command="{Binding RunDarknetVideo}" Grid.Column="1" Margin="10 10 10 0" Content="Run Video test" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="1" Command="{Binding GenerateImageBatch}" Margin="10 10 10 0" Content="Generate Image batch" IsEnabled="{Binding VideoIsValid}"/>
+                                <ComboBox Grid.Column="0" Height="24" Margin="10 10 0 0" ItemsSource="{Binding FramesToDropList}" SelectedValue="{Binding FramesToDrop, Mode=OneWayToSource}" IsEnabled="{Binding VideoIsValid}"/>
+                            </Grid>
+
                             
                             <!-- Bound to whether an image is produced. Also dictates if the tagged image is to be shown at the end of process. -->
                             <uc:MD_h3 Title="Basic Settings" Margin="0 10 0 0"/>
@@ -76,6 +85,9 @@
                             </CheckBox>
                             
                             <uc:MD_h3 Title="Advanced" Margin="0 10 0 0"/>
+                            <CheckBox Style="{StaticResource UpScaled}" IsChecked="{Binding ProcessInBatch}">
+                                <TextBlock>Process in batch</TextBlock>
+                            </CheckBox>
                             <CheckBox Style="{StaticResource UpScaled}" IsChecked="{Binding ProcessInBatch}">
                                 <TextBlock>Process in batch</TextBlock>
                             </CheckBox>

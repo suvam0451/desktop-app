@@ -118,5 +118,29 @@ namespace testing.Properties {
                 this["ProjectName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string VideoToImageCommand {
+            get {
+                return ((string)(this["VideoToImageCommand"]));
+            }
+            set {
+                this["VideoToImageCommand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string das {
+            get {
+                return ((string)(this["das"]));
+            }
+            set {
+                this["das"] = value;
+            }
+        }
     }
 }
