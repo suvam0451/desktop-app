@@ -66,12 +66,21 @@
                                                                DirectoryMode="False"/>
                             <Button Command="{Binding RunDarknetVideo}" Grid.Column="1" Margin="10 10 10 0" Content="Run Video test" />
                             <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1" Command="{Binding GenerateImageBatch}" Margin="10 10 10 0" Content="Generate Image batch" IsEnabled="{Binding IsVideoValid}"/>
-                                <ComboBox Grid.Column="0" Height="24" Margin="10 10 0 0" ItemsSource="{Binding FramesToDropList}" SelectedValue="{Binding FramesToDrop, Mode=OneWayToSource}" IsEnabled="{Binding IsVideoValid}"/>
+                                <ComboBox Grid.Column="0" Height="24" Margin="10 10 0 0" ItemsSource="{Binding FramesToDropList}" SelectedValue="{Binding FramesToDrop, Mode=OneWayToSource}" IsEnabled="{Binding IsVideoValid}" SelectedIndex="1"/>
+                                <Button Grid.Column="1" Command="{Binding GenerateImageBatch}" Margin="10 10 10 0" Content="Run complete test" IsEnabled="{Binding IsVideoValid}"/>
+
+                                <ComboBox Grid.Row="1" Grid.Column="0" Height="24" Margin="10 10 0 0" ItemsSource="{Binding FramesToDropList}" SelectedValue="{Binding FramesToDrop, Mode=OneWayToSource}" IsEnabled="{Binding IsVideoValid}" SelectedIndex="1"/>
+                                <Button Grid.Row="1" Grid.Column="1" Command="{Binding GenerateBatch}" Margin="10 10 10 0" Content="Generate Batch" 
+                                        ToolTip="Takes the video selected above and generates images with n frames skipped as selected in the combobox to the left."
+                                        IsEnabled="{Binding IsVideoValid}"/>
                             </Grid>
 
                             

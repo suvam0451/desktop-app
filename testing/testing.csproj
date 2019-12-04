@@ -121,6 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="API\API_FileSystem.cs" />
     <Compile Include="DataModels\Application_Sidebar.cs" />
     <Compile Include="DataModels\List_AvailablePages.cs" />
     <Compile Include="Directory\Data\DirectoryItemType.cs" />
@@ -132,8 +133,11 @@
     <Compile Include="Directory\ViewModel\DirectoryStructureViewModel.cs" />
     <Compile Include="Libraries\DotHelpers.cs" />
     <Compile Include="Libraries\ExcelParsers.cs" />
+    <Compile Include="Libraries\FileSystem.cs" />
     <Compile Include="Libraries\GraphAlgorithms.cs" />
-    <Compile Include="Libraries\HandlerLibrary.cs" />
+    <Compile Include="Libraries\HandlerLibrary.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\ITab.cs">
       <Generator>MSBuild:Compile</Generator>
@@ -331,6 +335,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

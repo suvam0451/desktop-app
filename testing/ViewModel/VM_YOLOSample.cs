@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using testing.API;
 using testing.Library;
 using testing.UserControls;
 
@@ -30,6 +31,7 @@ namespace testing.ViewModels
         public ICommand RunYOLO { get; }
         public ICommand RunDarknetVideo { get; }
         public ICommand GenerateImageBatch { get; }
+        public ICommand GenerateBatch { get; }
 
         // Boolean switches
         public bool ShowResultImage { get; set; } = true;
@@ -37,17 +39,24 @@ namespace testing.ViewModels
         public bool IsVideoValid { get; set; } = false;
         public bool AllowVideoUI { get; set; } = false;
 
+        API_FileSystem API_FS { get; set; }
         #endregion
 
+
+        private String UserSelectedDirectory { get; set; } = "";
         #region Constructor
 
         public VM_YOLOSample()
         {
+            API_FS = new API_FileSystem();
+
             ImageQueue = new ObservableCollection<String>();
             ClearCommand = new RelayCommand(o => { ClearCommand_Impl(); }, o => true);
             RunYOLO = new RelayCommand(o => { RunYOLO_Impl(); }, o => true);
             RunDarknetVideo = new RelayCommand(o => { RunDarknetVideo_Impl(); }, o => true);
             GenerateImageBatch = new RelayCommand(o => { GenerateImageBatch_Impl(); }, o => true);
+            GenerateBatch = new RelayCommand(o => { GenerateBatch_Impl(); }, o => true);
+
 
             ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
 
@@ -66,7 +75,18 @@ namespace testing.ViewModels
 
         #region ICommand Implementations
 
-        void ClearCommand_Impl() { ImageQueue.Clear(); }
+        void ClearCommand_Impl() {
+            MessageBox.Show("slice valus is: " + FramesToDrop);
+            // ImageQueue.Clear(); 
+        }
+
+        private void GenerateBatch_Impl() {
+            // MessageBox.Show("WakariMashta");
+            MessageBox.Show(Guid.NewGuid().ToString());
+            String BatchOutputBaseDir = Path.Combine(Properties.Settings.Default.ProjectDir, "ImageBatch");
+            String OutputDir = API_FS.RequestFolderRelativeToRootDir(BatchOutputBaseDir);
+            MessageBox.Show("WakariMashta:" + OutputDir);
+        }
 
         /* Runs YOLO Image classification for the queued list of images. */
         private async void RunYOLO_Impl()
@@ -133,15 +153,9 @@ namespace testing.ViewModels
             await (Task.Run(MakeImageQueueFileFromFolder_Task).ConfigureAwait(true));
             ConsoleLog("(2/3) List prepared. Proceeding with detection...");
 
-            // Processing all the images... 
-            // await (Task.Run(ImageBatchProcessQueue_Task).ConfigureAwait(true));
             String QueueFileDir = Path.Combine(Properties.Settings.Default.ProjectDir, "ImageBatch", "ImageQueue.txt");
-
-            // await (Task.Run(() => { 
-            //     ImageTagging_Task(QueueFileDir); 
-            // }).ConfigureAwait(true));
-            // 
-            // ConsoleLog("(3/3) Completed tagging images.");
+            await (Task.Run(() => { TagImages_NeverShow_Task(QueueFileDir); }).ConfigureAwait(true));
+            ConsoleLog("(3/3) Completed tagging images.");
 
             watch.Stop();
             ConsoleLog("Video taggin completed in " + Benchmarking.TimePassed(watch));
@@ -154,11 +168,11 @@ namespace testing.ViewModels
         // STEP 1
         private void GenerateImageBatch_Task()
         {
-            String BatchOutputDir = Path.Combine(Properties.Settings.Default.ProjectDir, "ImageBatch");
+            String BatchOutputDir = API_FS.GetSpecialFolderPath(SpecialFolder.ImageBatch);
 
             CmdProcess Proc = new CmdProcess(Environment.CurrentDirectory);
-            Proc.AddToQueue(@"VideoToImage.exe " + BatchOutputDir + " cap_video " + VideoPath + " " + "10");
-            Proc.ExecuteAndDestroy();
+            Proc.AddToQueue(@"VideoToImage.exe " + BatchOutputDir + " cap_video " + VideoPath + " " + FramesToDrop);
+            Proc.ExecuteAndDispose();
         }
 
         // STEP 2
@@ -205,16 +219,11 @@ namespace testing.ViewModels
 
         private void Async_VideoTagging_Start()
         {
-            String DarknetDir = Properties.Settings.Default.Darknet_Path;
-            String WorkspaceDir = Properties.Settings.Default.ProjectDir;
-            String VideoOutputPath = Path.Combine(WorkspaceDir, "Videos") + Path.GetFileName(VideoPath);
+            String VideoOutputPath = Path.Combine(API_FS.WorkspaceDir, "Videos", Path.GetFileName(VideoPath));
 
-            CmdProcess Proc = new CmdProcess(DarknetDir);
+            CmdProcess Proc = new CmdProcess(API_FS.DarknetDir);
             Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " -out_filename " + VideoOutputPath);
-            // Proc.QueueCopy(Path.Combine(DarknetDir, VideoName), Path.Combine(WorkspaceDir, "Videos"));
-            // Proc.AddToQueue("del " + VideoName);
-            Proc.ExecuteAndDestroy();
-            Proc.Dispose();
+            Proc.ExecuteAndDispose();
         }
 
         private void FileToImageList_Task(String ImageListPath, List<String> _In)
@@ -240,25 +249,25 @@ namespace testing.ViewModels
             foreach (String str in ImageList)
             {
                 // Section to copy over image
-                String ImageCopyStartPath = Path.Combine(DarknetDir, "predictions.jpg");
+                // String ImageCopyStartPath = Path.Combine(DarknetDir, "predictions.jpg");
                 String ImageCopyEndPath = Path.Combine(WorkspaceDir, ImageOutputPath, Path.GetFileName(str));
 
                 // Check if file already exists (Bounding rectangle output file)
-                String ResultFileStartPath = Path.Combine(DarknetDir, "result.json");
+                // String ResultFileStartPath = Path.Combine(DarknetDir, "result.json");
                 String ResultFileEndPath = Path.Combine(WorkspaceDir, DataOutputPath, Path.GetFileName(str) + ".txt");
 
                 if (ShowImages)
                 {
                     Proc.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -out result.json " + str);
-                    Proc.QueueCopy(ImageCopyStartPath, ImageCopyEndPath);
+                    Proc.QueueCopy("predictions.jpg", ImageCopyEndPath);
                 }
                 else
                 {
                     Proc.AddToQueue(@"darknet.exe detect cfg/yolov3.cfg weights/yolov3.weights -ext_output -dont_show -out result.json " + str);
                 }
-                Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
+                Proc.QueueCopy("result.json", ResultFileEndPath);
             }
-            Proc.ExecuteAndDestroy();
+            Proc.ExecuteAndDispose();
         }
 
         private void TagImages_AlwaysShow_Task(List<String> ImageList, String ImageOutputPath = "ImageTag", String DataOutputPath = "ImageData")
@@ -277,11 +286,22 @@ namespace testing.ViewModels
                 Proc.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -out " + ResultFileEndPath + " " + str);
                 Proc.QueueCopy(ImageCopyStartPath, ImageCopyEndPath);
             }
-            Proc.ExecuteAndDestroy();
+            Proc.Execute();
+            Proc.Dispose();
         }
 
-        private void TagImages_NeverShow_Task(String InputFile) { 
-            
+        private void TagImages_NeverShow_Task(String InputFile)
+        {
+            String DarknetDir = Properties.Settings.Default.Darknet_Path;
+            String WorkspaceDir = Properties.Settings.Default.ProjectDir;
+            String ResultFileEndPath = Path.Combine(WorkspaceDir, "VideoData", Path.GetFileName(VideoPath) + ".json");
+
+            CmdProcess Proc2 = new CmdProcess(DarknetDir);
+            Proc2.AddToQueue("type nul > " + ResultFileEndPath);
+            Proc2.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -dont_show -out " + ResultFileEndPath + " < " + InputFile);
+            Proc2.ExecuteAndDispose();
+            Proc2.Dispose();
+
         }
         private void TagImages_NeverShow_Task(List<String> ImageList, String DataOutputPath = "ImageData")
         {
@@ -293,7 +313,7 @@ namespace testing.ViewModels
             CmdProcess Proc = new CmdProcess(DarknetDir);
             Proc.AddToQueue("type nul > " + ImageListDir);
             Proc.AddToQueue("type nul > " + ResultFileEndPath);
-            Proc.ExecuteAndDestroy();
+            Proc.ExecuteAndDispose();
             Proc.Dispose();
             // Write the string array to a new file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Resources", "ImageList.txt")))
@@ -305,7 +325,7 @@ namespace testing.ViewModels
 
             CmdProcess Proc2 = new CmdProcess(DarknetDir);
             Proc2.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -dont_show -out " + ResultFileEndPath + " < " + ImageListDir);
-            Proc2.ExecuteAndDestroy();
+            Proc2.ExecuteAndDispose();
             Proc2.Dispose();
         }
 
@@ -340,7 +360,7 @@ namespace testing.ViewModels
                 }
                 Proc.QueueCopy(ResultFileStartPath, ResultFileEndPath);
             }
-            Proc.ExecuteAndDestroy();
+            Proc.ExecuteAndDispose();
         }
 
         #endregion

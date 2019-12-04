@@ -29,7 +29,7 @@ namespace testing.Libraries
 
             CmdProcess Proc = new CmdProcess(CWD);
             Proc.AddToQueue("dot -Tpng " + filePath + " > " + outputPath);
-            Proc.ExecuteAndDestroy();
+            Proc.ExecuteAndDispose();
         }
     }
 

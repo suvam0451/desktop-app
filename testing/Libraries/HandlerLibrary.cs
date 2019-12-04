@@ -47,7 +47,7 @@ namespace testing.Library
             this.Dispose();
         }
 
-        public void ExecuteAndDestroy()
+        public void ExecuteAndDispose()
         {
             Execute();
             Destroy();
