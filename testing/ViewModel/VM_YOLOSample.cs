@@ -10,6 +10,8 @@ using System.Windows.Input;
 using testing.API;
 using testing.Library;
 using testing.UserControls;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace testing.ViewModels
 {
@@ -19,7 +21,7 @@ namespace testing.ViewModels
 
         public String Title { get; set; } = "YOLO Sample";
         public String VideoPath { get; set; }
-        public int FramesToDrop { get; set; }
+        public int FramesToDrop { get; set; } = 10;
         public ObservableCollection<String> ImageQueue { get; }
         public ObservableCollection<String> VideoQueue { get; }
         public ObservableCollection<FrameworkElement> ConsoleStackPanel { get; }
@@ -53,7 +55,9 @@ namespace testing.ViewModels
             ImageQueue = new ObservableCollection<String>();
             ClearCommand = new RelayCommand(o => { ClearCommand_Impl(); }, o => true);
             RunYOLO = new RelayCommand(o => { RunYOLO_Impl(); }, o => true);
+            // Rerouted this command for isolation
             RunDarknetVideo = new RelayCommand(o => { RunDarknetVideo_Impl(); }, o => true);
+            // RunDarknetVideo = new RelayCommand(o => { PowerShellProcess(); }, o => true);
             GenerateImageBatch = new RelayCommand(o => { GenerateImageBatch_Impl(); }, o => true);
             GenerateBatch = new RelayCommand(o => { GenerateBatch_Impl(); }, o => true);
 
@@ -76,16 +80,16 @@ namespace testing.ViewModels
         #region ICommand Implementations
 
         void ClearCommand_Impl() {
-            MessageBox.Show("slice valus is: " + FramesToDrop);
+            // MessageBox.Show("slice valus is: " + FramesToDrop);
             // ImageQueue.Clear(); 
         }
 
         private void GenerateBatch_Impl() {
             // MessageBox.Show("WakariMashta");
-            MessageBox.Show(Guid.NewGuid().ToString());
+            // MessageBox.Show(Guid.NewGuid().ToString());
             String BatchOutputBaseDir = Path.Combine(Properties.Settings.Default.ProjectDir, "ImageBatch");
             String OutputDir = API_FS.RequestFolderRelativeToRootDir(BatchOutputBaseDir);
-            MessageBox.Show("WakariMashta:" + OutputDir);
+            // MessageBox.Show("WakariMashta:" + OutputDir);
         }
 
         /* Runs YOLO Image classification for the queued list of images. */
@@ -117,7 +121,7 @@ namespace testing.ViewModels
             }
             else
             {
-                await (Task.Run(() => { TagImages_NeverShow_Task(OneQueue); }).ConfigureAwait(true));
+                await (Task.Run(() => { TagImages_NeverShow_Task(OneQueue, "ImageData"); }).ConfigureAwait(true));
             }
 
             // TagImages_AlwaysShow_Task
@@ -134,6 +138,8 @@ namespace testing.ViewModels
             watch.Start();
 
             await (Task.Run(Async_VideoTagging_Start).ConfigureAwait(true));
+
+            // await (Task.Run(() => { API_ImageDetection.TagVideo(VideoPath, true); }).ConfigureAwait(true));
 
             watch.Stop();
             ConsoleLog("Video completed in " + Benchmarking.TimePassed(watch), "Find ouput in videos folder.");
@@ -169,10 +175,12 @@ namespace testing.ViewModels
         private void GenerateImageBatch_Task()
         {
             String BatchOutputDir = API_FS.GetSpecialFolderPath(SpecialFolder.ImageBatch);
-
+            
             CmdProcess Proc = new CmdProcess(Environment.CurrentDirectory);
             Proc.AddToQueue(@"VideoToImage.exe " + BatchOutputDir + " cap_video " + VideoPath + " " + FramesToDrop);
             Proc.ExecuteAndDispose();
+
+            // PowerShell_Process.Invoke("", "Scripts/SampleVideo.ps1", VideoPath);
         }
 
         // STEP 2
@@ -221,9 +229,15 @@ namespace testing.ViewModels
         {
             String VideoOutputPath = Path.Combine(API_FS.WorkspaceDir, "Videos", Path.GetFileName(VideoPath));
 
-            CmdProcess Proc = new CmdProcess(API_FS.DarknetDir);
-            Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " -out_filename " + VideoOutputPath);
-            Proc.ExecuteAndDispose();
+            // CmdProcess Proc = new CmdProcess(API_FS.DarknetDir);
+            // Proc.AddToQueue(@"darknet.exe detector demo data/coco.data cfg/yolov3.cfg weights/yolov3.weights " + VideoPath + " -out_filename " + VideoOutputPath);
+            // Proc.ExecuteAndDispose();
+
+            String ScriptPath = Path.Combine(Environment.CurrentDirectory, "Scripts/SampleVideo.ps1");
+            Powershell_Custom cust = new Powershell_Custom(Properties.Settings.Default.Darknet_Path, ScriptPath);
+            cust.AddArgument(VideoPath);
+            cust.AddParameter("OutputDir", VideoOutputPath);
+            cust.Execute();
         }
 
         private void FileToImageList_Task(String ImageListPath, List<String> _In)
@@ -301,7 +315,6 @@ namespace testing.ViewModels
             Proc2.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -dont_show -out " + ResultFileEndPath + " < " + InputFile);
             Proc2.ExecuteAndDispose();
             Proc2.Dispose();
-
         }
         private void TagImages_NeverShow_Task(List<String> ImageList, String DataOutputPath = "ImageData")
         {
@@ -315,18 +328,26 @@ namespace testing.ViewModels
             Proc.AddToQueue("type nul > " + ResultFileEndPath);
             Proc.ExecuteAndDispose();
             Proc.Dispose();
+
             // Write the string array to a new file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Resources", "ImageList.txt")))
             {
                 foreach (string line in ImageList)
                     outputFile.WriteLine(line);
+                outputFile.Close();
             }
-
 
             CmdProcess Proc2 = new CmdProcess(DarknetDir);
             Proc2.AddToQueue(@"darknet.exe detector test cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights -ext_output -dont_show -out " + ResultFileEndPath + " < " + ImageListDir);
             Proc2.ExecuteAndDispose();
             Proc2.Dispose();
+
+            // String ScriptPath = Path.Combine(Environment.CurrentDirectory, "Scripts/Darknet_ImageBatch.ps1");
+            // Powershell_Custom cust = new Powershell_Custom(Properties.Settings.Default.Darknet_Path, ScriptPath);
+            // cust.AddParameter("Images", ImageList);
+            // cust.AddParameter("ImageListLoc", ImageListDir);
+            // cust.AddParameter("OutputDataDir", ResultFileEndPath);
+            // cust.Execute();
         }
 
         /* Processes individual image entries one by one.
