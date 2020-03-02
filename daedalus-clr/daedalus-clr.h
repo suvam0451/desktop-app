@@ -18,7 +18,7 @@ using namespace System::Windows::Threading;
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include "HelperLibrary.h"
-#include <OpenXLSX/OpenXLSX.h>
+// #include <OpenXLSX/OpenXLSX.h>
 
 #define CVColors const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0); \
 		const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0); \
