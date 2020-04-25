@@ -26,6 +26,7 @@ namespace testing.ViewModels
         public Image MainDisplay { get; set; } = new Image();
         public ObservableCollection<ImageObject> ImageCollection { get; set; }
         public ICommand UpdateImageList { get; set; }
+        
 
         public VM_CombineTexture() {
             FileData = new Dictionary<String, String>();
@@ -52,7 +53,10 @@ namespace testing.ViewModels
                 DirectoryInfo dInfo = new DirectoryInfo(this.path); 
                 FileInfo[] fInfo = dInfo.GetFiles("*.go");
                 fInfo.Cast<FileInfo>().ToList().ForEach(setFileObjectCollection());
-            }
+
+                // BitmapImage mine = new BitmapImage(new Uri($"pack://application:,,,/images/logo/layers.png"))
+               
+                    }
         }
 
         private Action<FileInfo> setFileObjectCollection() {

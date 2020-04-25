@@ -4,6 +4,7 @@ x86/
 Debug/
 Release/
 bin/
+packages/
 
 # Location where builds are stored(inside)...
 .vs/*

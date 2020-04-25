@@ -168,6 +168,10 @@ BitmapImage^ HelperLibrary::GetImageSourceFromCV(cv::Mat& In) {
 	ms->Seek(0, SeekOrigin::Begin);
 
 	// Write stream to ImageSource...
+	
+
+	BitmapImage^ image = gcnew BitmapImage();
+	// image is "BitmapImage"
 	image->BeginInit();
 	image->StreamSource = ms;
 	image->EndInit();

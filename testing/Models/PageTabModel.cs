@@ -20,4 +20,18 @@ namespace testing.Models
             IsSelected = _IsSelected;
         }
     }
+
+    public class PageTabModelx<T> : testing.BaseViewModel
+    {
+        public bool IsSelected { get; set; } = false;
+        public String Header { get; set; } = "MyHeader";
+        public T Content { get; set; }
+
+        public PageTabModelx(String _Header, T _Content, bool _IsSelected = false)
+        {
+            Header = _Header;
+            Content = _Content;
+            IsSelected = _IsSelected;
+        }
+    }
 }

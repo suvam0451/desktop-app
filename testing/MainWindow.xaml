@@ -93,7 +93,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TabControl Grid.Row="0" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding Tabs, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=0}" Grid.ColumnSpan="1">
+                    <TabControl Grid.Row="0" Style="{StaticResource TabControl_Level1}" ItemsSource="{Binding Tabs, FallbackValue='fb'}" SelectedIndex="{Binding SelectedTabIndex, FallbackValue=1}" Grid.ColumnSpan="1">
                         <TabControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

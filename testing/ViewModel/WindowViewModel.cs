@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Windows.Controls;
 using testing.UserControls;
 using System.IO;
+using CS_UI.Interfaces.Tabs;
 
 namespace testing
 {
@@ -32,12 +33,18 @@ namespace testing
         private bool[] InstanceActive { get; set; }
         #endregion
 
+        
         #region Public Properties
 
         public ICollection<ITab> Tabs { get; }
-        private readonly ObservableCollection<ITab> tabs;
+        private ObservableCollection<ITab> tabs;
+
+        private TabManager tabx;
 
         public ObservableCollection<PageTabModel> TabBinding { get; set; }
+
+        public ObservableCollection<PageTabModelx<int>> TabBindingx { get; set; }
+        
         public ObservableCollection<FrameworkElement> ConsoleStackPanel { get; set; }
 
         /// The smallest width the window can go to
@@ -167,6 +174,8 @@ namespace testing
             InstanceActive = new bool[6];
 
             tabs = new ObservableCollection<ITab>();
+            tabx = new TabManager();
+
             ConsoleStackPanel = new ObservableCollection<FrameworkElement>();
             ConsoleStackPanel.Add(new Button { Content = "Console Area" });
             ConsoleStackPanel.Add(new MD_Definition
@@ -179,9 +188,15 @@ namespace testing
             tabs.CollectionChanged += Tabs_CollectionChanged;
 
             Tabs = tabs;
-            
+            // Tabs = <Collection<ITab>>(tabx);
+
+            // tabx.Add(new MainPageTabs("Combine Textures", EPageList.CombineTexture));
+
             Tabs.Add(new MainPageTabs("Combine Textures", EPageList.CombineTexture));
             Tabs.Add(new MainPageTabs("OpenCV test", EPageList.PlayVideo));
+
+            // tabs.Add(new MainPageTabs("Combine Textures", EPageList.CombineTexture));
+            // tabs.Add(new MainPageTabs("OpenCV test", EPageList.PlayVideo));
         }
 
         private void Tabs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
@@ -201,7 +216,8 @@ namespace testing
         }
 
         private void OnTabCloseRequested(object sender, EventArgs e) {
-            Tabs.Remove((ITab)sender);
+            // Tabs.Remove((ITab)sender); // original
+            tabs.Remove((ITab)sender);
         }
 
         private void AppendPage_Impl(object parameter) {

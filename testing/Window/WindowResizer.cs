@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using choomantar;
 
 namespace testing
 {
@@ -29,7 +30,6 @@ namespace testing
         /// The window to handle the resizing for
         /// </summary>
         private Window mWindow;
-
         /// <summary>
         /// The last calculated available screen size
         /// </summary>
