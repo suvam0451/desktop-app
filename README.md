@@ -17,13 +17,12 @@ I develoepd this application for my B. Tech project. I also am expected to integ
 
 # Screenshots
 
-![](./GalleryExhibiut2.png)
+![Exhibit A](./Gallery/Exhibiut2.png)
 
 For each tab, The application has a **description panel** which shows usage. Most parameters are set by the **left panel** and there is an **optional image field** for visual feedback. The **right panel** is supposed to help set global variables.
 
 **The console** in the bottom is resizable and indicates task progress with timestamps.
 
-![](./GalleryExhibiut3.png)
-
+![Exhibit B](./Gallery/Exhibiut3.png)
 
 The application uses MVVM pattern UI design and reuses lot of code among panels.
