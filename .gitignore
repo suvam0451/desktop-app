@@ -18,3 +18,5 @@ bin/
 !testing/bin/x64/Debug/CsvHelper.dll
 !testing/bin/x64/Debug/OpenXLSX.dll
 !OpenXLSX.dll
+
+.DS_Store
